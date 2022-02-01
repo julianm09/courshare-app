@@ -3,8 +3,15 @@ import AddCurriculumForm from "@/components/AddCurriculumForm";
 
 export default function Julian() {
   return (
-    <div>
+    <Cont>
       <AddCurriculumForm />
-    </div>
+    </Cont>
   );
 }
+
+const Cont = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+`
