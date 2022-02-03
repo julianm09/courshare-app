@@ -10,10 +10,10 @@ function MyApp({ Component, pageProps }) {
 
       <BotNav>
         <button onClick={() => r.push("/")}>Home</button>
-        <button onClick={() => r.push("/Comps/Evie")}>Evie</button>
-        <button onClick={() => r.push("/Comps/John")}>John</button>
-        <button onClick={() => r.push("/Comps/Juhee")}>Juhee</button>
-        <button onClick={() => r.push("/Comps/Julian")}>Julian</button>
+        <button onClick={() => r.push("/comps/evie")}>Evie</button>
+        <button onClick={() => r.push("/comps/john")}>John</button>
+        <button onClick={() => r.push("/comps/juhee")}>Juhee</button>
+        <button onClick={() => r.push("/comps/julian")}>Julian</button>
       </BotNav>
     </>
   );

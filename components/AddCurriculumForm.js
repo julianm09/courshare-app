@@ -1,7 +1,19 @@
 import styled from "styled-components";
 import { useState } from "react";
 
-export default function AddCurriculumForm({}) {
+export default function AddCurriculumForm({
+  name = "",
+  categories = [
+    "Web Development",
+    "Biological",
+    "Design",
+    "Brand Marketing",
+    "Accounting",
+    "Analysis",
+    "Business",
+    "Computer Science",
+  ],
+}) {
   const [showCategory, setShowCategory] = useState(false);
 
   return (
@@ -9,12 +21,25 @@ export default function AddCurriculumForm({}) {
       <Title>Add curriculum</Title>
       <Label>Name</Label>
       <Input />
-
       <Label>Category</Label>
       <Drowpdown onClick={() => setShowCategory(!showCategory)}>
         Select your curriculum category
       </Drowpdown>
-      {showCategory ? <DrowpdownBox /> : <></>}
+      {showCategory ? (
+        <DrowpdownBox>
+          <CategoryCont>
+            {categories.map((x) => (
+              <Category>
+                <Checkbox type={"checkbox"} />
+                <div>{x}</div>
+              </Category>
+            ))}
+          </CategoryCont>
+          <ShowAll>Show All</ShowAll>
+        </DrowpdownBox>
+      ) : (
+        <></>
+      )}
     </Cont>
   );
 }
@@ -98,14 +123,14 @@ const Drowpdown = styled.div`
 `;
 
 const DrowpdownBox = styled.div`
-  height: 162px;
+  min-height: 162px;
   width: 395px;
   width: 75%;
   max-width: 395px;
   border: 0.5px solid #000000;
   box-sizing: border-box;
   border-radius: 10px;
-  padding: 0 18px;
+  padding: 12px 18px;
   font-family: General Sans;
   font-size: 12px;
   font-style: normal;
@@ -113,4 +138,46 @@ const DrowpdownBox = styled.div`
   line-height: 16px;
   letter-spacing: 0em;
   text-align: left;
+  position: relative;
+`;
+
+const CategoryCont = styled.div`
+  height: 113px;
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rowss: 2fr 2fr 2fr 2fr;
+`;
+
+const Category = styled.div`
+  font-family: General Sans;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+const Checkbox = styled.input`
+  margin: 0 16px 0 0;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+`;
+
+const ShowAll = styled.div`
+  font-family: General Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  color: #ffc403;
+  cursor: pointer;
+  position: absolute;
+  right: 18px;
+  bottom: 12px;
 `;
