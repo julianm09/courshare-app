@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import AddCurriculumForm from "@/components/AddCurriculumForm";
 
-export default function Julian() {
+export default function julian() {
   return (
     <Cont>
       <AddCurriculumForm />
-      hello
     </Cont>
   );
 }
