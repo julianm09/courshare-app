@@ -5,6 +5,7 @@ export default function Julian() {
   return (
     <Cont>
       <AddCurriculumForm />
+      hello
     </Cont>
   );
 }
