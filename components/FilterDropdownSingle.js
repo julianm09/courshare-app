@@ -3,31 +3,26 @@ import { useState } from "react";
 import Checkbox from "./Checkbox";
 
 export default function FilterDropdownSingle({
-  name="Ratings",
-  categories = [
-    "4.5 - 5.5",
-    "4.0 - 4.5",
-    "3.5 - 4.0",
-    "0 - 3.5",
-  ],
+  name = "Ratings",
+  categories = ["4.5 - 5.5", "4.0 - 4.5", "3.5 - 4.0", "0 - 3.5"],
 }) {
   const [show, setShow] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState("");
 
   const handleSelect = (x) => {
-    setSelected(x)
+    setSelected(x);
   };
 
   const clearAll = () => {
-    setSelected('');
+    setSelected("");
   };
 
   return (
     <Cont>
       <Dropdown onClick={() => setShow(!show)}>
-      {name}
+        {name}
         <Icon>
           {show ? (
             <img src="/icons/up-caret.svg" />
