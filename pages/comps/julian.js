@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import AddCurriculumForm from "@/components/AddCurriculumForm";
 import FilterDropdown from "@/components/FilterDropdown";
+import FilterDropdownSingle from "@/components/FilterDropdownSingle";
 
 export default function julian() {
   return (
@@ -8,6 +9,9 @@ export default function julian() {
       <AddCurriculumForm />
       <Space/>
       <FilterDropdown/>
+      <Space/>
+      <FilterDropdownSingle/>
+      <Space/>
     </Cont>
   );
 }
