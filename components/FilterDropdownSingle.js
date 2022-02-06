@@ -2,64 +2,32 @@ import styled from "styled-components";
 import { useState } from "react";
 import Checkbox from "./Checkbox";
 
-export default function FilterDropdown({
-  name="Skills",
+export default function FilterDropdownSingle({
+  name="Ratings",
   categories = [
-    "Design and Product",
-    "Accounting",
-    "Data Analysis",
-    "Management",
-    "Logistics",
-    "Business Analysis",
-    "Programming",
-    "Web Development",
-    "Sales",
-    "Data Management",
-    "Communication",
-    "Databases",
-    "Computer Networking",
-    "Computer Science",
-    "Finance",
-    "Machine Learning",
-    "Software Engineering",
-    "Computer Interaction",
-    "Probability & Statistics",
-    "Business Psychology",
-    "Security Engineering",
-    "Human Resources",
-    "Entrepreneurship",
-    "Computer Architecture",
-    "Operations",
-    "Research and Design",
-    "Cloud Computing",
-    "Marketing",
-    "Computer Graphics",
-    "Data Visualization",
-    "DevOps",
-    "Operating Systems",
+    "4.5 - 5.5",
+    "4.0 - 4.5",
+    "3.5 - 4.0",
+    "0 - 3.5",
   ],
 }) {
   const [show, setShow] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState('');
 
   const handleSelect = (x) => {
-    if (selected.includes(x)) {
-      setSelected(selected.filter((i) => i !== x));
-    } else {
-      setSelected([...selected, x]);
-    }
+    setSelected(x)
   };
 
   const clearAll = () => {
-    setSelected([]);
+    setSelected('');
   };
 
   return (
     <Cont>
       <Dropdown onClick={() => setShow(!show)}>
-        {name}
+      {name}
         <Icon>
           {show ? (
             <img src="/icons/up-caret.svg" />
@@ -84,11 +52,6 @@ export default function FilterDropdown({
             ))}
           </CategoryCont>
           <Clear onClick={clearAll}>Clear</Clear>
-          {showAll ? (
-            <ShowAll onClick={() => setShowAll(!showAll)}>Show Less</ShowAll>
-          ) : (
-            <ShowAll onClick={() => setShowAll(!showAll)}>Show All</ShowAll>
-          )}
         </DrowpdownBox>
       ) : (
         <></>
@@ -128,8 +91,7 @@ const Dropdown = styled.div`
 const DrowpdownBox = styled.div`
   min-height: 162px;
   height: auto;
-  width: 460px;
-  max-width: 395px;
+  width: 230px;
   background: #ffffff;
   margin: 24px 0 0 0;
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
@@ -153,13 +115,9 @@ const DrowpdownBox = styled.div`
 const CategoryCont = styled.div`
   height: auto;
   display: grid;
-  grid-template-columns: 2fr 2fr;
+  grid-template-columns: 2fr;
   grid-gap: 12px 0;
   grid-template-rowss: auto;
-
-  @media (max-width: 800px) {
-    grid-template-columns: 2fr;
-  }
 `;
 
 const Category = styled.div`
