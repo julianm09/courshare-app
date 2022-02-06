@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import Checkbox from "./Checkbox";
 
-export default function AddCurriculumForm({
-  name = "",
+export default function FilterDropdown({
   categories = [
     "Design and Product",
     "Accounting",
@@ -39,32 +38,36 @@ export default function AddCurriculumForm({
     "Operating Systems",
   ],
 }) {
-  const [showCategory, setShowCategory] = useState(false);
-
+  const [show, setShow] = useState(false);
   const [showAll, setShowAll] = useState(false);
-  const [selected, setSelected] = useState("");
+
+  const [selected, setSelected] = useState([]);
 
   const handleSelect = (x) => {
-    setSelected(x);
+    if (selected.includes(x)) {
+      setSelected(selected.filter((i) => i !== x));
+    } else {
+      setSelected([...selected, x]);
+    }
+  };
+
+  const clearAll = () => {
+    setSelected([]);
   };
 
   return (
     <Cont>
-      <Title>Add curriculum</Title>
-      <Label>Name</Label>
-      <Input />
-      <Label>Category</Label>
-      <Drowpdown onClick={() => setShowCategory(!showCategory)}>
-        Select your curriculum category
+      <Dropdown onClick={() => setShow(!show)}>
+        Skills{" "}
         <Icon>
-          {showCategory ? (
+          {show ? (
             <img src="/icons/up-caret.svg" />
           ) : (
             <img src="/icons/down-caret.svg" />
           )}
         </Icon>
-      </Drowpdown>
-      {showCategory ? (
+      </Dropdown>
+      {show ? (
         <DrowpdownBox>
           <CategoryCont>
             {categories.slice(0, showAll ? 32 : 8).map((x) => (
@@ -79,6 +82,7 @@ export default function AddCurriculumForm({
               </Category>
             ))}
           </CategoryCont>
+          <Clear onClick={clearAll}>Clear</Clear>
           {showAll ? (
             <ShowAll onClick={() => setShowAll(!showAll)}>Show Less</ShowAll>
           ) : (
@@ -88,26 +92,11 @@ export default function AddCurriculumForm({
       ) : (
         <></>
       )}
-
-      <AddButton>Add</AddButton>
     </Cont>
   );
 }
 
 const Cont = styled.div`
-  width: 100%;
-  max-width: 519px;
-  min-height: 532px;
-  background: #ffffff;
-  filter: drop-shadow(4px 4px 20px rgba(58, 58, 58, 0.61));
-  border: 1px solid rgba(117, 117, 117, 0.003);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 69px 0 49px 0;
-
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -117,76 +106,34 @@ const Cont = styled.div`
                                   supported by Chrome, Edge, Opera and Firefox */
 `;
 
-const Title = styled.div`
-  width: 90%;
-  max-width: 395px;
-  font-family: General Sans;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 32px;
-  margin: 0 0 26px 0;
-`;
-
-const Label = styled.div`
-  width: 90%;
-  max-width: 395px;
-  font-family: General Sans;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 22px;
-  margin: 0 0 9px 0;
-`;
-
-const Input = styled.input`
-  height: 46px;
-  width: 90%;
-  max-width: 395px;
-  border: 0.5px solid #000000;
-  box-sizing: border-box;
-  border-radius: 10px;
-  margin: 0 0 22px 0;
+const Dropdown = styled.div`
   background: #ffffff;
-  padding: 0 18px;
-  font-family: General Sans;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 16px;
-  letter-spacing: 0em;
-  text-align: left;
-`;
-
-const Drowpdown = styled.div`
-  height: 46px;
-  width: 90%;
-  max-width: 395px;
-  border: 0.5px solid #000000;
-  box-sizing: border-box;
+  box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   border-radius: 10px;
-  padding: 0 18px;
-  font-family: General Sans;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 16px;
-  letter-spacing: 0em;
-  text-align: left;
-  margin: 0 0 12px 0;
+  height: 50px;
+  width: 230px;
+  padding: 0 21px 0 29px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: General Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  color: #000000;
   cursor: pointer;
 `;
 
 const DrowpdownBox = styled.div`
   min-height: 162px;
   height: auto;
-  width: 395px;
-  width: 90%;
+  width: 460px;
   max-width: 395px;
-  border: 0.5px solid #000000;
+  background: #ffffff;
+  margin: 24px 0 0 0;
+  box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
+  border-radius: 10px;
   box-sizing: border-box;
   border-radius: 10px;
   padding: 12px 18px 36px 18px;
@@ -200,6 +147,7 @@ const DrowpdownBox = styled.div`
   position: relative;
   z-index: 100;
   background: #ffffff;
+  position: absolute;
 `;
 
 const CategoryCont = styled.div`
@@ -240,23 +188,17 @@ const ShowAll = styled.div`
   bottom: 12px;
 `;
 
-const AddButton = styled.div`
-  width: 121px;
-  height: 41px;
-  background: #ffc403;
-  border-radius: 10px;
-  cursor: pointer;
+const Clear = styled.div`
   font-family: General Sans;
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
-  line-height: 22px;
-  color: #000000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 14px;
+  line-height: 19px;
+  color: #ffc403;
+  cursor: pointer;
   position: absolute;
-  bottom: 49px;
+  left: 18px;
+  bottom: 12px;
 `;
 
 const Icon = styled.div`
