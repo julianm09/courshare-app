@@ -1,13 +1,11 @@
 import styled from "styled-components";
-import CourseDetailCard from "@/components/CourseDetailCard";
 
 export default function Juhee() {
   return (
     <Cont>
       {/* make components here */}
-      <CourseDetailCard></CourseDetailCard>
     </Cont>
-  );
+  )
 }
 
 const Cont = styled.div`
@@ -15,4 +13,4 @@ const Cont = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
-`;
+`
