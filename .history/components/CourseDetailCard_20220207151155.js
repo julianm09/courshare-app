@@ -130,7 +130,12 @@ export default function CourseDetailCard({
         </SecondCont>
         <ThirdCont>
           <Heading2>Skills</Heading2>
-          <Desc>{skills}</Desc>
+          <Desc>
+            3d modeling • 3d lookup table • autodesk 3ds max • 3D Printing •
+            Mechanical Engineering • sketchup • Scaling • Computer-aided design
+            • Civil Engineering • mirror physical-science-and-engineering •
+            mechanical-engineering
+          </Desc>
         </ThirdCont>
       </ContentCont>
     </BigCont>
