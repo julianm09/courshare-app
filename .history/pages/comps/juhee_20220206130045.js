@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import CourseDetailCard from "@/components/CourseDetailCard";
 
 export default function Juhee() {
   return (
