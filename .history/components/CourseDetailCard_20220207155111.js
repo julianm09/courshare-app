@@ -89,7 +89,7 @@ export default function CourseDetailCard({
   description = "",
   skills = "",
 }) {
-  const [value, setValue] = React.useState(4);
+  const [value, setValue] = React.useState(5);
   return (
     <BigCont>
       <ButtonCont>

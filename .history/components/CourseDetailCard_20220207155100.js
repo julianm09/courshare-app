@@ -89,7 +89,7 @@ export default function CourseDetailCard({
   description = "",
   skills = "",
 }) {
-  const [value, setValue] = React.useState(4);
+  const [value, setValue] = React.useState(2);
   return (
     <BigCont>
       <ButtonCont>
@@ -121,7 +121,7 @@ export default function CourseDetailCard({
             </RightSmallCont>
             <RightSmallCont
               sx={{
-                "& > legend": { mt: 2 },
+                "& > legend": { mt: 5 },
               }}
             >
               <div

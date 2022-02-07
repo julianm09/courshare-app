@@ -77,7 +77,6 @@ const Heading2 = styled.p`
 `;
 const Desc = styled.p`
   font-size: 14px;
-  margin-left: 20px;
 `;
 const ThirdCont = styled.div``;
 
@@ -89,7 +88,7 @@ export default function CourseDetailCard({
   description = "",
   skills = "",
 }) {
-  const [value, setValue] = React.useState(4);
+  const [value, setValue] = React.useState(2);
   return (
     <BigCont>
       <ButtonCont>
@@ -124,24 +123,16 @@ export default function CourseDetailCard({
                 "& > legend": { mt: 2 },
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <RightSmallCont>
                 <Rating
-                  size="small"
-                  name="read-only"
+                  name="simple-controlled"
                   value={value}
                   onChange={(event, newValue) => {
                     setValue(newValue);
                   }}
                 />
                 <Desc>{rating}</Desc>
-              </div>
+              </RightSmallCont>
               <Desc>{difficulty}</Desc>
             </RightSmallCont>
             <RightSmallCont>

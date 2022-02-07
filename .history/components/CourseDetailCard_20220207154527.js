@@ -1,4 +1,3 @@
-import * as React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import Favorite from "@mui/icons-material/Favorite";
@@ -77,7 +76,6 @@ const Heading2 = styled.p`
 `;
 const Desc = styled.p`
   font-size: 14px;
-  margin-left: 20px;
 `;
 const ThirdCont = styled.div``;
 
@@ -89,7 +87,7 @@ export default function CourseDetailCard({
   description = "",
   skills = "",
 }) {
-  const [value, setValue] = React.useState(4);
+  const [value, setValue] = React.useState(2);
   return (
     <BigCont>
       <ButtonCont>
@@ -124,24 +122,14 @@ export default function CourseDetailCard({
                 "& > legend": { mt: 2 },
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
+              <Rating
+                name="simple-controlled"
+                value={value}
+                onChange={(event, newValue) => {
+                  setValue(newValue);
                 }}
-              >
-                <Rating
-                  size="small"
-                  name="read-only"
-                  value={value}
-                  onChange={(event, newValue) => {
-                    setValue(newValue);
-                  }}
-                />
-                <Desc>{rating}</Desc>
-              </div>
+              />
+              <Desc>{rating}</Desc>
               <Desc>{difficulty}</Desc>
             </RightSmallCont>
             <RightSmallCont>

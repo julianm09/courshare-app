@@ -1,4 +1,3 @@
-import * as React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import Favorite from "@mui/icons-material/Favorite";
@@ -7,7 +6,6 @@ import { Checkbox } from "@mui/material";
 import RegisterButton from "../components/RegisterButton";
 import { yellow } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
-import Rating from "@mui/material/Rating";
 
 const BigCont = styled.div`
   display: flex;
@@ -46,7 +44,7 @@ const Img = styled.img`
 const Heading1 = styled.p`
   font-size: 24px;
   margin: 0;
-  font-weight: 450;
+  font-weight: 400;
 `;
 
 const GreyText = styled.p`
@@ -73,11 +71,10 @@ const SecondCont = styled.div`
 `;
 const Heading2 = styled.p`
   font-size: 20px;
-  font-weight: 450;
+  font-weight: 400;
 `;
 const Desc = styled.p`
   font-size: 14px;
-  margin-left: 20px;
 `;
 const ThirdCont = styled.div``;
 
@@ -89,7 +86,6 @@ export default function CourseDetailCard({
   description = "",
   skills = "",
 }) {
-  const [value, setValue] = React.useState(4);
   return (
     <BigCont>
       <ButtonCont>
@@ -119,29 +115,8 @@ export default function CourseDetailCard({
             <RightSmallCont>
               <GreyText>{school}</GreyText>
             </RightSmallCont>
-            <RightSmallCont
-              sx={{
-                "& > legend": { mt: 2 },
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Rating
-                  size="small"
-                  name="read-only"
-                  value={value}
-                  onChange={(event, newValue) => {
-                    setValue(newValue);
-                  }}
-                />
-                <Desc>{rating}</Desc>
-              </div>
+            <RightSmallCont>
+              <Desc>{rating}</Desc>
               <Desc>{difficulty}</Desc>
             </RightSmallCont>
             <RightSmallCont>

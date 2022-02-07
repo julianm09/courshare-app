@@ -89,7 +89,7 @@ export default function CourseDetailCard({
   description = "",
   skills = "",
 }) {
-  const [value, setValue] = React.useState(4);
+  const [value, setValue] = React.useState(2);
   return (
     <BigCont>
       <ButtonCont>
@@ -133,8 +133,7 @@ export default function CourseDetailCard({
                 }}
               >
                 <Rating
-                  size="small"
-                  name="read-only"
+                  name="simple-controlled"
                   value={value}
                   onChange={(event, newValue) => {
                     setValue(newValue);
