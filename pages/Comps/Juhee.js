@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Juhee() {
+export default function juhee() {
   return (
     <Cont>
       {/* make components here */}

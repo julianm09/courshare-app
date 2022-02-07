@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Evie() {
+export default function evie() {
   return (
     <Cont>
       {/* make components here */}
