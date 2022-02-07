@@ -4,9 +4,7 @@ const AddCurr = styled.button`
   width: 200x;
   height: 29px;
   background-color: ${(props) => props.background};
-  border-radius: 5px;
-  border: 1px solid;
-  border-color: #ffecad;
+  border-radius: 20px;
   font-family: General Sans;
   font-style: normal;
   font-weight: normal;

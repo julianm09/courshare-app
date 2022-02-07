@@ -56,13 +56,7 @@ const Category = styled.div`
 
 const SortDropdown = ({
   text = "Sort by",
-  sort = [
-    "A to Z",
-    "Level (ascending)",
-    "Level (descending)",
-    "Ratings (ascending)",
-    "Ratings (descending)",
-  ],
+  sort = ["A to Z", "Level (a)", "Level (d)", "Ratings (a)", "Ratings (d)"],
   handleSort = () => console.log("sort"),
 }) => {
   const [open, setOpen] = useState(false);

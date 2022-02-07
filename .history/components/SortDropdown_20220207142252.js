@@ -61,7 +61,7 @@ const SortDropdown = ({
     "Level (ascending)",
     "Level (descending)",
     "Ratings (ascending)",
-    "Ratings (descending)",
+    "Ratings (d)",
   ],
   handleSort = () => console.log("sort"),
 }) => {

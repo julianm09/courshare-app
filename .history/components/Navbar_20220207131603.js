@@ -8,7 +8,7 @@ export default function Navbar({}) {
   const [menu, setMenu] = useState(false);
 
   const handleLink = (t) => {
-    setMenu(false);
+    setMenu(false)
     r.push(t);
   };
 
@@ -110,7 +110,7 @@ const LinkUI = styled.div`
   cursor: pointer;
   font-family: General Sans;
   font-style: normal;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 24px;
   color: #8b8b8b;
   color: ${(props) => (props.selected ? "#595959" : "#8B8B8B")};
