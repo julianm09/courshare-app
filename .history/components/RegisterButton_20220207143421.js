@@ -10,8 +10,8 @@ const RegisterBtn = styled.button`
   border: none;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: center；
+  align-items:center;
 `;
 const Header = styled.div`
   font-family: General Sans;

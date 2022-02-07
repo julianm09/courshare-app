@@ -10,8 +10,8 @@ import CloseIcon from "@mui/icons-material/Close";
 const BigCont = styled.div`
   display: flex;
   flex-direction: column;
-  width: 956px;
-  height: 776px;
+  width: 856px;
+  height: 676px;
   background-color: #ffffff;
   box-shadow: 0px 2px 8px 0px rgba(185, 185, 185, 0.52);
   border-radius: 20px;
@@ -89,9 +89,7 @@ export default function CourseDetailCard({
   return (
     <BigCont>
       <ButtonCont>
-        <button style={{ border: "none", background: "none" }}>
-          <CloseIcon />
-        </button>
+        <CloseIcon />
       </ButtonCont>
       <ContentCont>
         <FristCont>

@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
-const RegisterBtn = styled.button`
+const RegisterBtn = styled.div`
   width: 166px;
   height: 57px;
   background-color: ${(props) => props.background};
   color: #000000;
-  filter: drop-shadow(0px 2px 8px rgba(185, 185, 185, 0.52));
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 10px;
   border: none;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: center；
+  align-itmes:center;
 `;
 const Header = styled.div`
   font-family: General Sans;
@@ -21,6 +21,7 @@ const Header = styled.div`
   color: #000000;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 10px;
 `;
 
 const Text = styled.div`
@@ -31,7 +32,7 @@ font-size: 12px;
 color: #000000;
 margin-left: auto;
 margin-right: auto;
-
+margin-top: 5px;
 }
 `;
 

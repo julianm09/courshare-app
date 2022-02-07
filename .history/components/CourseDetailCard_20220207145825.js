@@ -2,10 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import { Checkbox } from "@mui/material";
 import RegisterButton from "../components/RegisterButton";
-import { yellow } from "@mui/material/colors";
-import CloseIcon from "@mui/icons-material/Close";
 
 const BigCont = styled.div`
   display: flex;
@@ -23,7 +20,15 @@ const ButtonCont = styled.div`
   margin-right: 20px;
   margin-top: 20px;
 `;
-
+const XButton = styled.button`
+  border: none;
+  background-color: #fff;
+  border-radius: 20px;
+  width: 30px;
+  height: 30px;
+  color: #000;
+  font-size: 22px;
+`;
 const ContentCont = styled.div`
   display: flex;
   flex-direction: column;
@@ -89,9 +94,7 @@ export default function CourseDetailCard({
   return (
     <BigCont>
       <ButtonCont>
-        <button style={{ border: "none", background: "none" }}>
-          <CloseIcon />
-        </button>
+        <XButton>x</XButton>
       </ButtonCont>
       <ContentCont>
         <FristCont>
@@ -103,9 +106,9 @@ export default function CourseDetailCard({
               <Heading1>{name}</Heading1>
               <Checkbox
                 sx={{
-                  color: yellow[800],
+                  color: teal[800],
                   "&.Mui-checked": {
-                    color: yellow[600],
+                    color: teal[600],
                   },
                 }}
                 icon={<FavoriteBorder />}

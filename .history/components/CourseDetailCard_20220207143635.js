@@ -1,12 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
-import Favorite from "@mui/icons-material/Favorite";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import { Checkbox } from "@mui/material";
+import Heart from "../public/icons/heart.svg";
 import RegisterButton from "../components/RegisterButton";
-import { yellow } from "@mui/material/colors";
-import CloseIcon from "@mui/icons-material/Close";
-
 const BigCont = styled.div`
   display: flex;
   flex-direction: column;
@@ -15,7 +10,6 @@ const BigCont = styled.div`
   background-color: #ffffff;
   box-shadow: 0px 2px 8px 0px rgba(185, 185, 185, 0.52);
   border-radius: 20px;
-  font-family: General Sans;
 `;
 const ButtonCont = styled.div`
   display: flex;
@@ -23,7 +17,15 @@ const ButtonCont = styled.div`
   margin-right: 20px;
   margin-top: 20px;
 `;
-
+const XButton = styled.button`
+  border: none;
+  background-color: #fff;
+  border-radius: 20px;
+  width: 30px;
+  height: 30px;
+  color: #000;
+  font-size: 22px;
+`;
 const ContentCont = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,7 +45,6 @@ const Img = styled.img`
 `;
 const Heading1 = styled.p`
   font-size: 24px;
-  margin: 0;
   font-weight: 500;
 `;
 
@@ -53,18 +54,13 @@ const GreyText = styled.p`
 `;
 const RightCont = styled.div`
   height: 245px;
-  margin-left: 60px;
-  display: flex;
-  flex-direction: column;
-  align-items: space-between;
+  margin-left: 40px;
+  justify-content: space-between;
 `;
 const RightSmallCont = styled.div`
-  width: 350px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5%;
 `;
 const SecondCont = styled.div`
   margin-top: 20px;
@@ -89,9 +85,7 @@ export default function CourseDetailCard({
   return (
     <BigCont>
       <ButtonCont>
-        <button style={{ border: "none", background: "none" }}>
-          <CloseIcon />
-        </button>
+        <XButton>x</XButton>
       </ButtonCont>
       <ContentCont>
         <FristCont>
@@ -101,16 +95,6 @@ export default function CourseDetailCard({
           <RightCont>
             <RightSmallCont>
               <Heading1>{name}</Heading1>
-              <Checkbox
-                sx={{
-                  color: yellow[800],
-                  "&.Mui-checked": {
-                    color: yellow[600],
-                  },
-                }}
-                icon={<FavoriteBorder />}
-                checkedIcon={<Favorite />}
-              />
             </RightSmallCont>
             <RightSmallCont>
               <GreyText>{school}</GreyText>

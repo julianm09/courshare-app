@@ -10,8 +10,8 @@ const RegisterBtn = styled.button`
   border: none;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: center；
+  align-itmes:center;
 `;
 const Header = styled.div`
   font-family: General Sans;
@@ -21,6 +21,7 @@ const Header = styled.div`
   color: #000000;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 10px;
 `;
 
 const Text = styled.div`
@@ -31,7 +32,7 @@ font-size: 12px;
 color: #000000;
 margin-left: auto;
 margin-right: auto;
-
+margin-top: 5px;
 }
 `;
 

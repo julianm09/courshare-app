@@ -89,9 +89,7 @@ export default function CourseDetailCard({
   return (
     <BigCont>
       <ButtonCont>
-        <button style={{ border: "none", background: "none" }}>
-          <CloseIcon />
-        </button>
+        <CloseIcon />
       </ButtonCont>
       <ContentCont>
         <FristCont>
