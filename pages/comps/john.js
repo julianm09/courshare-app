@@ -1,9 +1,14 @@
+import AddedBadge from "@/components/AddedBadge";
+import ExploreButton from "@/components/ExploreButton";
+import SortDropdown from "@/components/SortDropdown";
 import styled from "styled-components";
 
 export default function John() {
   return (
     <Cont>
-      {/* make components here */}
+      <AddedBadge/>
+      <ExploreButton/>
+      <SortDropdown/>
     </Cont>
   )
 }
