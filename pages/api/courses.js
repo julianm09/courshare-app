@@ -2,9 +2,7 @@ import coursera from "@/utils/coursera.json";
 const ogs = require("open-graph-scraper");
 
 export default function handler(req, res) {
-
-  const numCourses = 2  
-
+  const numCourses = 2;
 
   const courses = coursera.slice(0, numCourses);
 
@@ -35,9 +33,10 @@ export default function handler(req, res) {
   };
 
   const images = getImages(courses).then((r) => {
-    console.log(r)
-    return r;
+    console.log(r);
+ 
+    res.status(200).json(r);
   });
 
-  res.status(200).json(images);
+  
 }
