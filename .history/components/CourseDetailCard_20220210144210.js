@@ -7,6 +7,7 @@ import { Checkbox } from "@mui/material";
 import RegisterButton from "../components/RegisterButton";
 import { yellow } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
+import Rating from "@mui/material/Rating";
 import RatingStars from "./RatingStars";
 
 const BigCont = styled.div`

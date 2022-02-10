@@ -34,22 +34,24 @@ const ButtonCont = styled.div`
   justify-content: space-between;
 `;
 
-const useStyles = makeStyles((theme) => ({
-  indicator: {
-    backgroundColor: "#FFC403",
-    height: "10px",
-    top: "45px",
+const useStyles = makeStyles({
+  root: {
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    border: 0,
+    borderRadius: 3,
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    color: "white",
+    height: 48,
+    padding: "0 30px",
   },
-  textColor: {
-    color: "#FFC403",
-  },
-}));
+});
+
 export default function FilterBar({}) {
   const [value, setValue] = React.useState("one");
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const classes = useStyles();
 
   return (
     <BigCont>
@@ -57,11 +59,12 @@ export default function FilterBar({}) {
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="#FFC403"
+          textColor="secondary"
+          indicatorColor="secondary"
           aria-label="secondary tabs example"
-          TabIndicatorProps={{ className: classes.indicator }}
+          className={classes.tabs}
         >
-          <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
+          <Tab value="One" label="Courses" />
           <Tab value="two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
       </TopCont>

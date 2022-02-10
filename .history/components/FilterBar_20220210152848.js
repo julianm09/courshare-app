@@ -39,8 +39,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FFC403",
     height: "10px",
     top: "45px",
-  },
-  textColor: {
     color: "#FFC403",
   },
 }));
@@ -57,9 +55,9 @@ export default function FilterBar({}) {
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="#FFC403"
           aria-label="secondary tabs example"
           TabIndicatorProps={{ className: classes.indicator }}
+          TabTextColorProps={{ className: classes.textcolor }}
         >
           <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
           <Tab value="two" label="Curriculums" style={{ marginLeft: 30 }} />

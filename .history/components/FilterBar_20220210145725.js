@@ -5,7 +5,7 @@ import Tabs from "@mui/material/Tabs";
 import { useState } from "react";
 import FilterDropdown from "@/components/FilterDropdown";
 import FilterDropdownSingle from "@/components/FilterDropdownSingle";
-import { makeStyles } from "@mui/styles";
+import { makeStyles } from '@mui/styles';
 
 const BigCont = styled.div`
   width: 971px;
@@ -34,34 +34,34 @@ const ButtonCont = styled.div`
   justify-content: space-between;
 `;
 
-const useStyles = makeStyles((theme) => ({
-  indicator: {
-    backgroundColor: "#FFC403",
-    height: "10px",
-    top: "45px",
-  },
-  textColor: {
-    color: "#FFC403",
-  },
-}));
 export default function FilterBar({}) {
   const [value, setValue] = React.useState("one");
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const classes = useStyles();
 
+  
+  tabs: {
+
+    "& .MuiTabs-indicator": {
+      display: "none"
+      //backgroundColor: "orange"
+    }
+  
+  }
   return (
     <BigCont>
       <TopCont>
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="#FFC403"
+          textColor="secondary"
+          indicatorColor="secondary"
           aria-label="secondary tabs example"
-          TabIndicatorProps={{ className: classes.indicator }}
+          className={classes.tabs}
         >
-          <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
+          <Tab value="One" label="Courses" />
           <Tab value="two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
       </TopCont>

@@ -34,18 +34,20 @@ const ButtonCont = styled.div`
   justify-content: space-between;
 `;
 
-const useStyles = makeStyles((theme) => ({
-  indicator: {
-    backgroundColor: "#FFC403",
-    height: "10px",
-    top: "45px",
+const useStyles = makeStyles({
+  tabs: {
+    "& .MuiTabs-indicator": {
+      backgroundColor: "orange",
+      height: 3,
+    },
+    "& .MuiTab-root.Mui-selected": {
+      color: "red",
+    },
   },
-  textColor: {
-    color: "#FFC403",
-  },
-}));
+});
 export default function FilterBar({}) {
   const [value, setValue] = React.useState("one");
+  const classes = useStyles();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -57,11 +59,11 @@ export default function FilterBar({}) {
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="#FFC403"
+          textColor="secondary"
           aria-label="secondary tabs example"
-          TabIndicatorProps={{ className: classes.indicator }}
+          indicatorColor="primary"
         >
-          <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
+          <Tab className={styles.tabs} value="One" label="Courses" />
           <Tab value="two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
       </TopCont>

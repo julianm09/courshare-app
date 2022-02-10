@@ -40,9 +40,6 @@ const useStyles = makeStyles((theme) => ({
     height: "10px",
     top: "45px",
   },
-  textColor: {
-    color: "#FFC403",
-  },
 }));
 export default function FilterBar({}) {
   const [value, setValue] = React.useState("one");

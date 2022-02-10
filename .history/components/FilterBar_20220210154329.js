@@ -57,7 +57,6 @@ export default function FilterBar({}) {
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="#FFC403"
           aria-label="secondary tabs example"
           TabIndicatorProps={{ className: classes.indicator }}
         >

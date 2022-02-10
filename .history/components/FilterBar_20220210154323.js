@@ -35,14 +35,21 @@ const ButtonCont = styled.div`
 `;
 
 const useStyles = makeStyles((theme) => ({
-  indicator: {
-    backgroundColor: "#FFC403",
-    height: "10px",
-    top: "45px",
+  customTabRoot: {
+    color: "red",
   },
-  textColor: {
-    color: "#FFC403",
+  customTabIndicator: {
+    backgroundColor: "yellow",
+    color: "yellow",
   },
+  // indicator: {
+  //   backgroundColor: "#FFC403",
+  //   height: "10px",
+  //   top: "45px",
+  // },
+  // textColor: {
+  //   color: "#FFC403",
+  // },
 }));
 export default function FilterBar({}) {
   const [value, setValue] = React.useState("one");
@@ -57,7 +64,6 @@ export default function FilterBar({}) {
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="#FFC403"
           aria-label="secondary tabs example"
           TabIndicatorProps={{ className: classes.indicator }}
         >

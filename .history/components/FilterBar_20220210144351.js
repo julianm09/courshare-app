@@ -5,7 +5,6 @@ import Tabs from "@mui/material/Tabs";
 import { useState } from "react";
 import FilterDropdown from "@/components/FilterDropdown";
 import FilterDropdownSingle from "@/components/FilterDropdownSingle";
-import { makeStyles } from "@mui/styles";
 
 const BigCont = styled.div`
   width: 971px;
@@ -34,34 +33,42 @@ const ButtonCont = styled.div`
   justify-content: space-between;
 `;
 
-const useStyles = makeStyles((theme) => ({
-  indicator: {
-    backgroundColor: "#FFC403",
-    height: "10px",
-    top: "45px",
-  },
-  textColor: {
-    color: "#FFC403",
-  },
-}));
 export default function FilterBar({}) {
   const [value, setValue] = React.useState("one");
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const classes = useStyles();
 
+  render: function() {
+
+    var styles = {
+      default_tab:{
+        color: Colors.grey500,
+        backgroundColor: Colors.grey50,
+        fontWeight: 400,
+      },
+      active_tab:{
+        color: Colors.deepOrange700,
+      }
+    }
+  
+    styles.tab = []
+    styles.tab[0] = styles.default_tab;
+    styles.tab[1] = styles.default_tab;
+    styles.tab[2] = styles.default_tab;
+    styles.tab[this.state.slideIndex] = objectAssign({},   styles.tab[this.state.slideIndex], styles.active_tab);
   return (
     <BigCont>
       <TopCont>
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="#FFC403"
+          textColor="secondary"
+          indicatorColor="secondary"
           aria-label="secondary tabs example"
-          TabIndicatorProps={{ className: classes.indicator }}
         >
-          <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
+          <Tab value="One" label="Courses" />
           <Tab value="two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
       </TopCont>

@@ -34,14 +34,15 @@ const ButtonCont = styled.div`
   justify-content: space-between;
 `;
 
-const useStyles = makeStyles((theme) => ({
-  indicator: {
-    backgroundColor: "#FFC403",
-    height: "10px",
-    top: "45px",
-  },
-  textColor: {
-    color: "#FFC403",
+const useStyles = makeStyles(() => ({
+  tabs: {
+    "& .MuiTabs-indicator": {
+      backgroundColor: "yellow",
+      height: 3,
+    },
+    "& .MuiTab-root.Mui-selected": {
+      color: "yellow",
+    },
   },
 }));
 export default function FilterBar({}) {
@@ -54,13 +55,7 @@ export default function FilterBar({}) {
   return (
     <BigCont>
       <TopCont>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          textColor="#FFC403"
-          aria-label="secondary tabs example"
-          TabIndicatorProps={{ className: classes.indicator }}
-        >
+        <Tabs value={value} onChange={handleChange}>
           <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
           <Tab value="two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>

@@ -7,6 +7,7 @@ import { Checkbox } from "@mui/material";
 import RegisterButton from "../components/RegisterButton";
 import { yellow } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
+import Rating from "@mui/material/Rating";
 import RatingStars from "./RatingStars";
 
 const BigCont = styled.div`
@@ -119,7 +120,11 @@ export default function CourseDetailCard({
             <RightSmallCont>
               <GreyText>{school}</GreyText>
             </RightSmallCont>
-            <RightSmallCont>
+            <RightSmallCont
+              sx={{
+                "& > legend": { mt: 2 },
+              }}
+            >
               <div
                 style={{
                   display: "flex",
@@ -128,6 +133,14 @@ export default function CourseDetailCard({
                   alignItems: "center",
                 }}
               >
+                {/* <Rating
+                  size="small"
+                  name="read-only"
+                  value={value}
+                  onChange={(event, newValue) => {
+                    setValue(newValue);
+                  }}
+                /> */}
                 <RatingStars />
                 <Desc>{rating}</Desc>
               </div>

@@ -36,12 +36,9 @@ const ButtonCont = styled.div`
 
 const useStyles = makeStyles((theme) => ({
   indicator: {
-    backgroundColor: "#FFC403",
+    backgroundColor: "",
     height: "10px",
     top: "45px",
-  },
-  textColor: {
-    color: "#FFC403",
   },
 }));
 export default function FilterBar({}) {
@@ -57,7 +54,6 @@ export default function FilterBar({}) {
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="#FFC403"
           aria-label="secondary tabs example"
           TabIndicatorProps={{ className: classes.indicator }}
         >

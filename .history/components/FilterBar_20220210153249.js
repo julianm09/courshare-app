@@ -39,10 +39,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FFC403",
     height: "10px",
     top: "45px",
-  },
-  textColor: {
-    color: "#FFC403",
-  },
+  }, textcolor:{
+    color:"#FFC403"
+  }
 }));
 export default function FilterBar({}) {
   const [value, setValue] = React.useState("one");
@@ -57,8 +56,8 @@ export default function FilterBar({}) {
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="#FFC403"
           aria-label="secondary tabs example"
+          textColor=
           TabIndicatorProps={{ className: classes.indicator }}
         >
           <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
