@@ -43,7 +43,8 @@ const Source = styled.div`
     color: #aaa;
 `
 const Rating = styled.div`
-    
+display: flex;
+align-items: center;
 `
 
 const Challenge = styled.div`
