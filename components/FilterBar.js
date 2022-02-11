@@ -34,22 +34,15 @@ const ButtonCont = styled.div`
   justify-content: space-between;
 `;
 
-const useStyles = makeStyles((theme) => ({
-  indicator: {
-    backgroundColor: "#FFC403",
-    height: "10px",
-    top: "45px",
-  },
-  textColor: {
-    color: "#FFC403",
-  },
-}));
-export default function FilterBar({}) {
-  const [value, setValue] = React.useState("one");
+
+export default function FilterBar({ value, setValue }) {
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   const classes = useStyles();
+
 
   return (
     <BigCont>
