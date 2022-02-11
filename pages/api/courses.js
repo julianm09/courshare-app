@@ -1,42 +1,23 @@
 import coursera from "@/utils/coursera.json";
 const ogs = require("open-graph-scraper");
+import { filtering } from "@/utils/functions/filter";
 
 export default function handler(req, res) {
-  const numCourses = 2;
 
-  const courses = coursera.slice(0, numCourses);
+  const courses = coursera
 
-  const loopArray = (arr) => {
-    const newArr = [];
-
+  const getOgImages = (arr) => {
     return new Promise((resolve) => {
-      arr.forEach((element) => {
-        const options = { url: element["Course URL"] };
-        ogs(options, (error, results, response) => {
-          element["Image"] = results.ogImage.url;
-          newArr.push(element);
-          if (newArr.length >= numCourses) {
-            resolve(newArr);
-          }
-        });
-      });
+      console.log(arr.length)
+      resolve(arr);
     });
   };
 
-  const getImages = async (courses) => {
+  getOgImages(courses).then((r) => {
     try {
-      var x = await loopArray(courses);
-      return x;
+      res.status(200).json(r);
     } catch (error) {
       console.log("Error", error);
     }
-  };
-
-  const images = getImages(courses).then((r) => {
-    console.log(r);
- 
-    res.status(200).json(r);
   });
-
-  
 }

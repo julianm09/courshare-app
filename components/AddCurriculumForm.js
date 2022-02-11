@@ -3,6 +3,7 @@ import { useState } from "react";
 import Checkbox from "./Checkbox";
 
 export default function AddCurriculumForm({
+  setAddCurriculum,
   name = "",
   categories = [
     "Design and Product",
@@ -49,50 +50,64 @@ export default function AddCurriculumForm({
   };
 
   return (
-    <Cont>
-      <Title>Add curriculum</Title>
-      <Label>Name</Label>
-      <Input />
-      <Label>Category</Label>
-      <Drowpdown onClick={() => setShowCategory(!showCategory)}>
-        Select your curriculum category
-        <Icon>
-          {showCategory ? (
-            <img src="/icons/up-caret.svg" />
-          ) : (
-            <img src="/icons/down-caret.svg" />
-          )}
-        </Icon>
-      </Drowpdown>
-      {showCategory ? (
-        <DrowpdownBox>
-          <CategoryCont>
-            {categories.slice(0, showAll ? 32 : 8).map((x) => (
-              <Category>
-                <Checkbox
-                  handleSelect={handleSelect}
-                  x={x}
-                  setSelected={setSelected}
-                  selected={selected}
-                />
-                <div>{x}</div>
-              </Category>
-            ))}
-          </CategoryCont>
-          {showAll ? (
-            <ShowAll onClick={() => setShowAll(!showAll)}>Show Less</ShowAll>
-          ) : (
-            <ShowAll onClick={() => setShowAll(!showAll)}>Show All</ShowAll>
-          )}
-        </DrowpdownBox>
-      ) : (
-        <></>
-      )}
+    <Overlay onClick={() => setAddCurriculum(false)}>
+      <Cont onClick={(e) => e.stopPropagation() }>
+        <Title>Add curriculum</Title>
+        <Label>Name</Label>
+        <Input />
+        <Label>Category</Label>
+        <Drowpdown onClick={() => setShowCategory(!showCategory)}>
+          Select your curriculum category
+          <Icon>
+            {showCategory ? (
+              <img src="/icons/up-caret.svg" />
+            ) : (
+              <img src="/icons/down-caret.svg" />
+            )}
+          </Icon>
+        </Drowpdown>
+        {showCategory ? (
+          <DrowpdownBox>
+            <CategoryCont>
+              {categories.slice(0, showAll ? 32 : 8).map((x) => (
+                <Category>
+                  <Checkbox
+                    handleSelect={handleSelect}
+                    x={x}
+                    setSelected={setSelected}
+                    selected={selected}
+                  />
+                  <div>{x}</div>
+                </Category>
+              ))}
+            </CategoryCont>
+            {showAll ? (
+              <ShowAll onClick={() => setShowAll(!showAll)}>Show Less</ShowAll>
+            ) : (
+              <ShowAll onClick={() => setShowAll(!showAll)}>Show All</ShowAll>
+            )}
+          </DrowpdownBox>
+        ) : (
+          <></>
+        )}
 
-      <AddButton>Add</AddButton>
-    </Cont>
+        <AddButton>Add</AddButton>
+      </Cont>
+    </Overlay>
   );
 }
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.74);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Cont = styled.div`
   width: 100%;

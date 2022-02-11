@@ -33,12 +33,12 @@ const ButtonCont = styled.div`
   justify-content: space-between;
 `;
 
-export default function FilterBar({}) {
-  const [value, setValue] = React.useState("one");
+export default function FilterBar({ value, setValue }) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <BigCont>
       <TopCont>
