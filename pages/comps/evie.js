@@ -1,9 +1,12 @@
 import styled from "styled-components";
+import RegisterButton from "@/components/RegisterButton";
+import AddCurriculum from "@/components/AddCurriculum";
 
 export default function Evie() {
   return (
     <Cont>
-      {/* make components here */}
+      <RegisterButton/>
+      <AddCurriculum/>
     </Cont>
   )
 }
