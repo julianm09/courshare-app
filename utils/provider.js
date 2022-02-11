@@ -2,7 +2,7 @@ import { useContext, createContext, useState } from "react";
 import { themes } from "./variables";
 //the variables you want to provide to all the pages/components wrapped around this provider
 const initialStates = {
-  theme: "dafault",
+  theme: "default",
   setTheme: () => {},
 };
 
