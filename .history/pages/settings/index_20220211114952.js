@@ -92,6 +92,7 @@ export default function Settings() {
             <RightCont>
               <Switch
                 color="secondary"
+                backgroundColor={theme === "dark" ? "default" : "dark"}
                 onClick={() => setTheme(theme === "dark" ? "default" : "dark")}
               />
             </RightCont>

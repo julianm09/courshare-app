@@ -1,5 +1,5 @@
 import { useContext, createContext, useState } from "react";
-import { themes } from "./variables";
+
 //the variables you want to provide to all the pages/components wrapped around this provider
 const initialStates = {
   theme: "dafault",
@@ -27,7 +27,3 @@ export default function AppProvider({ children }) {
 }
 
 //use the Context to create Hooks like useTheme
-export const useTheme = () => {
-  const { theme, setTheme } = useContext(MyContext);
-  return { theme, setTheme };
-};

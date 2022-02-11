@@ -74,7 +74,6 @@ export default function Settings() {
     inputProps: { "aria-label": item },
   });
 
-  const { theme, setTheme } = useTheme();
   return (
     <BigCont>
       <HeadingCont>
@@ -90,10 +89,7 @@ export default function Settings() {
               <BodyText>Night Mode</BodyText>
             </LeftCont>
             <RightCont>
-              <Switch
-                color="secondary"
-                onClick={() => setTheme(theme === "dark" ? "default" : "dark")}
-              />
+              <Switch color="secondary" />
             </RightCont>
           </RowCont>
         </Cont>

@@ -2,14 +2,12 @@ import "../styles/globals.css";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar";
-import AppProvider from "@/utils//provider";
-import "semantic-ui-css/semantic.min.css";
 
 function MyApp({ Component, pageProps }) {
   const r = useRouter();
   return (
-    <AppProvider>
-      <Navbar />
+    <>
+    <Navbar/>
       <Component {...pageProps} />
 
       <BotNav>
@@ -19,7 +17,7 @@ function MyApp({ Component, pageProps }) {
         <button onClick={() => r.push("/comps/juhee")}>Juhee</button>
         <button onClick={() => r.push("/comps/julian")}>Julian</button>
       </BotNav>
-    </AppProvider>
+    </>
   );
 }
 
