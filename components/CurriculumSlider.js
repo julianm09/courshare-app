@@ -143,7 +143,7 @@ export default function CurriculumSlider ({
                         {ratingCount1}
                     </Rating>
                     <Challenge>
-                        <DifficultyBar />
+                        <DifficultyBar difficulty="beginner"/>
                         {difficulty1}
                     </Challenge>
                 </InfoCont>
@@ -158,7 +158,7 @@ export default function CurriculumSlider ({
                         {ratingCount2}
                     </Rating>
                     <Challenge>
-                        <DifficultyBar />
+                        <DifficultyBar difficulty="beginner" />
                         {difficulty2}
                     </Challenge>
                 </InfoCont>
@@ -173,7 +173,7 @@ export default function CurriculumSlider ({
                         {ratingCount3}
                     </Rating>
                     <Challenge>
-                        <DifficultyBar />
+                        <DifficultyBar difficulty="intermediate" />
                         {difficulty3}
                     </Challenge>
                 </InfoCont>

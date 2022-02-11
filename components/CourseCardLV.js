@@ -77,7 +77,7 @@ export default function CourseCardLV ({
                         {ratingCount}
                     </Rating>
                     <Challenge>
-                        <DifficultyBar />
+                        <DifficultyBar difficulty="intermediate" />
                         {difficulty}
                     </Challenge>
                 </InfoCont>
