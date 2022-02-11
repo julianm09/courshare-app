@@ -41,7 +41,7 @@ export default function FilterBar({ value, setValue }) {
     setValue(newValue);
   };
 
-  const classes = useStyles();
+  const classes = makeStyles();
 
 
   return (
