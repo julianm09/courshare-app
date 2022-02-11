@@ -89,7 +89,7 @@ export default function Settings() {
               <BodyText>Night Mode</BodyText>
             </LeftCont>
             <RightCont>
-              <Switch color="secondary" />
+              <GreenSwitch />
             </RightCont>
           </RowCont>
         </Cont>

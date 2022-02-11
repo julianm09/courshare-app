@@ -4,9 +4,8 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import Divider from "@mui/material/Divider";
 import GridViewIcon from "@mui/icons-material/GridView";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-// import { yellow } from "@mui/material/colors";
-import Radio from "@mui/material/Radio";
 
 const BigCont = styled.div`
   width: 100vw;
@@ -51,29 +50,58 @@ const BodyText = styled.div`
   margin-left: 10px;
 `;
 
-// const GreenSwitch = styled(Switch)(({ theme }) => ({
-//   "& .MuiSwitch-switchBase.Mui-checked": {
-//     color: yellow[600],
-//   },
-//   "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-//     backgroundColor: yellow[600],
-//   },
-// }));
+const IOSSwitch = styled((props) => (
+  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+))(({ theme }) => ({
+  width: 42,
+  height: 26,
+  padding: 0,
+  "& .MuiSwitch-switchBase": {
+    padding: 0,
+    margin: 2,
+    transitionDuration: "300ms",
+    "&.Mui-checked": {
+      transform: "translateX(16px)",
+      color: "#fff",
+      "& + .MuiSwitch-track": {
+        backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
+        opacity: 1,
+        border: 0,
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: 0.5,
+      },
+    },
+    "&.Mui-focusVisible .MuiSwitch-thumb": {
+      color: "#33cf4d",
+      border: "6px solid #fff",
+    },
+    "&.Mui-disabled .MuiSwitch-thumb": {
+      color:
+        theme.palette.mode === "light"
+          ? theme.palette.grey[100]
+          : theme.palette.grey[600],
+    },
+    "&.Mui-disabled + .MuiSwitch-track": {
+      opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    boxSizing: "border-box",
+    width: 22,
+    height: 22,
+  },
+  "& .MuiSwitch-track": {
+    borderRadius: 26 / 2,
+    backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
+    opacity: 1,
+    transition: theme.transitions.create(["background-color"], {
+      duration: 500,
+    }),
+  },
+}));
 
 export default function Settings() {
-  const [selectedValue, setSelectedValue] = React.useState("a");
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-  };
-
-  const controlProps = (item) => ({
-    checked: selectedValue === item,
-    onChange: handleChange,
-    value: item,
-    name: "size-radio-button-demo",
-    inputProps: { "aria-label": item },
-  });
-
   return (
     <BigCont>
       <HeadingCont>
@@ -89,7 +117,9 @@ export default function Settings() {
               <BodyText>Night Mode</BodyText>
             </LeftCont>
             <RightCont>
-              <Switch color="secondary" />
+              <FormControlLabel
+                control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+              />
             </RightCont>
           </RowCont>
         </Cont>
@@ -98,23 +128,17 @@ export default function Settings() {
           <Heading2>View</Heading2>
           <RowCont>
             <LeftCont>
-              <FormatListBulletedIcon style={{ color: "#8c8c8c" }} />
-              <BodyText>List</BodyText>
-            </LeftCont>
-            <RightCont>
-              <Radio {...controlProps("a")} size="small" color="secondary" />
-            </RightCont>
-          </RowCont>
-          <RowCont>
-            <LeftCont>
               <GridViewIcon style={{ color: "#8c8c8c" }} />
               <BodyText>Grid</BodyText>
             </LeftCont>
-
-            <RightCont>
-              {" "}
-              <Radio {...controlProps("b")} size="small" color="secondary" />
-            </RightCont>
+            <RightCont></RightCont>
+          </RowCont>
+          <RowCont>
+            <LeftCont>
+              <FormatListBulletedIcon style={{ color: "#8c8c8c" }} />
+              <BodyText>List</BodyText>
+            </LeftCont>
+            <RightCont></RightCont>
           </RowCont>
         </Cont>
         <Divider light />

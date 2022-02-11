@@ -4,9 +4,10 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import Divider from "@mui/material/Divider";
 import GridViewIcon from "@mui/icons-material/GridView";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-// import { yellow } from "@mui/material/colors";
-import Radio from "@mui/material/Radio";
+import { green } from "@mui/material/colors";
+import { alpha, styled } from "@mui/material/styles";
 
 const BigCont = styled.div`
   width: 100vw;
@@ -51,29 +52,18 @@ const BodyText = styled.div`
   margin-left: 10px;
 `;
 
-// const GreenSwitch = styled(Switch)(({ theme }) => ({
-//   "& .MuiSwitch-switchBase.Mui-checked": {
-//     color: yellow[600],
-//   },
-//   "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-//     backgroundColor: yellow[600],
-//   },
-// }));
-
+const GreenSwitch = styled(Switch)(({ theme }) => ({
+  "& .MuiSwitch-switchBase.Mui-checked": {
+    color: green[600],
+    "&:hover": {
+      backgroundColor: alpha(green[600], theme.palette.action.hoverOpacity),
+    },
+  },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: green[600],
+  },
+}));
 export default function Settings() {
-  const [selectedValue, setSelectedValue] = React.useState("a");
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-  };
-
-  const controlProps = (item) => ({
-    checked: selectedValue === item,
-    onChange: handleChange,
-    value: item,
-    name: "size-radio-button-demo",
-    inputProps: { "aria-label": item },
-  });
-
   return (
     <BigCont>
       <HeadingCont>
@@ -89,7 +79,7 @@ export default function Settings() {
               <BodyText>Night Mode</BodyText>
             </LeftCont>
             <RightCont>
-              <Switch color="secondary" />
+              <GreenSwitch defaultChecked />
             </RightCont>
           </RowCont>
         </Cont>
@@ -98,23 +88,17 @@ export default function Settings() {
           <Heading2>View</Heading2>
           <RowCont>
             <LeftCont>
-              <FormatListBulletedIcon style={{ color: "#8c8c8c" }} />
-              <BodyText>List</BodyText>
-            </LeftCont>
-            <RightCont>
-              <Radio {...controlProps("a")} size="small" color="secondary" />
-            </RightCont>
-          </RowCont>
-          <RowCont>
-            <LeftCont>
               <GridViewIcon style={{ color: "#8c8c8c" }} />
               <BodyText>Grid</BodyText>
             </LeftCont>
-
-            <RightCont>
-              {" "}
-              <Radio {...controlProps("b")} size="small" color="secondary" />
-            </RightCont>
+            <RightCont></RightCont>
+          </RowCont>
+          <RowCont>
+            <LeftCont>
+              <FormatListBulletedIcon style={{ color: "#8c8c8c" }} />
+              <BodyText>List</BodyText>
+            </LeftCont>
+            <RightCont></RightCont>
           </RowCont>
         </Cont>
         <Divider light />

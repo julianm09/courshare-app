@@ -5,8 +5,9 @@ import Divider from "@mui/material/Divider";
 import GridViewIcon from "@mui/icons-material/GridView";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import Switch from "@mui/material/Switch";
-// import { yellow } from "@mui/material/colors";
+import { yellow } from "@mui/material/colors";
 import Radio from "@mui/material/Radio";
+import { styles } from "@mui/styles";
 
 const BigCont = styled.div`
   width: 100vw;
@@ -51,15 +52,14 @@ const BodyText = styled.div`
   margin-left: 10px;
 `;
 
-// const GreenSwitch = styled(Switch)(({ theme }) => ({
-//   "& .MuiSwitch-switchBase.Mui-checked": {
-//     color: yellow[600],
-//   },
-//   "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-//     backgroundColor: yellow[600],
-//   },
-// }));
-
+const GreenSwitch = styled(Switch)(({ theme }) => ({
+  "& .MuiSwitch-switchBase.Mui-checked": {
+    color: yellow[600],
+  },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: yellow[600],
+  },
+}));
 export default function Settings() {
   const [selectedValue, setSelectedValue] = React.useState("a");
   const handleChange = (event) => {
@@ -74,6 +74,16 @@ export default function Settings() {
     inputProps: { "aria-label": item },
   });
 
+  const styles = (theme) => ({
+    radio: {
+      "&$checked": {
+        color: "#CCC",
+      },
+    },
+    checked: {},
+  });
+
+  const classes = styles();
   return (
     <BigCont>
       <HeadingCont>
@@ -89,7 +99,7 @@ export default function Settings() {
               <BodyText>Night Mode</BodyText>
             </LeftCont>
             <RightCont>
-              <Switch color="secondary" />
+              <GreenSwitch />
             </RightCont>
           </RowCont>
         </Cont>
@@ -102,7 +112,11 @@ export default function Settings() {
               <BodyText>List</BodyText>
             </LeftCont>
             <RightCont>
-              <Radio {...controlProps("a")} size="small" color="secondary" />
+              <Radio
+                {...controlProps("a")}
+                size="small"
+                classes={{ root: classes.radio, checked: classes.checked }}
+              />
             </RightCont>
           </RowCont>
           <RowCont>
@@ -113,7 +127,7 @@ export default function Settings() {
 
             <RightCont>
               {" "}
-              <Radio {...controlProps("b")} size="small" color="secondary" />
+              <Radio {...controlProps("b")} size="small" />
             </RightCont>
           </RowCont>
         </Cont>

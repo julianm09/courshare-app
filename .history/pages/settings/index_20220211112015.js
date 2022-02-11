@@ -5,7 +5,7 @@ import Divider from "@mui/material/Divider";
 import GridViewIcon from "@mui/icons-material/GridView";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import Switch from "@mui/material/Switch";
-// import { yellow } from "@mui/material/colors";
+import { yellow } from "@mui/material/colors";
 import Radio from "@mui/material/Radio";
 
 const BigCont = styled.div`
@@ -51,15 +51,23 @@ const BodyText = styled.div`
   margin-left: 10px;
 `;
 
-// const GreenSwitch = styled(Switch)(({ theme }) => ({
-//   "& .MuiSwitch-switchBase.Mui-checked": {
-//     color: yellow[600],
-//   },
-//   "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-//     backgroundColor: yellow[600],
-//   },
-// }));
+const GreenSwitch = styled(Switch)(({ theme }) => ({
+  "& .MuiSwitch-switchBase.Mui-checked": {
+    color: yellow[600],
+  },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: yellow[600],
+  },
+}));
 
+const YellowRadio = styled(Radio)(({ theme }) => ({
+  "& .MuiRadio-radioBase.Mui-checked": {
+    color: yellow[600],
+  },
+  "& .MuiRadio-radioBase.Mui-checked + .MuiRadio-track": {
+    backgroundColor: yellow[600],
+  },
+}));
 export default function Settings() {
   const [selectedValue, setSelectedValue] = React.useState("a");
   const handleChange = (event) => {
@@ -89,7 +97,7 @@ export default function Settings() {
               <BodyText>Night Mode</BodyText>
             </LeftCont>
             <RightCont>
-              <Switch color="secondary" />
+              <GreenSwitch />
             </RightCont>
           </RowCont>
         </Cont>
@@ -102,7 +110,7 @@ export default function Settings() {
               <BodyText>List</BodyText>
             </LeftCont>
             <RightCont>
-              <Radio {...controlProps("a")} size="small" color="secondary" />
+              <YellowRadio {...controlProps("a")} size="small" />
             </RightCont>
           </RowCont>
           <RowCont>

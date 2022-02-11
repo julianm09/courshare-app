@@ -4,8 +4,9 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import Divider from "@mui/material/Divider";
 import GridViewIcon from "@mui/icons-material/GridView";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-// import { yellow } from "@mui/material/colors";
+import { yellow } from "@mui/material/colors";
 import Radio from "@mui/material/Radio";
 
 const BigCont = styled.div`
@@ -51,15 +52,14 @@ const BodyText = styled.div`
   margin-left: 10px;
 `;
 
-// const GreenSwitch = styled(Switch)(({ theme }) => ({
-//   "& .MuiSwitch-switchBase.Mui-checked": {
-//     color: yellow[600],
-//   },
-//   "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-//     backgroundColor: yellow[600],
-//   },
-// }));
-
+const GreenSwitch = styled(Switch)(({ theme }) => ({
+  "& .MuiSwitch-switchBase.Mui-checked": {
+    color: yellow[600],
+  },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: yellow[600],
+  },
+}));
 export default function Settings() {
   const [selectedValue, setSelectedValue] = React.useState("a");
   const handleChange = (event) => {
@@ -89,7 +89,7 @@ export default function Settings() {
               <BodyText>Night Mode</BodyText>
             </LeftCont>
             <RightCont>
-              <Switch color="secondary" />
+              <GreenSwitch defaultChecked />
             </RightCont>
           </RowCont>
         </Cont>
@@ -98,22 +98,21 @@ export default function Settings() {
           <Heading2>View</Heading2>
           <RowCont>
             <LeftCont>
-              <FormatListBulletedIcon style={{ color: "#8c8c8c" }} />
-              <BodyText>List</BodyText>
+              <GridViewIcon style={{ color: "#8c8c8c" }} />
+              <BodyText>Grid</BodyText>
             </LeftCont>
             <RightCont>
-              <Radio {...controlProps("a")} size="small" color="secondary" />
+              <Radio {...controlProps("a")} size="small" />
             </RightCont>
           </RowCont>
           <RowCont>
             <LeftCont>
-              <GridViewIcon style={{ color: "#8c8c8c" }} />
-              <BodyText>Grid</BodyText>
+              <FormatListBulletedIcon style={{ color: "#8c8c8c" }} />
+              <BodyText>List</BodyText>
             </LeftCont>
-
             <RightCont>
               {" "}
-              <Radio {...controlProps("b")} size="small" color="secondary" />
+              <Radio {...controlProps("b")} size="small" />
             </RightCont>
           </RowCont>
         </Cont>
