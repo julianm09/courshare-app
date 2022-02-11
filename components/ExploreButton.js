@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+const Cont = styled.div`
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+`;
+
 const ExploreBtn = styled.button`
     width:188px;
     height: 60px;
@@ -16,7 +25,9 @@ const ExploreButton = ({
     background = "#4d328a"
 }) =>{
     return (
-        <ExploreBtn background={background}>{text}</ExploreBtn>
+        <Cont>
+            <ExploreBtn background={background}>{text}</ExploreBtn>
+        </Cont>
     )
 }
 
