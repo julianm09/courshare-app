@@ -16,7 +16,8 @@ const Drowpdown = styled.div`
   height: 50px;
   width: 230px;
   max-width: 395px;
-  border: 0.5px solid #000000;
+
+  box-shadow: 0px 2px 8px 0px rgba(185, 185, 185, 0.52);
   box-sizing: border-box;
   border-radius: 10px;
   padding: 0 18px;
@@ -38,15 +39,14 @@ const DrowpdownBox = styled.div`
   min-height: 209px;
   width: 230px;
   max-width: 395px;
-  border: 0.5px solid #000000;
+  box-shadow: 0px 2px 8px 0px rgba(185, 185, 185, 0.52);
   box-sizing: border-box;
   border-radius: 10px;
   padding: 12px 18px;
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
-
 
 const Category = styled.div`
   font-family: General Sans;
@@ -67,12 +67,17 @@ const Icon = styled.div`
 `;
 
 const SortDropdown = ({
-    text = "Sort by",
-    sort=['A to Z', 'Level (a)', 'Level (d)', 'Ratings (a)', 'Ratings (d)'],
-    handleSort= () => console.log('sort')
-
-}) =>{
-    const [open, setOpen] = useState(false)
+  text = "Sort by",
+  sort = [
+    "A to Z",
+    "Level (ascending)",
+    "Level (descending)",
+    "Ratings (ascending)",
+    "Ratings (descending)",
+  ],
+  handleSort = () => console.log("sort"),
+}) => {
+  const [open, setOpen] = useState(false);
 
     return(
         <Cont>
@@ -103,3 +108,4 @@ const SortDropdown = ({
     )
 }
 export default SortDropdown
+
