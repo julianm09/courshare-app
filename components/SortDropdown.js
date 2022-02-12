@@ -4,6 +4,12 @@ import { useState } from "react";
 const Cont = styled.div`
   width: 230px;
   max-height: 281px;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 `;
 
 const Drowpdown = styled.div`
@@ -54,6 +60,12 @@ const Category = styled.div`
   justify-content: flex-start;
 `;
 
+const Icon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const SortDropdown = ({
   text = "Sort by",
   sort = [
@@ -67,21 +79,33 @@ const SortDropdown = ({
 }) => {
   const [open, setOpen] = useState(false);
 
-  return (
-    <Cont>
-      <Drowpdown onClick={() => setOpen(!open)}>Sort by</Drowpdown>
-      {open ? (
-        <DrowpdownBox>
-          {sort.map((x) => (
-            <Category>
-              <div>{x}</div>
-            </Category>
-          ))}
-        </DrowpdownBox>
-      ) : (
-        <></>
-      )}
-    </Cont>
-  );
-};
-export default SortDropdown;
+    return(
+        <Cont>
+        <Drowpdown onClick={()=>setOpen(!open)}>
+            {text}
+            <Icon>
+          {open ? (
+            <img src="/icons/up-caret.svg" />
+          ) : (
+            <img src="/icons/down-caret.svg" />
+          )}
+        </Icon>
+        </Drowpdown>
+        {open ? (
+            <DrowpdownBox>
+              
+                {sort.map((x) => (
+                  <Category>
+                    <div>{x}</div>
+                  </Category>
+                ))}
+              
+            </DrowpdownBox>
+          ) : (
+            <></>
+          )}         
+        </Cont>
+    )
+}
+export default SortDropdown
+
