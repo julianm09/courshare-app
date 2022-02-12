@@ -10,7 +10,9 @@ import {purple} from '@mui/material/colors';
 
 const Cont = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 0 49px 0;
 `
 
 const CourseCont = styled.div`
@@ -64,12 +66,13 @@ export default function CourseCardLV ({
     courseName = "3D CAD Fundamental",
     teachingSource = "National Taiwan University",
     ratingCount = 4.6,
-    difficulty = " Intermediate"
+    difficulty = " Intermediate",
+    image
 }){
     return(
         <Cont>
             <CourseCont>
-                <CourseImg src="/Testing.png"/>
+                <CourseImg src={image}/>
                 <InfoCont>
                     <Title>{courseName}</Title>
                     <Source>{teachingSource}</Source>

@@ -1,10 +1,9 @@
-import coursera from "@/utils/coursera.json";
+import curriculums from "@/utils/curriculums.json";
 const ogs = require("open-graph-scraper");
 import { filtering } from "@/utils/functions/filter";
 
 export default function handler(req, res) {
 
-  const courses = coursera.splice(0,10)
 
   const getOgImages = (arr) => {
     return new Promise((resolve) => {
@@ -13,7 +12,7 @@ export default function handler(req, res) {
     });
   };
 
-  getOgImages(courses).then((r) => {
+  getOgImages(curriculums).then((r) => {
     try {
       res.status(200).json(r);
     } catch (error) {
