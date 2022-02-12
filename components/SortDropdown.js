@@ -2,8 +2,12 @@ import styled from "styled-components";
 import { useState } from "react";
 
 const Cont = styled.div`
-  width: 230px;
-  max-height: 281px;
+  width: 100%;
+  margin: 0 0 54px 0;
+  display: flex;
+  position: relative;
+
+  justify-content: flex-end;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -16,7 +20,6 @@ const Drowpdown = styled.div`
   height: 50px;
   width: 230px;
   max-width: 395px;
-
   box-shadow: 0px 2px 8px 0px rgba(185, 185, 185, 0.52);
   box-sizing: border-box;
   border-radius: 10px;
@@ -28,14 +31,18 @@ const Drowpdown = styled.div`
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
-  margin: 0 0 12px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  background: #ffffff;
 `;
 
 const DrowpdownBox = styled.div`
+position: absolute;
+background: #ffffff;
+z-index: 100000;
+top: 72px;
   min-height: 209px;
   width: 230px;
   max-width: 395px;
@@ -58,6 +65,7 @@ const Category = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  cursor: pointer;
 `;
 
 const Icon = styled.div`

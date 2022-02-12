@@ -6,17 +6,24 @@ import { useState } from "react";
 import FilterDropdown from "@/components/FilterDropdown";
 import FilterDropdownSingle from "@/components/FilterDropdownSingle";
 import { makeStyles } from "@mui/styles";
+import SearchBar from "./SearchBar";
 
 const BigCont = styled.div`
-  width: 971px;
-  height: 210px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 79px 0 74px 0;
 `;
 const TopCont = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  margin: 0 0 71px 0;
+  @media (max-width: 1000px) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 const FilterBy = styled.p`
   font-family: General Sans;
@@ -26,12 +33,26 @@ const FilterBy = styled.p`
 const BottomCont = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 1400px) {
+    width: 100%;
+  }
 `;
 
 const ButtonCont = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
+
+  @media (max-width: 1000px) {
+    width: 100%;
+    flex-direction: column;
+  }
+`;
+
+const Space = styled.div`
+  width: 17px;
+  height: 22px;
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -63,18 +84,20 @@ export default function FilterBar({ value, setValue }) {
           TabIndicatorProps={{ className: classes.indicator }}
         >
           <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
-          <Tab value="two" label="Curriculums" style={{ marginLeft: 30 }} />
+          <Tab value="Two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
+        <Space/>
+        <SearchBar />
       </TopCont>
       <BottomCont>
         <FilterBy>Filter by</FilterBy>
 
         <ButtonCont>
-          <FilterDropdown />
-
           <FilterDropdown name="University" />
+          <Space />
 
           <FilterDropdownSingle name="Level" />
+          <Space />
 
           <FilterDropdownSingle />
         </ButtonCont>

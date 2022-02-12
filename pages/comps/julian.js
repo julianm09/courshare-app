@@ -8,8 +8,6 @@ import DifficultyBar from "@/components/DifficultyBar";
 export default function julian() {
   return (
     <Cont>
-      <AddCurriculumForm />
-      <Space />
       <FilterDropdown />
       <Space />
       <FilterDropdownSingle />
