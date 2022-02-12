@@ -4,22 +4,22 @@ import Checkbox from "./Checkbox";
 import Rating from "@mui/material/Rating";
 
 export default function DifficultyBar({
-  difficulty = "beginner",
+  difficulty = "Beginner",
   size = "small",
 }) {
   return (
     <>
-      {difficulty == "beginner" && size == "small" ? (
+      {difficulty == "Beginner" && size == "small" ? (
         <img src="/icons/difficulty-1-s.svg" />
-      ) : difficulty == "intermediate" && size == "small" ? (
+      ) : difficulty == "Intermediate" && size == "small" ? (
         <img src="/icons/difficulty-2-s.svg" />
-      ) : difficulty == "beginner" && size == "small" ? (
+      ) : difficulty == "Advanced" && size == "small" ? (
         <img src="/icons/difficulty-3-s.svg" />
-      ) : difficulty == "beginner" && size == "small" ? (
+      ) : difficulty == "Beginner" && size == "large" ? (
         <img src="/icons/difficulty-1-l.svg" />
-      ) : difficulty == "beginner" && size == "small" ? (
+      ) : difficulty == "Intermediate" && size == "large" ? (
         <img src="/icons/difficulty-2-l.svg" />
-      ) : difficulty == "beginner" && size == "small" ? (
+      ) : difficulty == "Advanced" && size == "large" ? (
         <img src="/icons/difficulty-3-l.svg" />
       ) : (
         <></>

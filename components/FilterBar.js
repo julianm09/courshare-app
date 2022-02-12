@@ -5,6 +5,7 @@ import Tabs from "@mui/material/Tabs";
 import { useState } from "react";
 import FilterDropdown from "@/components/FilterDropdown";
 import FilterDropdownSingle from "@/components/FilterDropdownSingle";
+import { makeStyles } from "@mui/styles";
 
 const BigCont = styled.div`
   width: 971px;
@@ -33,23 +34,27 @@ const ButtonCont = styled.div`
   justify-content: space-between;
 `;
 
-export default function FilterBar({}) {
-  const [value, setValue] = React.useState("one");
+
+export default function FilterBar({ value, setValue }) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const classes = makeStyles();
+
+
   return (
     <BigCont>
       <TopCont>
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="secondary"
-          indicatorColor="secondary"
+          textColor="#FFC403"
           aria-label="secondary tabs example"
+          TabIndicatorProps={{ className: classes.indicator }}
         >
-          <Tab value="One" label="Courses" />
+          <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
           <Tab value="two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
       </TopCont>

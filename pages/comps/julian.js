@@ -22,7 +22,7 @@ export default function julian() {
         color={"black"}
       />
       <Space />
-      <DifficultyBar difficulty={"beginner"} size={"small"} />
+      <DifficultyBar difficulty={"Beginner"} size={"large"} />
       <Space />
     </Cont>
   );
