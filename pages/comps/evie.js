@@ -3,7 +3,7 @@ import RegisterButton from "@/components/RegisterButton";
 import AddCurriculum from "@/components/AddCurriculum";
 import InformCard from "@/components/InformCard";
 import CourseCard from "@/components/CourseCard";
-import Search from "@/components/search";
+import Search from "@/components/SearchBar";
 
 export default function Evie() {
   return (

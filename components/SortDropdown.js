@@ -43,7 +43,7 @@ position: absolute;
 background: #ffffff;
 z-index: 100000;
 top: 72px;
-  min-height: 209px;
+
   width: 230px;
   max-width: 395px;
   box-shadow: 0px 2px 8px 0px rgba(185, 185, 185, 0.52);
@@ -61,6 +61,7 @@ const Category = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
+  height: 50px;
   text-align: left;
   display: flex;
   align-items: center;
@@ -75,6 +76,7 @@ const Icon = styled.div`
 `;
 
 const SortDropdown = ({
+  display,
   text = "Sort by",
   sort = [
     "A to Z",
