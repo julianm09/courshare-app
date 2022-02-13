@@ -86,20 +86,29 @@ export default function FilterBar({ value, setValue }) {
           <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
           <Tab value="Two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
-        <Space/>
+        <Space />
         <SearchBar />
       </TopCont>
       <BottomCont>
         <FilterBy>Filter by</FilterBy>
 
         <ButtonCont>
-          <FilterDropdown name="University" />
-          <Space />
+          {value == "One" ? (
+            <>
+              <FilterDropdown name="University" />
+              <Space />
 
-          <FilterDropdownSingle name="Level" />
-          <Space />
+              <FilterDropdownSingle name="Level" />
+              <Space />
 
-          <FilterDropdownSingle />
+              <FilterDropdownSingle />
+            </>
+          ) : (
+            <>
+            <FilterDropdown name="Category" />
+              <Space />
+            </>
+          )}
         </ButtonCont>
       </BottomCont>
     </BigCont>

@@ -5,7 +5,12 @@ import Stack from "@mui/material/Stack";
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
 
-const Cont = styled.div``;
+const Cont = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+`;
 
 const useStyles = makeStyles(() => ({
   ul: {
@@ -19,10 +24,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 export default function PageNavigation({}) {
+  const handleChange = (e, v) => {
+    console.log(v);
+  };
   const classes = useStyles();
   return (
     <Cont>
       <Pagination
+      value={0}
+        onChange={handleChange}
         count={10}
         variant="outlined"
         shape="rounded"
