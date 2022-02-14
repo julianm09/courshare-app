@@ -20,8 +20,7 @@ const TopCont = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  margin: 0 0 71px 0;
+  ${"" /* margin: 0 0 71px 0; */}
   @media (max-width: 1000px) {
     width: 100%;
     flex-direction: column;
@@ -91,6 +90,7 @@ export default function FilterBar({ value, setValue }) {
         </Tabs>
         <Space />
         <SearchBar />
+        <SortDropdown />
       </TopCont>
       <BottomCont>
         <FilterBy>Filter by</FilterBy>

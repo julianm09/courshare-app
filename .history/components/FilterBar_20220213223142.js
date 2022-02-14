@@ -91,6 +91,7 @@ export default function FilterBar({ value, setValue }) {
         </Tabs>
         <Space />
         <SearchBar />
+        <SortDropdown />
       </TopCont>
       <BottomCont>
         <FilterBy>Filter by</FilterBy>

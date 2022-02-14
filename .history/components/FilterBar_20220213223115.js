@@ -89,8 +89,9 @@ export default function FilterBar({ value, setValue }) {
           <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
           <Tab value="Two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
-        <Space />
+        {/* <Space /> */}
         <SearchBar />
+        <SortDropdown />
       </TopCont>
       <BottomCont>
         <FilterBy>Filter by</FilterBy>

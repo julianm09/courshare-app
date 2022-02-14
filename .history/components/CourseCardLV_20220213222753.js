@@ -12,6 +12,7 @@ const Cont = styled.div`
   display: flex;
   justify-content: space-between;
   width: 90%;
+  height:
   margin: 0 0 49px 0;
 `;
 

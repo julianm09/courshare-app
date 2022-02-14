@@ -24,7 +24,7 @@ const CurriculumList = styled.div`
   border: 1px solid #f0f0f0;
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   position: absolute;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 const CreateText = styled.div`

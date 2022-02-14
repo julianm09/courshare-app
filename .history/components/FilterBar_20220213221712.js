@@ -7,7 +7,6 @@ import FilterDropdown from "@/components/FilterDropdown";
 import FilterDropdownSingle from "@/components/FilterDropdownSingle";
 import { makeStyles } from "@mui/styles";
 import SearchBar from "./SearchBar";
-import SortDropdown from "./SortDropdown";
 
 const BigCont = styled.div`
   width: 100%;
@@ -20,7 +19,6 @@ const TopCont = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
   margin: 0 0 71px 0;
   @media (max-width: 1000px) {
     width: 100%;
@@ -29,7 +27,7 @@ const TopCont = styled.div`
 `;
 const FilterBy = styled.p`
   font-family: General Sans;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
 `;
 const BottomCont = styled.div`
@@ -45,7 +43,6 @@ const ButtonCont = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  margin-top: 20px;
 
   @media (max-width: 1000px) {
     width: 100%;

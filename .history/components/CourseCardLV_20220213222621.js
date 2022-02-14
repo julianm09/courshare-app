@@ -11,7 +11,7 @@ import { purple } from "@mui/material/colors";
 const Cont = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 90%;
+  width: 100%;
   margin: 0 0 49px 0;
 `;
 

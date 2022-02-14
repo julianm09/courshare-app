@@ -68,8 +68,8 @@ const Dropdown = styled.div`
   background: #ffffff;
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   border-radius: 10px;
-  height: 40px;
-  width: 210px;
+  height: 50px;
+  width: 230px;
   padding: 0 21px 0 29px;
   display: flex;
   justify-content: space-between;
@@ -77,7 +77,7 @@ const Dropdown = styled.div`
   font-family: General Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 24px;
   color: #000000;
   cursor: pointer;
