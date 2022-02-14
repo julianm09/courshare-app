@@ -5,7 +5,12 @@ import Stack from "@mui/material/Stack";
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
 
-const Cont = styled.div``;
+const Cont = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+`;
 
 const useStyles = makeStyles(() => ({
   ul: {
@@ -18,16 +23,28 @@ const useStyles = makeStyles(() => ({
     },
   },
 }));
-export default function PageNavigation({}) {
+
+export default function PageNavigationCurriculum({items=5, setCurriculumPage, curriculumPage, getCurriculums}) {
+
+  const handleChange = (e, v) => {
+    console.log(v);
+    setCurriculumPage(v - 1)
+  };
+
+  React.useEffect(() => {
+    getCurriculums();
+  },[curriculumPage])
+  
   const classes = useStyles();
   return (
     <Cont>
       <Pagination
-        count={10}
+        onChange={handleChange}
+        count={Math.round(items / 3)}
         variant="outlined"
         shape="rounded"
         classes={{ ul: classes.ul }}
       />
     </Cont>
-  );
+  )
 }

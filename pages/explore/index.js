@@ -5,41 +5,105 @@ import ax from "axios";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import FilterBar from "@/components/FilterBar";
+import AddCurriculumForm from "@/components/AddCurriculumForm";
+import CourseCardLV from "@/components/CourseCardLV";
+import SortDropdown from "@/components/SortDropdown";
+import CurriculumSlider from "@/components/CurriculumSlider";
+import PageNavigation from "@/components/PageNavigationCourse";
+import PageNavigationCourse from "@/components/PageNavigationCourse";
+import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
 
-export default function Explore() {
+export default function Home() {
   const [courses, setCourses] = useState([]);
-  const [search, setSearch] = useState('') 
+  const [curriculums, setCurriculums] = useState([]);
+  const [search, setSearch] = useState("");
   const [display, setDisplay] = useState("One");
+  const [addCurriculum, setAddCurriculum] = useState(false);
+  const [coursePage, setCoursePage] = useState(0);
+  const [curriculumPage, setCurriculumPage] = useState(0);
 
   const getCourses = async () => {
-    const res = await ax.get("../api/courses");
+    const res = await ax.get("./api/courses", {
+      params: {
+        page: coursePage,
+      },
+    });
     console.log(res.data);
     setCourses(res.data);
   };
 
+  const getCurriculums = async () => {
+    const res = await ax.get("./api/curriculums", {
+      params: {
+        page: curriculumPage,
+      },
+    });
+    setCurriculums(res.data);
+  };
+
   useEffect(() => {
     getCourses();
+    getCurriculums();
   }, []);
-
-
 
   return (
     <Cont>
-
-      <FilterBar value={display} setValue={setDisplay}/>
-  
-
-      {display == "One" ? courses.map((x) => (
-        <div>
-          <div>{x['Course Name']}</div>
-          <div>{x['Difficulty Level']}</div>
-          <div>{x['Course Rating']}</div>
-          <div>{x['Course URL']}</div>
-          <div>{x['Skills']}</div>
-          <img width="300px" src={x.Image} />
-        </div>
-      )) : <></>}
-
+      <FilterBar value={display} setValue={setDisplay} />
+      <SortDropdown
+        sort={
+          display == "One"
+            ? [
+                "A to Z",
+                "Level (ascending)",
+                "Level (descending)",
+                "Ratings (ascending)",
+                "Ratings (descending)",
+              ]
+            : ["Top", "New"]
+        }
+      />
+      {addCurriculum ? (
+        <AddCurriculumForm setAddCurriculum={setAddCurriculum} />
+      ) : (
+        <></>
+      )}
+      {display == "One" ? (
+        <>
+          {courses &&
+            courses.map((x) => (
+              <CourseCardLV
+                courseName={x["Course Name"]}
+                teachingSource={x["University"]}
+                ratingCount={x["Course Rating"]}
+                difficulty={x["Difficulty Level"]}
+                image={x.Image}
+              />
+            ))}
+          <PageNavigationCourse
+            setCoursePage={setCoursePage}
+            getCourses={() => getCourses()}
+            coursePage={coursePage}
+          />
+        </>
+      ) : display == "Two" ? (
+        <>
+          {curriculums &&
+            curriculums.map((x) => (
+              <CurriculumSlider
+                avaText={x["name"]}
+                favouriteCount={x["likes"]}
+                courses={x["courses"]}
+              />
+            ))}
+          <PageNavigationCurriculum
+            setCurriculumPage={setCurriculumPage}
+            curriculumPage={curriculumPage}
+            getCurriculums={() => getCurriculums()}
+          />
+        </>
+      ) : (
+        <></>
+      )}
     </Cont>
   );
 }
@@ -51,6 +115,10 @@ const Cont = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-`
 
-
+  @media (max-width: 1000px) {
+    width: 90%;
+    flex-direction: column;
+    padding: 0;
+  }
+`;
