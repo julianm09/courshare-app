@@ -26,7 +26,6 @@ const Heading = styled.p`
   font-size: 20px;
   font-weight: 400;
   font-weight: 400;
-  color: ${(props) => props.color};
 `;
 const ContentCont = styled.div``;
 const Cont = styled.div`
@@ -36,7 +35,6 @@ const Cont = styled.div`
 `;
 const Heading2 = styled.p`
   font-size: 16px;
-  color: ${(props) => props.color};
 `;
 const RowCont = styled.div`
   display: flex;
@@ -54,7 +52,6 @@ const BodyText = styled.div`
   font-size: 14px;
   color: #8c8c8c;
   margin-left: 10px;
-  color: ${(props) => props.color};
 `;
 
 // const GreenSwitch = styled(Switch)(({ theme }) => ({
@@ -89,13 +86,11 @@ export default function Settings() {
       <Divider light />
       <ContentCont>
         <Cont>
-          <Heading2 color={comp_themes[theme].switch_text}>Appearance</Heading2>
+          <Heading2>Appearance</Heading2>
           <RowCont>
             <LeftCont>
               <NightlightIcon style={{ color: "#8c8c8c" }} />
-              <BodyText color={comp_themes[theme].switch_text}>
-                Night Mode
-              </BodyText>
+              <BodyText>Night Mode</BodyText>
             </LeftCont>
             <RightCont>
               <Switch
@@ -107,11 +102,11 @@ export default function Settings() {
         </Cont>
         <Divider light />
         <Cont>
-          <Heading2 color={comp_themes[theme].switch_text}>View</Heading2>
+          <Heading2>View</Heading2>
           <RowCont>
             <LeftCont>
               <FormatListBulletedIcon style={{ color: "#8c8c8c" }} />
-              <BodyText color={comp_themes[theme].switch_text}>List</BodyText>
+              <BodyText>List</BodyText>
             </LeftCont>
             <RightCont>
               <Radio {...controlProps("a")} size="small" color="secondary" />
@@ -120,7 +115,7 @@ export default function Settings() {
           <RowCont>
             <LeftCont>
               <GridViewIcon style={{ color: "#8c8c8c" }} />
-              <BodyText color={comp_themes[theme].switch_text}>Grid</BodyText>
+              <BodyText>Grid</BodyText>
             </LeftCont>
 
             <RightCont>

@@ -77,7 +77,6 @@ export default function FilterBar({ value, setValue }) {
   };
 
   const classes = useStyles();
-  const { theme, setTheme } = useTheme();
 
   return (
     <BigCont>

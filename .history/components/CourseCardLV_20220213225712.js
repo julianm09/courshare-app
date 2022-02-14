@@ -6,7 +6,7 @@ import DifficultyBar from "@/components/DifficultyBar";
 import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { Checkbox } from "@mui/material";
-import { yellow } from "@mui/material/colors";
+import { purple } from "@mui/material/colors";
 import { useTheme } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 
@@ -39,6 +39,7 @@ const CourseImg = styled.img`
 `;
 
 const Title = styled.div`
+  margin-bottom: 30%;
   color: ${(props) => props.color};
 `;
 
@@ -49,9 +50,12 @@ const Source = styled.div`
 const Rating = styled.div`
   display: flex;
   align-items: center;
+  color: ${(props) => props.color};
 `;
 
-const Challenge = styled.div``;
+const Challenge = styled.div`
+  color: ${(props) => props.color};
+`;
 
 const Selection = styled.div`
   display: flex;
@@ -95,10 +99,10 @@ export default function CourseCardLV({
         <Break />
         <Checkbox
           sx={{
-            color: yellow[800],
+            color: purple[800],
             height: 30,
             "&.Mui-checked": {
-              color: yellow[600],
+              color: purple[600],
               height: 30,
             },
           }}

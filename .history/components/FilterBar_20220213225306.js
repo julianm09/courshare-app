@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useState } from "react";
-import { useTheme } from "@/utils/provider";
 import FilterDropdown from "@/components/FilterDropdown";
 import FilterDropdownSingle from "@/components/FilterDropdownSingle";
 import { makeStyles } from "@mui/styles";
@@ -77,7 +76,6 @@ export default function FilterBar({ value, setValue }) {
   };
 
   const classes = useStyles();
-  const { theme, setTheme } = useTheme();
 
   return (
     <BigCont>

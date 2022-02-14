@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useState } from "react";
-import { useTheme } from "@/utils/provider";
 import FilterDropdown from "@/components/FilterDropdown";
 import FilterDropdownSingle from "@/components/FilterDropdownSingle";
 import { makeStyles } from "@mui/styles";
@@ -32,7 +31,6 @@ const FilterBy = styled.p`
   font-family: General Sans;
   font-size: 16px;
   font-weight: 400;
-  color: ${(props) => props.color};
 `;
 const BottomCont = styled.div`
   display: flex;
@@ -77,7 +75,6 @@ export default function FilterBar({ value, setValue }) {
   };
 
   const classes = useStyles();
-  const { theme, setTheme } = useTheme();
 
   return (
     <BigCont>
@@ -96,7 +93,7 @@ export default function FilterBar({ value, setValue }) {
         <SearchBar />
       </TopCont>
       <BottomCont>
-        <FilterBy color={comp_themes[theme].switch_text}>Filter by</FilterBy>
+        <FilterBy>Filter by</FilterBy>
 
         <ButtonCont>
           <FilterDropdown name="University" />

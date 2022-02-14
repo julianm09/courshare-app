@@ -36,7 +36,6 @@ const Cont = styled.div`
 `;
 const Heading2 = styled.p`
   font-size: 16px;
-  color: ${(props) => props.color};
 `;
 const RowCont = styled.div`
   display: flex;
@@ -54,7 +53,6 @@ const BodyText = styled.div`
   font-size: 14px;
   color: #8c8c8c;
   margin-left: 10px;
-  color: ${(props) => props.color};
 `;
 
 // const GreenSwitch = styled(Switch)(({ theme }) => ({
@@ -89,12 +87,14 @@ export default function Settings() {
       <Divider light />
       <ContentCont>
         <Cont>
-          <Heading2 color={comp_themes[theme].switch_text}>Appearance</Heading2>
+          <Heading2 color={comp_themes[theme].switch_text}>
+            Settings>Appearance
+          </Heading2>
           <RowCont>
             <LeftCont>
               <NightlightIcon style={{ color: "#8c8c8c" }} />
               <BodyText color={comp_themes[theme].switch_text}>
-                Night Mode
+                Settings>Night Mode
               </BodyText>
             </LeftCont>
             <RightCont>
@@ -107,11 +107,15 @@ export default function Settings() {
         </Cont>
         <Divider light />
         <Cont>
-          <Heading2 color={comp_themes[theme].switch_text}>View</Heading2>
+          <Heading2 color={comp_themes[theme].switch_text}>
+            Settings>View
+          </Heading2>
           <RowCont>
             <LeftCont>
               <FormatListBulletedIcon style={{ color: "#8c8c8c" }} />
-              <BodyText color={comp_themes[theme].switch_text}>List</BodyText>
+              <BodyText color={comp_themes[theme].switch_text}>
+                Settings>List
+              </BodyText>
             </LeftCont>
             <RightCont>
               <Radio {...controlProps("a")} size="small" color="secondary" />
@@ -120,7 +124,9 @@ export default function Settings() {
           <RowCont>
             <LeftCont>
               <GridViewIcon style={{ color: "#8c8c8c" }} />
-              <BodyText color={comp_themes[theme].switch_text}>Grid</BodyText>
+              <BodyText color={comp_themes[theme].switch_text}>
+                Settings>Grid
+              </BodyText>
             </LeftCont>
 
             <RightCont>
