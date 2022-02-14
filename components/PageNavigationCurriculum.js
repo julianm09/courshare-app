@@ -23,21 +23,28 @@ const useStyles = makeStyles(() => ({
     },
   },
 }));
-export default function PageNavigation({}) {
+
+export default function PageNavigationCurriculum({items=5, setCurriculumPage, curriculumPage, getCurriculums}) {
+
   const handleChange = (e, v) => {
     console.log(v);
+    setCurriculumPage(v - 1)
   };
+
+  React.useEffect(() => {
+    getCurriculums();
+  },[curriculumPage])
+  
   const classes = useStyles();
   return (
     <Cont>
       <Pagination
-      value={0}
         onChange={handleChange}
-        count={10}
+        count={Math.round(items / 3)}
         variant="outlined"
         shape="rounded"
         classes={{ ul: classes.ul }}
       />
     </Cont>
-  );
+  )
 }

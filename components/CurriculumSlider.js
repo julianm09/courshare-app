@@ -13,20 +13,18 @@ const Cont = styled.div`
   font-weight: normal;
   width: auto;
   margin: 0 0 112px 0;
-  
 `;
 
 const TitleCont = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-    margin: 0 0 32px 0;
+  margin: 0 0 32px 0;
 `;
 
 const LeftCont = styled.div`
   display: flex;
   align-items: center;
-  
 `;
 
 const Avatar = styled.img`
@@ -44,13 +42,11 @@ const RightCont = styled.div`
   display: flex;
   align-items: center;
   font-size: 24px;
-  
 `;
 
 const ContentCont = styled.div`
   display: flex;
   justify-content: space-between;
-  
 `;
 
 const BoxCont = styled.div`
@@ -59,7 +55,6 @@ const BoxCont = styled.div`
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   border-radius: 10px;
   margin: 0 75px 0 0;
-  
 `;
 
 const InfoCont = styled.div`
@@ -78,7 +73,6 @@ const InfoCont = styled.div`
 const Img = styled.img`
   width: 355px;
   border-radius: 10px;
- 
 `;
 
 const Title = styled.div``;
