@@ -13,19 +13,19 @@ const Cont = styled.div`
 
 const CurriculumList = styled.div`
   width: 186px;
-  height: 120px;
+  height: 114px;
   border-radius: 10px;
   font-family: General Sans;
   font-style: normal;
   font-weight: 400;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+
   border: 1px solid #f0f0f0;
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   position: absolute;
   margin-top: 20px;
-  padding: 5px 0;
 `;
 
 const CreateText = styled.div`
@@ -35,7 +35,7 @@ const CreateText = styled.div`
 `;
 
 const Break = styled.div`
-  width: 90%;
+  width: 80%;
   border: 0.4px solid #cbcbcb;
   margin-left: 5%;
 `;

@@ -131,7 +131,7 @@ export default function Settings() {
                 {...controlProps("b")}
                 size="small"
                 color="secondary"
-                onClick={() => setView(view === "gird" ? "default" : "grid")}
+                onClick={() => setTheme(theme === "dark" ? "default" : "dark")}
               />
             </RightCont>
           </RowCont>
