@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import CourseDetailCard from "@/components/CourseDetailCard";
-import PageNavigation from "@/components/PageNavigation";
+import PageNavigation from "@/components/PageNavigationCourse";
 import FilterBar from "@/components/FilterBar";
 
 export default function Juhee() {

@@ -2,34 +2,86 @@ import * as React from "react";
 import styled from "styled-components";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
+import { useState } from "react";
+import FilterDropdown from "@/components/FilterDropdown";
+import FilterDropdownSingle from "@/components/FilterDropdownSingle";
+import { makeStyles } from "@mui/styles";
+import SearchBar from "./SearchBar";
 
+const BigCont = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 79px 0 74px 0;
+`;
 const TopCont = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  margin: 0 0 71px 0;
+  height: 50px;
+  @media (max-width: 1000px) {
+    width: 100%;
+    flex-direction: column;
+  }
+`;
+const Header = styled.p`
+  font-family: General Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 43px;
+
+  color: #000000;
+`;
+const BottomCont = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 1400px) {
+    flex-direction: column;
+  }
 `;
 
-export default function SectionTabs({
-  value,
-  setValue,
-  one = "Courses",
-  two = "Curriculum",
-}) {
+const useStyles = makeStyles((theme) => ({
+  indicator: {
+    backgroundColor: "#FFC403",
+    height: "10px",
+    top: "45px",
+  },
+  textColor: {
+    color: "#FFC403",
+  },
+}));
+
+export default function FilterBar({ value, setValue }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const classes = useStyles();
+
   return (
-    <TopCont>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        textColor="secondary"
-        indicatorColor="secondary"
-        aria-label="secondary tabs example"
-      >
-        <Tab value="One" label={one} />
-        <Tab value="two" label={two} style={{ marginLeft: 30 }} />
-      </Tabs>
-    </TopCont>
+    <BigCont>
+      <TopCont>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          textColor="#FFC403"
+          aria-label="secondary tabs example"
+          TabIndicatorProps={{ className: classes.indicator }}
+        >
+          <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
+          <Tab value="Two" label="Curriculums" style={{ marginLeft: 30 }} />
+        </Tabs>
+      </TopCont>
+      <BottomCont>
+        <Header>Saved Courses</Header>
+        <SearchBar />
+      </BottomCont>
+    </BigCont>
   );
 }

@@ -1,22 +1,20 @@
 import curriculums from "@/utils/curriculums.json";
-const ogs = require("open-graph-scraper");
-import { filtering } from "@/utils/functions/filter";
 
 export default function handler(req, res) {
+  const { page } = req.query;
 
+  var courses = [];
 
-  const getOgImages = (arr) => {
-    return new Promise((resolve) => {
-      console.log(arr.length)
-      resolve(arr);
-    });
-  };
+  if (page) {
+    courses = PageCourses(page * 3, 3);
+  }
+  console.log(page)
 
-  getOgImages(curriculums).then((r) => {
-    try {
-      res.status(200).json(r);
-    } catch (error) {
-      console.log("Error", error);
-    }
-  });
+  function PageCourses(start = 0, num_items = 24) {
+    const new_list = curriculums.slice(Number(start), Number(start) + num_items);
+    return new_list;
+  }
+
+  res.status(200).json(courses);
 }
+

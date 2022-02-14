@@ -9,7 +9,9 @@ import AddCurriculumForm from "@/components/AddCurriculumForm";
 import CourseCardLV from "@/components/CourseCardLV";
 import SortDropdown from "@/components/SortDropdown";
 import CurriculumSlider from "@/components/CurriculumSlider";
-import PageNavigation from "@/components/PageNavigation";
+import PageNavigation from "@/components/PageNavigationCourse";
+import PageNavigationCourse from "@/components/PageNavigationCourse";
+import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
 
 export default function Home() {
   const [courses, setCourses] = useState([]);
@@ -17,15 +19,25 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [display, setDisplay] = useState("One");
   const [addCurriculum, setAddCurriculum] = useState(false);
+  const [coursePage, setCoursePage] = useState(0);
+  const [curriculumPage, setCurriculumPage] = useState(0);
 
   const getCourses = async () => {
-    const res = await ax.get("./api/courses");
+    const res = await ax.get("./api/courses", {
+      params: {
+        page: coursePage,
+      },
+    });
     console.log(res.data);
     setCourses(res.data);
   };
 
   const getCurriculums = async () => {
-    const res = await ax.get("./api/curriculums");
+    const res = await ax.get("./api/curriculums", {
+      params: {
+        page: curriculumPage,
+      },
+    });
     setCurriculums(res.data);
   };
 
@@ -67,7 +79,11 @@ export default function Home() {
                 image={x.Image}
               />
             ))}
-          <PageNavigation />
+          <PageNavigationCourse
+            setCoursePage={setCoursePage}
+            getCourses={() => getCourses()}
+            coursePage={coursePage}
+          />
         </>
       ) : display == "Two" ? (
         <>
@@ -79,7 +95,11 @@ export default function Home() {
                 courses={x["courses"]}
               />
             ))}
-          <PageNavigation />
+          <PageNavigationCurriculum
+            setCurriculumPage={setCurriculumPage}
+            curriculumPage={curriculumPage}
+            getCurriculums={() => getCurriculums()}
+          />
         </>
       ) : (
         <></>

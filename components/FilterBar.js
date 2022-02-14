@@ -20,6 +20,7 @@ const TopCont = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin: 0 0 71px 0;
+  min-height: 50px;
   @media (max-width: 1000px) {
     width: 100%;
     flex-direction: column;
@@ -105,7 +106,7 @@ export default function FilterBar({ value, setValue }) {
             </>
           ) : (
             <>
-            <FilterDropdown name="Category" />
+              <FilterDropdown name="Category" />
               <Space />
             </>
           )}
