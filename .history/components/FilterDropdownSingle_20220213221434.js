@@ -77,7 +77,7 @@ const Dropdown = styled.div`
   font-family: General Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 24px;
   color: #000000;
   cursor: pointer;

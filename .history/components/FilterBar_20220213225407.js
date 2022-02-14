@@ -23,7 +23,6 @@ const TopCont = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0 0 71px 0;
-  min-height: 50px;
   @media (max-width: 1000px) {
     width: 100%;
     flex-direction: column;
@@ -100,22 +99,13 @@ export default function FilterBar({ value, setValue }) {
         <FilterBy color={comp_themes[theme].switch_text}>Filter by</FilterBy>
 
         <ButtonCont>
-          {value == "One" ? (
-            <>
-              <FilterDropdown name="University" />
-              <Space />
+          <FilterDropdown name="University" />
+          <Space />
 
-              <FilterDropdownSingle name="Level" />
-              <Space />
+          <FilterDropdownSingle name="Level" />
+          <Space />
 
-              <FilterDropdownSingle />
-            </>
-          ) : (
-            <>
-              <FilterDropdown name="Category" />
-              <Space />
-            </>
-          )}
+          <FilterDropdownSingle />
         </ButtonCont>
       </BottomCont>
     </BigCont>

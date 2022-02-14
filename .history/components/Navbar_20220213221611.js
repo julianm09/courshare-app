@@ -18,7 +18,7 @@ export default function Navbar({}) {
         src="/logo.svg"
         selected={r.pathname == "/"}
         onClick={() => handleLink("/")}
-        style={{ width: 100 }}
+        style={{width:20px;}}
       ></Logo>
       <Navigation>
         <LinkUI selected={r.pathname == "/"} onClick={() => handleLink("/")}>

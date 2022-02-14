@@ -36,7 +36,6 @@ const Drowpdown = styled.div`
   align-items: center;
   cursor: pointer;
   background: #ffffff;
-  margin-bottom: 20px;
 `;
 
 const DrowpdownBox = styled.div`

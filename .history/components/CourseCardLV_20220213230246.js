@@ -98,7 +98,7 @@ export default function CourseCardLV({
             color: yellow[800],
             height: 30,
             "&.Mui-checked": {
-              color: yellow[600],
+              color: purple[600],
               height: 30,
             },
           }}

@@ -107,11 +107,15 @@ export default function Settings() {
         </Cont>
         <Divider light />
         <Cont>
-          <Heading2 color={comp_themes[theme].switch_text}>View</Heading2>
+          <Heading2 color={comp_themes[theme].switch_text}>
+            Settings>View
+          </Heading2>
           <RowCont>
             <LeftCont>
               <FormatListBulletedIcon style={{ color: "#8c8c8c" }} />
-              <BodyText color={comp_themes[theme].switch_text}>List</BodyText>
+              <BodyText color={comp_themes[theme].switch_text}>
+                Settings>List
+              </BodyText>
             </LeftCont>
             <RightCont>
               <Radio {...controlProps("a")} size="small" color="secondary" />
@@ -120,7 +124,9 @@ export default function Settings() {
           <RowCont>
             <LeftCont>
               <GridViewIcon style={{ color: "#8c8c8c" }} />
-              <BodyText color={comp_themes[theme].switch_text}>Grid</BodyText>
+              <BodyText color={comp_themes[theme].switch_text}>
+                Settings>Grid
+              </BodyText>
             </LeftCont>
 
             <RightCont>

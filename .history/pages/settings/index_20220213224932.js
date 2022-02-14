@@ -110,7 +110,7 @@ export default function Settings() {
           <Heading2 color={comp_themes[theme].switch_text}>View</Heading2>
           <RowCont>
             <LeftCont>
-              <FormatListBulletedIcon style={{ color: "#8c8c8c" }} />
+              <FormatListBulletedIcon style={{   color: ${(props) => props.color};}} />
               <BodyText color={comp_themes[theme].switch_text}>List</BodyText>
             </LeftCont>
             <RightCont>

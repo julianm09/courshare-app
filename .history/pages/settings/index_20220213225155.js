@@ -86,7 +86,7 @@ export default function Settings() {
       <HeadingCont>
         <Heading color={comp_themes[theme].switch_text}>Settings</Heading>
       </HeadingCont>
-      <Divider light />
+      <Divider light color={comp_themes[theme].switch_text} />
       <ContentCont>
         <Cont>
           <Heading2 color={comp_themes[theme].switch_text}>Appearance</Heading2>

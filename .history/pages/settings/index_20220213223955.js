@@ -7,7 +7,6 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import Switch from "@mui/material/Switch";
 import Radio from "@mui/material/Radio";
 import { useTheme } from "@/utils/provider";
-import { comp_themes } from "@/utils/variables";
 
 const BigCont = styled.div`
   width: 100vw;
@@ -26,17 +25,15 @@ const Heading = styled.p`
   font-size: 20px;
   font-weight: 400;
   font-weight: 400;
-  color: ${(props) => props.color};
 `;
 const ContentCont = styled.div``;
 const Cont = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 40px 0;
+  margin: 20px 0;
 `;
 const Heading2 = styled.p`
   font-size: 16px;
-  color: ${(props) => props.color};
 `;
 const RowCont = styled.div`
   display: flex;
@@ -54,7 +51,6 @@ const BodyText = styled.div`
   font-size: 14px;
   color: #8c8c8c;
   margin-left: 10px;
-  color: ${(props) => props.color};
 `;
 
 // const GreenSwitch = styled(Switch)(({ theme }) => ({
@@ -84,18 +80,16 @@ export default function Settings() {
   return (
     <BigCont>
       <HeadingCont>
-        <Heading color={comp_themes[theme].switch_text}>Settings</Heading>
+        <Heading>Settings</Heading>
       </HeadingCont>
       <Divider light />
       <ContentCont>
         <Cont>
-          <Heading2 color={comp_themes[theme].switch_text}>Appearance</Heading2>
+          <Heading2>Appearance</Heading2>
           <RowCont>
             <LeftCont>
               <NightlightIcon style={{ color: "#8c8c8c" }} />
-              <BodyText color={comp_themes[theme].switch_text}>
-                Night Mode
-              </BodyText>
+              <BodyText>Night Mode</BodyText>
             </LeftCont>
             <RightCont>
               <Switch
@@ -107,11 +101,11 @@ export default function Settings() {
         </Cont>
         <Divider light />
         <Cont>
-          <Heading2 color={comp_themes[theme].switch_text}>View</Heading2>
+          <Heading2>View</Heading2>
           <RowCont>
             <LeftCont>
               <FormatListBulletedIcon style={{ color: "#8c8c8c" }} />
-              <BodyText color={comp_themes[theme].switch_text}>List</BodyText>
+              <BodyText>List</BodyText>
             </LeftCont>
             <RightCont>
               <Radio {...controlProps("a")} size="small" color="secondary" />
@@ -120,7 +114,7 @@ export default function Settings() {
           <RowCont>
             <LeftCont>
               <GridViewIcon style={{ color: "#8c8c8c" }} />
-              <BodyText color={comp_themes[theme].switch_text}>Grid</BodyText>
+              <BodyText>Grid</BodyText>
             </LeftCont>
 
             <RightCont>

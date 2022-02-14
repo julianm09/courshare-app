@@ -2,21 +2,58 @@ import styled from "styled-components";
 import { useState } from "react";
 import Checkbox from "./Checkbox";
 
-export default function FilterDropdownSingle({
-  name = "Ratings",
-  categories = ["4.5 - 5.5", "4.0 - 4.5", "3.5 - 4.0", "0 - 3.5"],
+export default function FilterDropdown({
+  name = "Skills",
+  categories = [
+    "Design and Product",
+    "Accounting",
+    "Data Analysis",
+    "Management",
+    "Logistics",
+    "Business Analysis",
+    "Programming",
+    "Web Development",
+    "Sales",
+    "Data Management",
+    "Communication",
+    "Databases",
+    "Computer Networking",
+    "Computer Science",
+    "Finance",
+    "Machine Learning",
+    "Software Engineering",
+    "Computer Interaction",
+    "Probability & Statistics",
+    "Business Psychology",
+    "Security Engineering",
+    "Human Resources",
+    "Entrepreneurship",
+    "Computer Architecture",
+    "Operations",
+    "Research and Design",
+    "Cloud Computing",
+    "Marketing",
+    "Computer Graphics",
+    "Data Visualization",
+    "DevOps",
+    "Operating Systems",
+  ],
 }) {
   const [show, setShow] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState([]);
 
   const handleSelect = (x) => {
-    setSelected(x);
+    if (selected.includes(x)) {
+      setSelected(selected.filter((i) => i !== x));
+    } else {
+      setSelected([...selected, x]);
+    }
   };
 
   const clearAll = () => {
-    setSelected("");
+    setSelected([]);
   };
 
   return (
@@ -47,6 +84,11 @@ export default function FilterDropdownSingle({
             ))}
           </CategoryCont>
           <Clear onClick={clearAll}>Clear</Clear>
+          {showAll ? (
+            <ShowAll onClick={() => setShowAll(!showAll)}>Show Less</ShowAll>
+          ) : (
+            <ShowAll onClick={() => setShowAll(!showAll)}>Show All</ShowAll>
+          )}
         </DrowpdownBox>
       ) : (
         <></>
@@ -68,8 +110,8 @@ const Dropdown = styled.div`
   background: #ffffff;
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   border-radius: 10px;
-  height: 40px;
-  width: 210px;
+  height: 45px;
+  width: 230px;
   padding: 0 21px 0 29px;
   display: flex;
   justify-content: space-between;
@@ -77,7 +119,7 @@ const Dropdown = styled.div`
   font-family: General Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 24px;
   color: #000000;
   cursor: pointer;
@@ -86,7 +128,8 @@ const Dropdown = styled.div`
 const DrowpdownBox = styled.div`
   min-height: 162px;
   height: auto;
-  width: 230px;
+  width: 460px;
+  max-width: 395px;
   background: #ffffff;
   margin: 24px 0 0 0;
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
@@ -110,9 +153,13 @@ const DrowpdownBox = styled.div`
 const CategoryCont = styled.div`
   height: auto;
   display: grid;
-  grid-template-columns: 2fr;
+  grid-template-columns: 2fr 2fr;
   grid-gap: 12px 0;
   grid-template-rowss: auto;
+
+  @media (max-width: 800px) {
+    grid-template-columns: 2fr;
+  }
 `;
 
 const Category = styled.div`
