@@ -58,7 +58,7 @@ const DrowpdownBox = styled.div`
 
 const Category = styled.div`
   font-family: General Sans;
-  font-size: 14px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: 24px;

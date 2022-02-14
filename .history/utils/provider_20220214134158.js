@@ -33,8 +33,3 @@ export const useTheme = () => {
   const { theme, setTheme } = useContext(MyContext);
   return { theme, setTheme };
 };
-
-export const useView = () => {
-  const { view, setView } = useContext(MyContext);
-  return { view, setView };
-};

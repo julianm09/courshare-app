@@ -35,7 +35,7 @@ const CreateText = styled.div`
 `;
 
 const Break = styled.div`
-  width: 90%;
+  width: 80%;
   border: 0.4px solid #cbcbcb;
   margin-left: 5%;
 `;

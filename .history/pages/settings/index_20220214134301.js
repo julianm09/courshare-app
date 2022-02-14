@@ -82,7 +82,6 @@ export default function Settings() {
   });
 
   const { theme, setTheme } = useTheme();
-  const { view, setView } = useView();
   return (
     <BigCont>
       <HeadingCont>
@@ -127,12 +126,7 @@ export default function Settings() {
 
             <RightCont>
               {" "}
-              <Radio
-                {...controlProps("b")}
-                size="small"
-                color="secondary"
-                onClick={() => setView(view === "gird" ? "default" : "grid")}
-              />
+              <Radio {...controlProps("b")} size="small" color="secondary" />
             </RightCont>
           </RowCont>
         </Cont>
