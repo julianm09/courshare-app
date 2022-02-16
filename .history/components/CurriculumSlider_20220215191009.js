@@ -45,7 +45,6 @@ const RightCont = styled.div`
   display: flex;
   align-items: center;
   font-size: 18px;
-  color: ${(props) => props.color};
 `;
 
 const ContentCont = styled.div`
@@ -121,7 +120,7 @@ export default function CurriculumSlider({
             {avaText}
           </AvatarText>
         </LeftCont>
-        <RightCont color={comp_themes[theme].switch_text}>
+        <RightCont>
           {favouriteCount}
           <Checkbox
             sx={{

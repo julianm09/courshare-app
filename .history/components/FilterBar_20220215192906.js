@@ -68,9 +68,6 @@ const useStyles = makeStyles(() => ({
     height: "10px",
     top: "45px",
   },
-  textColor: {
-    color: "#FFC403",
-  },
 }));
 
 export default function FilterBar({ value, setValue }) {
@@ -87,7 +84,7 @@ export default function FilterBar({ value, setValue }) {
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="FFC403"
+          textColor="#FFC403"
           aria-label="secondary tabs example"
           TabIndicatorProps={{ className: classes.indicator }}
         >

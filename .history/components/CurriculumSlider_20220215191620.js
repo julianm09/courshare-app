@@ -121,7 +121,7 @@ export default function CurriculumSlider({
             {avaText}
           </AvatarText>
         </LeftCont>
-        <RightCont color={comp_themes[theme].switch_text}>
+        <RightCont>
           {favouriteCount}
           <Checkbox
             sx={{

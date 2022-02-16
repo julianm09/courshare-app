@@ -87,11 +87,15 @@ export default function FilterBar({ value, setValue }) {
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="FFC403"
+          textColor={{ className: classes.textColor }}
           aria-label="secondary tabs example"
           TabIndicatorProps={{ className: classes.indicator }}
         >
-          <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
+          <Tab
+            classes={{ className: classes.textColor }}
+            value="One"
+            label="Courses"
+          />
           <Tab value="Two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
         <Space />
