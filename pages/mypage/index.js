@@ -17,7 +17,7 @@ import SectionTabs from "@/components/SectionTabs";
 export default function MyPage() {
   const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(null);
   const [display, setDisplay] = useState("One");
   const [addCurriculum, setAddCurriculum] = useState(false);
   const [coursePage, setCoursePage] = useState(0);
@@ -27,6 +27,7 @@ export default function MyPage() {
     const res = await ax.get("./api/courses", {
       params: {
         page: coursePage,
+        search: search,
       },
     });
     console.log(res.data);

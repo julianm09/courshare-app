@@ -10,7 +10,7 @@ export function filtering(
 ) {
   const { title, university, rating, level, skills } = config;
 
-  if (title) {
+  if (title || university || rating || level || skills) {
     const filtered_arr = arr.filter((o) => {
       var cond = true;
 
