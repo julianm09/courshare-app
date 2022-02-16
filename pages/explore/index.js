@@ -16,39 +16,73 @@ import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
 export default function Home() {
   const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
-  const [search, setSearch] = useState("");
+  const [searchCourse, setSearchCourse] = useState(null);
   const [display, setDisplay] = useState("One");
   const [addCurriculum, setAddCurriculum] = useState(false);
   const [coursePage, setCoursePage] = useState(0);
+  const [courseItems, setCourseItems] = useState(424);
   const [curriculumPage, setCurriculumPage] = useState(0);
+  const [searching, setSearching] = useState(false);
+  const [university, setUniversity] = useState(null);
 
   const getCourses = async () => {
     const res = await ax.get("./api/courses", {
       params: {
         page: coursePage,
+        search: searchCourse,
+        university: university,
       },
     });
-    console.log(res.data);
     setCourses(res.data);
+    setSearching(false);
   };
+
+  console.log(university)
+
+  const handleSearch = (e) => {
+    setSearchCourse(e.target.value);
+  };
+
+  useEffect(() => {
+    console.log(searchCourse);
+    let timer = setTimeout(() => {
+      if (
+        (searchCourse !== null && searchCourse.length > 1) ||
+        (searchCourse !== null && searchCourse === "")
+      ) {
+        if (display === "One") {
+          setSearching(true);
+          getCourses();
+        }
+      }
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [searchCourse]);
+
+  useEffect(() => {
+    getCourses();
+  }, []);
 
   const getCurriculums = async () => {
     const res = await ax.get("./api/curriculums", {
       params: {
         page: curriculumPage,
+        search: searchCourse,
       },
     });
     setCurriculums(res.data);
   };
 
-  useEffect(() => {
-    getCourses();
-    getCurriculums();
-  }, []);
-
   return (
     <Cont>
-      <FilterBar value={display} setValue={setDisplay} />
+      <FilterBar
+        value={display}
+        setValue={setDisplay}
+        handleSearch={handleSearch}
+        university={university}
+        setUniversity={setUniversity}
+      />
       <SortDropdown
         sort={
           display == "One"
@@ -62,16 +96,18 @@ export default function Home() {
             : ["Top", "New"]
         }
       />
+      {searching ? <>searching</> : <></>}
       {addCurriculum ? (
         <AddCurriculumForm setAddCurriculum={setAddCurriculum} />
       ) : (
         <></>
       )}
-      {display == "One" ? (
+      {display == "One" && !searching ? (
         <>
           {courses &&
-            courses.map((x) => (
+            courses.map((x, i) => (
               <CourseCardLV
+                key={i}
                 courseName={x["Course Name"]}
                 teachingSource={x["University"]}
                 ratingCount={x["Course Rating"]}
@@ -81,8 +117,9 @@ export default function Home() {
             ))}
           <PageNavigationCourse
             setCoursePage={setCoursePage}
-            getCourses={() => getCourses()}
+            getCourses={getCourses}
             coursePage={coursePage}
+            items={courseItems}
           />
         </>
       ) : display == "Two" ? (

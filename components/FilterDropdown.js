@@ -3,40 +3,14 @@ import { useState } from "react";
 import Checkbox from "./Checkbox";
 
 export default function FilterDropdown({
+  setUniversity,
+  university,
   name = "Skills",
   categories = [
-    "Design and Product",
-    "Accounting",
-    "Data Analysis",
-    "Management",
-    "Logistics",
-    "Business Analysis",
-    "Programming",
-    "Web Development",
-    "Sales",
-    "Data Management",
-    "Communication",
-    "Databases",
-    "Computer Networking",
-    "Computer Science",
-    "Finance",
-    "Machine Learning",
-    "Software Engineering",
-    "Computer Interaction",
-    "Probability & Statistics",
-    "Business Psychology",
-    "Security Engineering",
-    "Human Resources",
-    "Entrepreneurship",
-    "Computer Architecture",
-    "Operations",
-    "Research and Design",
-    "Cloud Computing",
-    "Marketing",
-    "Computer Graphics",
-    "Data Visualization",
-    "DevOps",
-    "Operating Systems",
+    "École Polytechnique",
+    "Amazon Web Services",
+    "Arizona State University",
+    "University of Illinois at Urbana-Champaign",
   ],
 }) {
   const [show, setShow] = useState(false);
@@ -45,10 +19,12 @@ export default function FilterDropdown({
   const [selected, setSelected] = useState([]);
 
   const handleSelect = (x) => {
-    if (selected.includes(x)) {
-      setSelected(selected.filter((i) => i !== x));
-    } else {
-      setSelected([...selected, x]);
+    if(name === "University"){
+      if (university.includes(x)) {
+        setUniversity(university.filter((i) => i !== x));
+      } else {
+        setUniversity([...university, x]);
+      }
     }
   };
 
@@ -77,7 +53,7 @@ export default function FilterDropdown({
                   handleSelect={handleSelect}
                   x={x}
                   setSelected={setSelected}
-                  selected={selected}
+                  selected={university}
                 />
                 <div>{x}</div>
               </Category>

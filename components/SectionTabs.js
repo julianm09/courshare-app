@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FilterBar({ value, setValue }) {
+export default function FilterBar({ value, setValue, handleSearch }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

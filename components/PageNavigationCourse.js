@@ -27,16 +27,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function PageNavigationCourse({items=424, setCoursePage, getCourses, coursePage}) {
+export default function PageNavigationCourse({items=424, setCoursePage}) {
 
   const handleChange = (e, v) => {
     console.log(v);
     setCoursePage(v - 1)
   };
-
-  React.useEffect(() => {
-    getCourses();
-  },[coursePage])
   
   const classes = useStyles();
   return (

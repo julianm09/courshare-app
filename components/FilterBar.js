@@ -73,7 +73,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function FilterBar({ value, setValue }) {
+export default function FilterBar({ value, setValue, handleSearch, setUniversity, university }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -95,7 +95,7 @@ export default function FilterBar({ value, setValue }) {
           <Tab value="Two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
         <Space />
-        <SearchBar />
+        <SearchBar handleSearch={handleSearch} />
       </TopCont>
       <BottomCont>
         <FilterBy color={comp_themes[theme].switch_text}>Filter by</FilterBy>
@@ -103,7 +103,7 @@ export default function FilterBar({ value, setValue }) {
         <ButtonCont>
           {value == "One" ? (
             <>
-              <FilterDropdown name="University" />
+              <FilterDropdown name="University" university={university} setUniversity={setUniversity}/>
               <Space />
 
               <FilterDropdownSingle name="Level" />
