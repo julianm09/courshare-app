@@ -65,7 +65,7 @@ export default function FilterBar({ value, setValue }) {
   };
 
   const classes = useStyles();
-  const { theme, setTheme } = useTheme();
+
   return (
     <BigCont>
       <TopCont>
@@ -81,7 +81,7 @@ export default function FilterBar({ value, setValue }) {
         </Tabs>
       </TopCont>
       <BottomCont>
-        <Header color={comp_themes[theme].switch_text}>Saved Courses</Header>
+        <Header>Saved Courses</Header>
         <SearchBar />
       </BottomCont>
     </BigCont>
