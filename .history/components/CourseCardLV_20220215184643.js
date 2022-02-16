@@ -13,7 +13,7 @@ import { comp_themes } from "@/utils/variables";
 const Cont = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 90%;
+  width: 80%;
   margin: 0 0 49px 0;
 `;
 

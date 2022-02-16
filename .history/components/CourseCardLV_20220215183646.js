@@ -51,9 +51,7 @@ const Rating = styled.div`
   align-items: center;
 `;
 
-const Challenge = styled.div`
-  font-size: 14px;
-`;
+const Challenge = styled.div``;
 
 const Selection = styled.div`
   display: flex;

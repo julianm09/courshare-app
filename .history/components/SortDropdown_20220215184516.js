@@ -38,18 +38,14 @@ const Drowpdown = styled.div`
   background: #ffffff;
   margin-bottom: 20px;
   margin-right: 10%;
-  @media (max-width: 1000px) {
-    margin-right: 0%;
-  }
 `;
 
 const DrowpdownBox = styled.div`
   position: absolute;
   background: #ffffff;
   z-index: 100000;
-  top: 52px;
-  right: 145px;
-  min-height: 109px;
+  top: 72px;
+  min-height: 209px;
   width: 160px;
   max-width: 395px;
   box-shadow: 0px 2px 8px 0px rgba(185, 185, 185, 0.52);

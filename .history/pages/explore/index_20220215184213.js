@@ -12,9 +12,8 @@ import CurriculumSlider from "@/components/CurriculumSlider";
 import PageNavigation from "@/components/PageNavigationCourse";
 import PageNavigationCourse from "@/components/PageNavigationCourse";
 import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
-import SectionTabs from "@/components/SectionTabs";
 
-export default function MyPage() {
+export default function Home() {
   const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
   const [search, setSearch] = useState("");
@@ -49,13 +48,25 @@ export default function MyPage() {
 
   return (
     <Cont>
-      <SectionTabs
-        value={display}
-        setValue={setDisplay}
-        one="Saved"
-        two="Your Curriculums"
+      <FilterBar value={display} setValue={setDisplay} />
+      <SortDropdown
+        sort={
+          display == "One"
+            ? [
+                "A to Z",
+                "Level (ascending)",
+                "Level (descending)",
+                "Ratings (ascending)",
+                "Ratings (descending)",
+              ]
+            : ["Top", "New"]
+        }
       />
-
+      {addCurriculum ? (
+        <AddCurriculumForm setAddCurriculum={setAddCurriculum} />
+      ) : (
+        <></>
+      )}
       {display == "One" ? (
         <>
           {courses &&
@@ -72,22 +83,6 @@ export default function MyPage() {
             setCoursePage={setCoursePage}
             getCourses={() => getCourses()}
             coursePage={coursePage}
-          />
-
-          <Header>Saved Curriculums</Header>
-
-          {curriculums &&
-            curriculums.map((x) => (
-              <CurriculumSlider
-                avaText={x["name"]}
-                favouriteCount={x["likes"]}
-                courses={x["courses"]}
-              />
-            ))}
-          <PageNavigationCurriculum
-            setCurriculumPage={setCurriculumPage}
-            curriculumPage={curriculumPage}
-            getCurriculums={() => getCurriculums()}
           />
         </>
       ) : display == "Two" ? (
@@ -114,20 +109,16 @@ export default function MyPage() {
 }
 
 const Cont = styled.div`
-  width: 90%;
+  width: 80%;
   margin: 0 5%;
   padding: 0 0 0 8%;
   display: flex;
   justify-content: center;
   flex-direction: column;
-`;
 
-const Header = styled.p`
-  font-family: General Sans;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 43px;
-  color: #000000;
-  margin: 176px 0 86px;
+  @media (max-width: 1000px) {
+    width: 90%;
+    flex-direction: column;
+    padding: 0;
+  }
 `;

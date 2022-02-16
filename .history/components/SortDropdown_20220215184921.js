@@ -47,8 +47,8 @@ const DrowpdownBox = styled.div`
   position: absolute;
   background: #ffffff;
   z-index: 100000;
-  top: 52px;
-  right: 145px;
+  top: 72px;
+  right: 120px;
   min-height: 109px;
   width: 160px;
   max-width: 395px;

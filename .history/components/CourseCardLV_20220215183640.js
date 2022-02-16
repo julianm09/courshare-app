@@ -35,7 +35,7 @@ const InfoCont = styled.div`
 
 const CourseImg = styled.img`
   width: 280px;
-  height: 146px;
+  height: 188px;
 `;
 
 const Title = styled.div`
@@ -51,9 +51,7 @@ const Rating = styled.div`
   align-items: center;
 `;
 
-const Challenge = styled.div`
-  font-size: 14px;
-`;
+const Challenge = styled.div``;
 
 const Selection = styled.div`
   display: flex;

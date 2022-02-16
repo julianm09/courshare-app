@@ -36,7 +36,7 @@ const Drowpdown = styled.div`
   align-items: center;
   cursor: pointer;
   background: #ffffff;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   margin-right: 10%;
   @media (max-width: 1000px) {
     margin-right: 0%;
@@ -47,7 +47,7 @@ const DrowpdownBox = styled.div`
   position: absolute;
   background: #ffffff;
   z-index: 100000;
-  top: 52px;
+  top: 72px;
   right: 145px;
   min-height: 109px;
   width: 160px;

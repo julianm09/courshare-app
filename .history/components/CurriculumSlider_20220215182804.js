@@ -41,7 +41,7 @@ const AvatarText = styled.div`
 const RightCont = styled.div`
   display: flex;
   align-items: center;
-  font-size: 18px;
+  font-size: 24px;
 `;
 
 const ContentCont = styled.div`
@@ -68,7 +68,6 @@ const InfoCont = styled.div`
   font-size: 16px;
   white-space: nowrap;
   width: 168px;
-  padding: 10px 0;
 `;
 
 const Img = styled.img`
@@ -87,8 +86,7 @@ const Source = styled.div`
 const Rating = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 15%;
-  font-size: 12px;
+  margin-bottom: 22%;
 `;
 
 const Challenge = styled.div`

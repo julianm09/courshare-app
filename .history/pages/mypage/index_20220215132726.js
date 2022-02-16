@@ -76,7 +76,7 @@ export default function MyPage() {
 
           <Header>Saved Curriculums</Header>
 
-          {curriculums &&
+{curriculums &&
             curriculums.map((x) => (
               <CurriculumSlider
                 avaText={x["name"]}
@@ -89,6 +89,8 @@ export default function MyPage() {
             curriculumPage={curriculumPage}
             getCurriculums={() => getCurriculums()}
           />
+
+          
         </>
       ) : display == "Two" ? (
         <>
@@ -126,7 +128,7 @@ const Header = styled.p`
   font-family: General Sans;
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 32px;
   line-height: 43px;
   color: #000000;
   margin: 176px 0 86px;

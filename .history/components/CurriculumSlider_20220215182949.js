@@ -41,7 +41,7 @@ const AvatarText = styled.div`
 const RightCont = styled.div`
   display: flex;
   align-items: center;
-  font-size: 18px;
+  font-size: 24px;
 `;
 
 const ContentCont = styled.div`

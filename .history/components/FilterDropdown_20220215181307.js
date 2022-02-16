@@ -110,8 +110,8 @@ const Dropdown = styled.div`
   background: #ffffff;
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   border-radius: 10px;
-  height: 35px;
-  width: 160px;
+  height: 30px;
+  width: 180px;
   padding: 0 21px 0 29px;
   display: flex;
   justify-content: space-between;
