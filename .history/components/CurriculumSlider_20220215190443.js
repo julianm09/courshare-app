@@ -61,7 +61,7 @@ const InfoCont = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin: 14px 30px;
+  margin: 14px 20px;
   font-family: General Sans;
   font-style: normal;
   font-weight: normal;

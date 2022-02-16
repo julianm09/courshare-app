@@ -54,7 +54,7 @@ const BoxCont = styled.div`
   display: flex;
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   border-radius: 10px;
-  margin: 0 45px 0 0;
+  margin: 0 75px 0 0;
 `;
 
 const InfoCont = styled.div`
@@ -67,7 +67,7 @@ const InfoCont = styled.div`
   font-weight: normal;
   font-size: 16px;
   white-space: nowrap;
-  width: 155px;
+  width: 168px;
   padding: 10px 0;
 `;
 

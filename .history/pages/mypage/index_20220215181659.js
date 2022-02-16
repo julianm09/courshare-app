@@ -126,7 +126,7 @@ const Header = styled.p`
   font-family: General Sans;
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 32px;
   line-height: 43px;
   color: #000000;
   margin: 176px 0 86px;

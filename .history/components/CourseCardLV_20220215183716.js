@@ -13,7 +13,7 @@ import { comp_themes } from "@/utils/variables";
 const Cont = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 90%;
+  width: 80%;
   margin: 0 0 49px 0;
 `;
 
@@ -51,9 +51,7 @@ const Rating = styled.div`
   align-items: center;
 `;
 
-const Challenge = styled.div`
-  font-size: 14px;
-`;
+const Challenge = styled.div``;
 
 const Selection = styled.div`
   display: flex;
