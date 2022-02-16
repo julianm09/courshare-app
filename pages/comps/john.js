@@ -14,7 +14,7 @@ export default function John() {
       <SortDropdown/>
       <CurriculumDropdown />
       <CourseCardLV />
-      <CurriculumSlider />
+      {/* <CurriculumSlider /> */}
     </Cont>
   )
 }
