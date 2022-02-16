@@ -62,7 +62,7 @@ const Space = styled.div`
   height: 22px;
 `;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   indicator: {
     backgroundColor: "#FFC403",
     height: "10px",
@@ -87,7 +87,7 @@ export default function FilterBar({ value, setValue, handleSearch, setUniversity
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="#FFC403"
+          textColor="FFC403"
           aria-label="secondary tabs example"
           TabIndicatorProps={{ className: classes.indicator }}
         >

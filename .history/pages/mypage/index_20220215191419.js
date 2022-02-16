@@ -13,13 +13,11 @@ import PageNavigation from "@/components/PageNavigationCourse";
 import PageNavigationCourse from "@/components/PageNavigationCourse";
 import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
 import SectionTabs from "@/components/SectionTabs";
-import { useTheme } from "@/utils/provider";
-import { comp_themes } from "@/utils/variables";
 
 export default function MyPage() {
   const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState("");
   const [display, setDisplay] = useState("One");
   const [addCurriculum, setAddCurriculum] = useState(false);
   const [coursePage, setCoursePage] = useState(0);
@@ -29,7 +27,6 @@ export default function MyPage() {
     const res = await ax.get("./api/courses", {
       params: {
         page: coursePage,
-        search: search,
       },
     });
     console.log(res.data);

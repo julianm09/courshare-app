@@ -73,6 +73,7 @@ const InfoCont = styled.div`
   white-space: nowrap;
   width: 155px;
   padding: 10px 0;
+  background: #ffffff;
 `;
 
 const Img = styled.img`

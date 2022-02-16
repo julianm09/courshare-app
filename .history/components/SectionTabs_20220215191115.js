@@ -59,13 +59,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FilterBar({ value, setValue, handleSearch }) {
+export default function FilterBar({ value, setValue }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const classes = useStyles();
-  const { theme, setTheme } = useTheme();
+
   return (
     <BigCont>
       <TopCont>

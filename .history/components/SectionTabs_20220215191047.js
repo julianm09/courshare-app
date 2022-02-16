@@ -35,7 +35,7 @@ const Header = styled.p`
   font-size: 24px;
   line-height: 43px;
 
-  color: ${(props) => props.color};
+  color: #000000;
 `;
 const BottomCont = styled.div`
   display: flex;
@@ -59,13 +59,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FilterBar({ value, setValue, handleSearch }) {
+export default function FilterBar({ value, setValue }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const classes = useStyles();
-  const { theme, setTheme } = useTheme();
+
   return (
     <BigCont>
       <TopCont>
@@ -81,7 +81,7 @@ export default function FilterBar({ value, setValue, handleSearch }) {
         </Tabs>
       </TopCont>
       <BottomCont>
-        <Header color={comp_themes[theme].switch_text}>Saved Courses</Header>
+        <Header>Saved Courses</Header>
         <SearchBar />
       </BottomCont>
     </BigCont>

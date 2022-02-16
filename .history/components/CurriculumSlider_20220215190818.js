@@ -6,7 +6,6 @@ import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { Checkbox } from "@mui/material";
 import { purple } from "@mui/material/colors";
-import { useTheme } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 
 const Cont = styled.div`
@@ -38,14 +37,12 @@ const Avatar = styled.img`
 const AvatarText = styled.div`
   font-size: 20px;
   white-space: nowrap;
-  color: ${(props) => props.color};
 `;
 
 const RightCont = styled.div`
   display: flex;
   align-items: center;
   font-size: 18px;
-  color: ${(props) => props.color};
 `;
 
 const ContentCont = styled.div`
@@ -82,7 +79,6 @@ const Img = styled.img`
 
 const Title = styled.div`
   font-size: 14px;
-  color: ${(props) => props.color};
 `;
 
 const Source = styled.div`
@@ -111,7 +107,6 @@ export default function CurriculumSlider({
   difficulty1 = " Beginner",
   courses,
 }) {
-  const { theme, setTheme } = useTheme();
   return (
     <Cont>
       <TitleCont>
@@ -121,7 +116,7 @@ export default function CurriculumSlider({
             {avaText}
           </AvatarText>
         </LeftCont>
-        <RightCont color={comp_themes[theme].switch_text}>
+        <RightCont>
           {favouriteCount}
           <Checkbox
             sx={{
@@ -142,9 +137,7 @@ export default function CurriculumSlider({
           <BoxCont>
             <Img src={x["Image"]} />
             <InfoCont>
-              <Title color={comp_themes[theme].switch_text}>
-                {x["Course Name"]}
-              </Title>
+              <Title>{x["Course Name"]}</Title>
               <Source>{x["University"]}</Source>
               <Rating>
                 <RatingStars />

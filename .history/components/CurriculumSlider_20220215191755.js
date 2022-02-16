@@ -59,6 +59,7 @@ const BoxCont = styled.div`
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   border-radius: 10px;
   margin: 0 45px 0 0;
+  background: #ffffff;
 `;
 
 const InfoCont = styled.div`
