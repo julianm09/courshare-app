@@ -25,6 +25,7 @@ export default function MyPage() {
   const [coursePage, setCoursePage] = useState(0);
   const [curriculumPage, setCurriculumPage] = useState(0);
   const [searching, setSearching] = useState(false);
+  const [courseItems, setCourseItems] = useState(424);
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -50,8 +51,9 @@ export default function MyPage() {
         search: searchCourse,
       },
     });
-    console.log(res.data);
-    setCourses(res.data);
+    setCourses(res.data.courses);
+    setCourseItems(res.data.length)
+    setSearching(false);
   };
 
   const getCurriculums = async () => {
@@ -100,6 +102,7 @@ export default function MyPage() {
             setCoursePage={setCoursePage}
             getCourses={() => getCourses()}
             coursePage={coursePage}
+            items={courseItems}
           />
 
           <Header color={comp_themes[theme].switch_text}>
