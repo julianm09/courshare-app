@@ -52,9 +52,11 @@ export default function handler(req, res) {
     }
   }
 
+  const length = courses.length
+
   if (page) {
     courses = courses.slice(Number(page) * 9, (Number(page) + 1) * 9);
   }
 
-  res.status(200).json(courses);
+  res.status(200).json({courses, length: length});
 }

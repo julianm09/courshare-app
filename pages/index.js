@@ -53,8 +53,8 @@ const LeftCont = styled.div`
 const RightCont = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 5%;
-  align-items: flex-start;
+  align-items: flex-end;
+  padding: 0 5% 0 0;
 
   @media(max-width: 1000px){
     display: none;
@@ -81,6 +81,5 @@ const Name = styled.div`
 const ExploreBtn = styled.button``;
 
 const GroupImg = styled.img`
-  width: 550px;
-  height: 620px;
+  width: 70%;
 `;

@@ -23,8 +23,12 @@ const Searchimg = styled.img`
 const Cont = styled.div`
   position: relative;
   display: flex;
-  max-width: 503px;
+
   align-items: center;
+  @media (max-width: 1000px) {
+    width: 100%;
+
+  }
 `;
 
 export default function SearchBar({handleSearch, value}) {

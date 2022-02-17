@@ -28,12 +28,11 @@ const TopCont = styled.div`
     flex-direction: column;
   }
 `;
-const Header = styled.p`
+const Header = styled.div`
   font-family: General Sans;
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
-  line-height: 43px;
 
   color: ${(props) => props.color};
 `;
@@ -43,8 +42,9 @@ const BottomCont = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 1400px) {
+  @media (max-width: 1000px) {
     flex-direction: column;
+    align-items: flex-start;
   }
 `;
 

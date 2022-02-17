@@ -28,6 +28,7 @@ const TopCont = styled.div`
   @media (max-width: 1000px) {
     width: 100%;
     flex-direction: column;
+    align-items: flex-start;
   }
 `;
 const FilterBy = styled.p`
@@ -54,6 +55,7 @@ const ButtonCont = styled.div`
   @media (max-width: 1000px) {
     width: 100%;
     flex-direction: column;
+
   }
 `;
 
