@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import Checkbox from "./Checkbox";
 import AddedBadge from "./AddedBadge";
-import CloseIcon from "@mui/icons-material/Close";
 
 export default function AddCurriculumForm({
   setAddCurriculum,
@@ -62,60 +61,53 @@ export default function AddCurriculumForm({
   };
 
   return (
-    <Overlay>
+    <Overlay onClick={() => setAddCurriculum(false)}>
       {addedCurriculum ? (
         <AddedBadge />
       ) : (
         <Cont onClick={(e) => e.stopPropagation()}>
-          <ButtonCont>
-            <CloseIcon onClick={() => setAddCurriculum(false)} />
-          </ButtonCont>
-          <ContentCont>
-            <Title>Add curriculum</Title>
-            <Label>Name</Label>
-            <Input />
-            <Label>Category</Label>
-            <Drowpdown onClick={() => setShowCategory(!showCategory)}>
-              Select your curriculum category
-              <Icon>
-                {showCategory ? (
-                  <img src="/icons/up-caret.svg" />
-                ) : (
-                  <img src="/icons/down-caret.svg" />
-                )}
-              </Icon>
-            </Drowpdown>
-            {showCategory ? (
-              <DrowpdownBox>
-                <CategoryCont>
-                  {categories.slice(0, showAll ? 32 : 8).map((x) => (
-                    <Category>
-                      <Checkbox
-                        handleSelect={handleSelect}
-                        x={x}
-                        setSelected={setSelected}
-                        selected={selected}
-                      />
-                      <div>{x}</div>
-                    </Category>
-                  ))}
-                </CategoryCont>
-                {showAll ? (
-                  <ShowAll onClick={() => setShowAll(!showAll)}>
-                    Show Less
-                  </ShowAll>
-                ) : (
-                  <ShowAll onClick={() => setShowAll(!showAll)}>
-                    Show All
-                  </ShowAll>
-                )}
-              </DrowpdownBox>
-            ) : (
-              <></>
-            )}
+          <Title>Add curriculum</Title>
+          <Label>Name</Label>
+          <Input />
+          <Label>Category</Label>
+          <Drowpdown onClick={() => setShowCategory(!showCategory)}>
+            Select your curriculum category
+            <Icon>
+              {showCategory ? (
+                <img src="/icons/up-caret.svg" />
+              ) : (
+                <img src="/icons/down-caret.svg" />
+              )}
+            </Icon>
+          </Drowpdown>
+          {showCategory ? (
+            <DrowpdownBox>
+              <CategoryCont>
+                {categories.slice(0, showAll ? 32 : 8).map((x) => (
+                  <Category>
+                    <Checkbox
+                      handleSelect={handleSelect}
+                      x={x}
+                      setSelected={setSelected}
+                      selected={selected}
+                    />
+                    <div>{x}</div>
+                  </Category>
+                ))}
+              </CategoryCont>
+              {showAll ? (
+                <ShowAll onClick={() => setShowAll(!showAll)}>
+                  Show Less
+                </ShowAll>
+              ) : (
+                <ShowAll onClick={() => setShowAll(!showAll)}>Show All</ShowAll>
+              )}
+            </DrowpdownBox>
+          ) : (
+            <></>
+          )}
 
-            <AddButton onClick={handleAddCurriculum}>Add</AddButton>
-          </ContentCont>
+          <AddButton onClick={handleAddCurriculum}>Add</AddButton>
         </Cont>
       )}
     </Overlay>
@@ -145,9 +137,9 @@ const Cont = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-
+  align-items: center;
   justify-content: flex-start;
-  padding: 40px 0;
+  padding: 69px 0 49px 0;
 
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -159,45 +151,31 @@ const Cont = styled.div`
 `;
 
 const Title = styled.div`
-  width: 80%;
-  max-width: 295px;
+  width: 90%;
+  max-width: 395px;
   font-family: General Sans;
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 32px;
   margin: 0 0 26px 0;
 `;
 
-const ButtonCont = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 40px;
-`;
-
-const ContentCont = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 const Label = styled.div`
-  width: 80%;
-  max-width: 295px;
+  width: 90%;
+  max-width: 395px;
   font-family: General Sans;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 22px;
   margin: 0 0 9px 0;
 `;
 
 const Input = styled.input`
   height: 46px;
-  width: 80%;
-  max-width: 295px;
-  height: 40px;
+  width: 90%;
+  max-width: 395px;
   border: 0.5px solid #000000;
   box-sizing: border-box;
   border-radius: 10px;
@@ -215,9 +193,8 @@ const Input = styled.input`
 
 const Drowpdown = styled.div`
   height: 46px;
-  width: 80%;
-  max-width: 295px;
-  height: 40px;
+  width: 90%;
+  max-width: 395px;
   border: 0.5px solid #000000;
   box-sizing: border-box;
   border-radius: 10px;
@@ -239,9 +216,9 @@ const Drowpdown = styled.div`
 const DrowpdownBox = styled.div`
   min-height: 162px;
   height: auto;
-  width: 295px;
-  width: 80%;
-  max-width: 295px;
+  width: 395px;
+  width: 90%;
+  max-width: 395px;
   border: 0.5px solid #000000;
   box-sizing: border-box;
   border-radius: 10px;
@@ -273,7 +250,7 @@ const CategoryCont = styled.div`
 const Category = styled.div`
   font-family: General Sans;
 
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 16px;
@@ -287,7 +264,7 @@ const ShowAll = styled.div`
   font-family: General Sans;
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 19px;
   color: #ffc403;
   cursor: pointer;
@@ -305,7 +282,7 @@ const AddButton = styled.div`
   font-family: General Sans;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 22px;
   color: #000000;
   display: flex;

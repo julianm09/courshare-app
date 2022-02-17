@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import Checkbox from "./Checkbox";
 import AddedBadge from "./AddedBadge";
-import CloseIcon from "@mui/icons-material/Close";
 
 export default function AddCurriculumForm({
   setAddCurriculum,
@@ -62,60 +61,53 @@ export default function AddCurriculumForm({
   };
 
   return (
-    <Overlay>
+    <Overlay onClick={() => setAddCurriculum(false)}>
       {addedCurriculum ? (
         <AddedBadge />
       ) : (
         <Cont onClick={(e) => e.stopPropagation()}>
-          <ButtonCont>
-            <CloseIcon onClick={() => setAddCurriculum(false)} />
-          </ButtonCont>
-          <ContentCont>
-            <Title>Add curriculum</Title>
-            <Label>Name</Label>
-            <Input />
-            <Label>Category</Label>
-            <Drowpdown onClick={() => setShowCategory(!showCategory)}>
-              Select your curriculum category
-              <Icon>
-                {showCategory ? (
-                  <img src="/icons/up-caret.svg" />
-                ) : (
-                  <img src="/icons/down-caret.svg" />
-                )}
-              </Icon>
-            </Drowpdown>
-            {showCategory ? (
-              <DrowpdownBox>
-                <CategoryCont>
-                  {categories.slice(0, showAll ? 32 : 8).map((x) => (
-                    <Category>
-                      <Checkbox
-                        handleSelect={handleSelect}
-                        x={x}
-                        setSelected={setSelected}
-                        selected={selected}
-                      />
-                      <div>{x}</div>
-                    </Category>
-                  ))}
-                </CategoryCont>
-                {showAll ? (
-                  <ShowAll onClick={() => setShowAll(!showAll)}>
-                    Show Less
-                  </ShowAll>
-                ) : (
-                  <ShowAll onClick={() => setShowAll(!showAll)}>
-                    Show All
-                  </ShowAll>
-                )}
-              </DrowpdownBox>
-            ) : (
-              <></>
-            )}
+          <Title>Add curriculum</Title>
+          <Label>Name</Label>
+          <Input />
+          <Label>Category</Label>
+          <Drowpdown onClick={() => setShowCategory(!showCategory)}>
+            Select your curriculum category
+            <Icon>
+              {showCategory ? (
+                <img src="/icons/up-caret.svg" />
+              ) : (
+                <img src="/icons/down-caret.svg" />
+              )}
+            </Icon>
+          </Drowpdown>
+          {showCategory ? (
+            <DrowpdownBox>
+              <CategoryCont>
+                {categories.slice(0, showAll ? 32 : 8).map((x) => (
+                  <Category>
+                    <Checkbox
+                      handleSelect={handleSelect}
+                      x={x}
+                      setSelected={setSelected}
+                      selected={selected}
+                    />
+                    <div>{x}</div>
+                  </Category>
+                ))}
+              </CategoryCont>
+              {showAll ? (
+                <ShowAll onClick={() => setShowAll(!showAll)}>
+                  Show Less
+                </ShowAll>
+              ) : (
+                <ShowAll onClick={() => setShowAll(!showAll)}>Show All</ShowAll>
+              )}
+            </DrowpdownBox>
+          ) : (
+            <></>
+          )}
 
-            <AddButton onClick={handleAddCurriculum}>Add</AddButton>
-          </ContentCont>
+          <AddButton onClick={handleAddCurriculum}>Add</AddButton>
         </Cont>
       )}
     </Overlay>
@@ -145,7 +137,7 @@ const Cont = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-
+  align-items: center;
   justify-content: flex-start;
   padding: 40px 0;
 
@@ -167,19 +159,6 @@ const Title = styled.div`
   font-size: 20px;
   line-height: 32px;
   margin: 0 0 26px 0;
-`;
-
-const ButtonCont = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 40px;
-`;
-
-const ContentCont = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 const Label = styled.div`
@@ -305,7 +284,7 @@ const AddButton = styled.div`
   font-family: General Sans;
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 22px;
   color: #000000;
   display: flex;

@@ -105,12 +105,20 @@ export default function CourseDetailCard({
 }) {
   const [value, setValue] = React.useState(4);
 
+  const handleAddCurriculum = () => {
+    setAddedCurriculum(true);
+
+    setTimeout(() => {
+      setAddCurriculum(false);
+      setAddedCurriculum(true);
+    }, 1000);
+  };
   return (
-    <Overlay>
+    <Overlay onClick={() => setViewCourse(false)}>
       <BigCont onClick={(e) => e.stopPropagation()}>
         <ButtonCont>
           <button style={{ border: "none", background: "none" }}>
-            <CloseIcon onClick={() => setViewCourse(false)} />
+            <CloseIcon onClick={() => setAddCurriculum(false)} />
           </button>
         </ButtonCont>
         <ContentCont>
