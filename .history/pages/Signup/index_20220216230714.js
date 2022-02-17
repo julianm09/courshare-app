@@ -3,15 +3,12 @@ import styled from "styled-components";
 const Cont = styled.div`
   width: 519px;
   height: 528px;
-  position: relative;
+
   background: #ffffff;
   /* button */
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   border-radius: 10px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+
   margin: auto;
 `;
 

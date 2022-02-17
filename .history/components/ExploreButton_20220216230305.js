@@ -16,7 +16,7 @@ const ExploreBtn = styled.button`
   color: #fff;
   border-radius: 8px;
   border: none;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 400;
 `;
 
