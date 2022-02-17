@@ -197,6 +197,7 @@ export default function Home() {
             {courses &&
               courses.map((x, i) => (
                 <CourseCardLV
+                  setAddCurriculum={setAddCurriculum}
                   key={i}
                   courseName={x["Course Name"]}
                   teachingSource={x["University"]}

@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FilterBar({ value, setValue, handleSearch }) {
+export default function FilterBar({ value, setValue, handleSearch, one, two }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -76,13 +76,13 @@ export default function FilterBar({ value, setValue, handleSearch }) {
           aria-label="secondary tabs example"
           TabIndicatorProps={{ className: classes.indicator }}
         >
-          <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
-          <Tab value="Two" label="Curriculums" style={{ marginLeft: 30 }} />
+          <Tab classes={{ tabs: classes.tabs }} value="One" label={one} />
+          <Tab value="Two" label={two} style={{ marginLeft: 30 }} />
         </Tabs>
       </TopCont>
       <BottomCont>
         <Header color={comp_themes[theme].switch_text}>Saved Courses</Header>
-        <SearchBar />
+        <SearchBar handleSearch={handleSearch}/>
       </BottomCont>
     </BigCont>
   );

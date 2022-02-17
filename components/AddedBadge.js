@@ -10,22 +10,26 @@ const Cont = styled.div`
 `;
 
 const AddedBtn = styled.button`
-    width: 253px;
-    height: 79px;
-    background-color: ${props=>props.background};
-    font-size: 20px;
-    border: none;
-`
+  width: 253px;
+  height: 79px;
+  background-color: ${(props) => props.background};
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: General Sans;
+  font-style: normal;
+  font-weight: 400;
+  filter: drop-shadow(0px 2px 8px rgba(185, 185, 185, 0.52));
+`;
 
 const AddedBadge = ({
-    text = "Added to Curriculum",
-    background = "#ffecad"
-}) =>{
-    return (
-        <Cont>
-            <AddedBtn background={background}>{text}</AddedBtn>
-        </Cont>
-    )
-}
+  text = "Added to Curriculum",
+  background = "#ffecad",
+}) => {
+  return <AddedBtn background={background}>{text}</AddedBtn>;
+};
 
-export default AddedBadge
+export default AddedBadge;

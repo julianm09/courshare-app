@@ -13,7 +13,7 @@ const Cont = styled.div`
 
 const CurriculumList = styled.div`
   width: 186px;
-  height: 120px;
+
   border-radius: 10px;
   font-family: General Sans;
   font-style: normal;
@@ -30,8 +30,12 @@ const CurriculumList = styled.div`
 
 const CreateText = styled.div`
   font-size: 14px;
-  margin-left: 5%;
-  margin-top: 3%;
+  padding:3% 5%;
+  cursor: pointer;
+
+  &:hover{
+    background: #FEF3D0;
+  }
 `;
 
 const Break = styled.div`
@@ -42,25 +46,36 @@ const Break = styled.div`
 
 const Curriculums = styled.div`
   font-size: 12px;
-  margin-left: 5%;
+  padding: 3% 5%;
+  cursor: pointer;
+  &:hover{
+    background: #FEF3D0;
+  }
 `;
 
 export default function CurriculumDropdown({
+  setAddCurriculum,
   curriculums = [
     "UX/UI Design Course",
     "Web Development Course",
     "3D Modeling Course",
   ],
+  
 }) {
   const [show, setShow] = useState(false);
 
+  const addCurriculum = () => {
+    setAddCurriculum(true)
+    setShow(false)
+  }
+
   return (
     <Cont>
-      <MoreVertIcon onClick={() => setShow(!show)} />
+      <MoreVertIcon style={{cursor: "pointer"}} onClick={() => setShow(!show)} />
 
       {show ? (
         <CurriculumList>
-          <CreateText>Create new curriculum</CreateText>
+          <CreateText onClick={addCurriculum}>Create new curriculum</CreateText>
           <Break></Break>
           {curriculums.map((x) => (
             <Curriculums>

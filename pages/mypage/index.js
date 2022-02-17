@@ -19,17 +19,35 @@ import { comp_themes } from "@/utils/variables";
 export default function MyPage() {
   const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
-  const [search, setSearch] = useState(null);
+  const [searchCourse, setSearchCourse] = useState(null);
   const [display, setDisplay] = useState("One");
   const [addCurriculum, setAddCurriculum] = useState(false);
   const [coursePage, setCoursePage] = useState(0);
   const [curriculumPage, setCurriculumPage] = useState(0);
+  const [searching, setSearching] = useState(false);
 
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      if (
+        (searchCourse !== null && searchCourse.length > 1) ||
+        (searchCourse !== null && searchCourse === "")
+      ) {
+        if (display === "One") {
+          setSearching(true);
+          setCoursePage(0);
+          getCourses();
+        }
+      }
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [searchCourse]);
+  
   const getCourses = async () => {
     const res = await ax.get("./api/courses", {
       params: {
         page: coursePage,
-        search: search,
+        search: searchCourse,
       },
     });
     console.log(res.data);
@@ -45,6 +63,10 @@ export default function MyPage() {
     setCurriculums(res.data);
   };
 
+  const handleSearch = (e) => {
+      setSearchCourse(e.target.value);
+  };
+
   useEffect(() => {
     getCourses();
     getCurriculums();
@@ -52,11 +74,13 @@ export default function MyPage() {
   const { theme, setTheme } = useTheme();
   return (
     <Cont>
+      <Greeting>Hi, Juhee 👋</Greeting>
       <SectionTabs
         value={display}
         setValue={setDisplay}
         one="Saved"
         two="Your Curriculums"
+        handleSearch={handleSearch}
       />
 
       {display == "One" ? (
@@ -69,6 +93,7 @@ export default function MyPage() {
                 ratingCount={x["Course Rating"]}
                 difficulty={x["Difficulty Level"]}
                 image={x.Image}
+                setAddCurriculum={setAddCurriculum}
               />
             ))}
           <PageNavigationCourse
@@ -127,7 +152,7 @@ const Cont = styled.div`
   flex-direction: column;
 `;
 
-const Header = styled.p`
+const Header = styled.div`
   font-family: General Sans;
   font-style: normal;
   font-weight: 500;
@@ -135,4 +160,14 @@ const Header = styled.p`
   line-height: 43px;
   color: ${(props) => props.color};
   margin: 176px 0 86px;
+`;
+
+const Greeting = styled.div`
+font-family: General Sans;
+font-style: normal;
+font-weight: 500;
+font-size: 55px;
+line-height: 74px;
+color: #000000;
+margin: 95px 0 ;
 `;

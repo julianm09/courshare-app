@@ -69,6 +69,7 @@ export default function CourseCardLV({
   ratingCount = 4.6,
   difficulty = " Intermediate",
   image,
+  setAddCurriculum
 }) {
   const { theme, setTheme } = useTheme();
   return (
@@ -92,7 +93,7 @@ export default function CourseCardLV({
         </InfoCont>
       </CourseCont>
       <Selection>
-        <CurriculumDropdown />
+        <CurriculumDropdown setAddCurriculum={setAddCurriculum}/>
         <Break />
         <Checkbox
           sx={{
