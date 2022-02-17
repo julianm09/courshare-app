@@ -25,12 +25,11 @@ const InfoCont = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-left: 5%;
+  margin-left: 28px;
   font-family: General Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
-  white-space: nowrap;
 `;
 
 const CourseImg = styled.img`
@@ -80,7 +79,7 @@ export default function CourseCardLV({
           <Title color={comp_themes[theme].switch_text}>{courseName}</Title>
           <Source>{teachingSource}</Source>
           <Rating>
-            <RatingStars />
+            <RatingStars defaultValue={ratingCount} />
             {ratingCount}
           </Rating>
           <Challenge>

@@ -1,11 +1,49 @@
 import styled from "styled-components";
 import { useState } from "react";
-import ax from 'axios';
+import ax from "axios";
 import CourseCardLV from "./CourseCardLV";
 
-var timer = null;
+const SortDropdown = ({
+  text = "Sort by",
+  sort = [
+    "A to Z",
+    "Level (ascending)",
+    "Level (descending)",
+    "Ratings (ascending)",
+    "Ratings (descending)",
+  ],
+  setSortDirection,
+  setSortBy,
+}) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Cont>
+      <Drowpdown onClick={() => setOpen(!open)}>
+        {text}
+        <Icon>
+          {open ? (
+            <img src="/icons/up-caret.svg" />
+          ) : (
+            <img src="/icons/down-caret.svg" />
+          )}
+        </Icon>
+      </Drowpdown>
+      {open ? (
+        <DrowpdownBox>
+          {sort.map((x) => (
+            <Category onClick={() => setSortBy(x)}>{x}</Category>
+          ))}
+        </DrowpdownBox>
+      ) : (
+        <></>
+      )}
+    </Cont>
+  );
+};
+
 const Cont = styled.div`
-  width: 100%;
+  width: 90%;
   margin: 0 0 54px 0;
   display: flex;
   position: relative;
@@ -40,7 +78,7 @@ const Drowpdown = styled.div`
   cursor: pointer;
   background: #ffffff;
   margin-bottom: 20px;
-  margin-right: 10%;
+
   @media (max-width: 1000px) {
     margin-right: 0%;
   }
@@ -51,14 +89,13 @@ const DrowpdownBox = styled.div`
   background: #ffffff;
   z-index: 100000;
   top: 52px;
-  right: 145px;
-  min-height: 109px;
+
   width: 160px;
   max-width: 395px;
   box-shadow: 0px 2px 8px 0px rgba(185, 185, 185, 0.52);
   box-sizing: border-box;
   border-radius: 10px;
-  padding: 12px 18px;
+  padding: 12px 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -75,6 +112,11 @@ const Category = styled.div`
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
+  padding: 0 18px;
+
+  &:hover{
+    background: #FEF3D0;
+  }
 `;
 
 const Icon = styled.div`
@@ -83,94 +125,4 @@ const Icon = styled.div`
   align-items: center;
 `;
 
-const SortDropdown = ({
-  text = "Sort by",
-  sort = [
-    "A to Z",
-    "Level (ascending)",
-    "Level (descending)",
-    "Ratings (ascending)",
-    "Ratings (descending)",
-  ],
-  handleSort = () => console.log("sort"),
-}) => {
-  const [open, setOpen] = useState(false);
-  const [data, setData] = useState([]);
-  const [sbr, setSBR] = useState(false);
-  const [sbla, setSBLA] = useState(false);
-  const [sbld, setSBLD] = useState(false);
-  const [sbra, setSBRA] = useState(false);
-  const [sbrd, setSBRD] = useState(false);
-  const Sorting = async ()=>{
-
-    //resets the timer if the inputs keeps changing
-    if(timer){
-      clearTimeout(timer);
-      timer = null;
-    }
-
-    //start a timer to wait 2 seconds before making an asynchronous call
-    if(timer === null){
-      timer = setTimeout(async ()=>{
-        console.log("async call");
-        const res = await ax.get("/api/courses", {
-          params:{
-            title_rating: sbr,
-            level_rating_a: sbla,
-            level_rating_d: sbld,
-            rating_a: sbra,
-            rating_d: sbrd
-          }
-        })
-      
-        console.log(res.data);
-        setData(res.data);
-        timer = null;
-      }, 500);
-    }
-
-  }
-
-  return (
-    <Cont>
-      <Drowpdown onClick={() => setOpen(!open)}>
-        {text}
-        <Icon>
-          {open ? (
-            <img src="/icons/up-caret.svg" />
-          ) : (
-            <img src="/icons/down-caret.svg" />
-          )}
-        </Icon>
-      </Drowpdown>
-      {open ? (
-        <DrowpdownBox onClick={()=>Sorting()}>
-            <Category onClick={()=>setSBR(!sbr)}>
-              A to Z
-            </Category>
-            <Category onClick={()=>setSBLA(!sbla)}>
-              Level (ascending)
-            </Category>
-            <Category onClick={()=>setSBLD(!sbld)}>
-              Level (descending)
-            </Category>
-            <Category onClick={()=>setSBRA(!sbra)}>
-              Ratings (ascending)
-            </Category>
-            <Category onClick={()=>setSBRD(!sbrd)}>
-              Ratings (descending)
-            </Category>
-        </DrowpdownBox>
-      ) : (
-        <></>
-      )}
-
-      {data.map((o,i) =>{
-        return <div>
-          <CourseCardLV />
-        </div>
-      })}
-    </Cont>
-  );
-};
 export default SortDropdown;

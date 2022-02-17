@@ -4,6 +4,7 @@
     "name": "Julians Curriculum",
     "date": "02/11/2022",
     "likes": 100,
+    "category":"math",
     "courses": [
       {
         "Course Name": "Silicon Thin Film Solar Cells",
@@ -42,6 +43,7 @@
     "name": "Johns Curriculum",
     "date": "02/05/2022",
     "likes": 120,
+    "category":"communication",
     "courses": [
       {
         "Course Name": "Silicon Thin Film Solar Cells",
@@ -80,6 +82,7 @@
     "name": "Juhees Curriculum",
     "date": "02/04/2022",
     "likes": 300,
+    "category":"business",
     "courses": [
       {
         "Course Name": "Silicon Thin Film Solar Cells",
@@ -118,6 +121,7 @@
     "name": "Evies Curriculum",
     "date": "02/02/2022",
     "likes": 100,
+    "category":"communication",
     "courses": [
       {
         "Course Name": "Silicon Thin Film Solar Cells",
@@ -155,6 +159,7 @@
     "id": 5,
     "name": "Henrys Curriculum",
     "date": "02/01/2022",
+    "category":"webdev",
     "likes": 200,
     "courses": [
       {

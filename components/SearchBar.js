@@ -27,11 +27,11 @@ const Cont = styled.div`
   align-items: center;
 `;
 
-export default function SearchBar({handleSearch}) {
+export default function SearchBar({handleSearch, value}) {
   return (
     <Cont>
       <Searchimg src="/icons/search.png" />
-      <SearchBarInput onChange={(e) => handleSearch(e)}/>
+      <SearchBarInput value={value} onChange={(e) => handleSearch(e)}/>
     </Cont>
   );
 }

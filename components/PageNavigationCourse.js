@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
       border: "1px solid #FFC403",
       display: "flex",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
     },
     "&	.Mui-selected": {
       color: "#ffffff",
@@ -27,13 +27,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function PageNavigationCourse({items=424, setCoursePage}) {
-
+export default function PageNavigationCourse({ items = 424, setCoursePage }) {
   const handleChange = (e, v) => {
-    console.log(v);
-    setCoursePage(v - 1)
+    setCoursePage(v - 1);
   };
-  
+
   const classes = useStyles();
   return (
     <Cont>

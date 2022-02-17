@@ -5,18 +5,18 @@ import Checkbox from "./Checkbox";
 export default function FilterDropdownSingle({
   name = "Ratings",
   categories = ["4.5 - 5.5", "4.0 - 4.5", "3.5 - 4.0", "0 - 3.5"],
+  selected,
+  setSelected = () => {},
 }) {
   const [show, setShow] = useState(false);
   const [showAll, setShowAll] = useState(false);
-
-  const [selected, setSelected] = useState("");
 
   const handleSelect = (x) => {
     setSelected(x);
   };
 
   const clearAll = () => {
-    setSelected("");
+    setSelected([]);
   };
 
   return (

@@ -3,68 +3,58 @@ import { filtering } from "@/utils/functions/filter";
 import { sortArr } from "@/utils/functions/sort";
 
 export default function handler(req, res) {
-
-const { page, txt, title_rating, level_rating_a, level_rating_d, rating_a, rating_d, search, university } = req.query;
+  const { page, sortBy, search, university, rating, level } = req.query;
 
   var courses = [];
 
-  if (page) {
-    courses = PageCourses(page * 9, 9);
-  }
+  courses = coursera;
 
-  if(txt){
+  if (university || search || rating || level) {
     courses = filtering(courses, {
-      title:txt
-    })
-  }
-
-  if(title_rating){
-    courses = sortArr(courses, {
-      key:"Course Name",
-      type:"asc"
-    })
-  }
-
-  if(level_rating_a){
-    courses = sortArr(courses, {
-      key:"Difficulty Level",
-      type:"asc"
-    })
-  }
-
-  if(level_rating_d){
-    courses = sortArr(courses, {
-      key:"Difficulty Level",
-      type:"desc"
-    })
-  }
-
-  if(rating_a){
-    courses = sortArr(courses, {
-      key:"Course Rating",
-      type:"asc"
-    })
-  }
-
-  if(rating_d){
-    courses = sortArr(courses, {
-      key:"Course Rating",
-      type:"desc"
-    })
-  }
-
-  function PageCourses(start = 0, num_items = 9) {
-    const new_list = coursera.slice(Number(start), Number(start) + num_items);
-    return new_list;
-  }
-
-  if (university || search) {
-    courses = filtering(coursera, {
-      title: search
+      title: search,
+      university: university,
+      rating: rating,
+      level: level
     });
+  }
 
+  if (sortBy) {
+    if (sortBy === "A to Z") {
+      courses = sortArr(courses, {
+        key: "Course Name",
+        type: "asc",
+      });
+    } else if (sortBy === "Z to A") {
+      courses = sortArr(courses, {
+        key: "Course Name",
+        type: "desc",
+      });
+    } else if (sortBy === "Level (ascending)") {
+      courses = sortArr(courses, {
+        key: "Difficulty Level",
+        type: "asc",
+      });
+    } else if (sortBy === "Level (descending)") {
+      courses = sortArr(courses, {
+        key: "Difficulty Level",
+        type: "desc",
+      });
+    } else if (sortBy === "Ratings (ascending)") {
+      courses = sortArr(courses, {
+        key: "Course Rating",
+        type: "asc",
+      });
+    } else if (sortBy === "Ratings (descending)") {
+      courses = sortArr(courses, {
+        key: "Course Rating",
+        type: "desc",
+      });
+    }
+  }
+
+  if (page) {
+    courses = courses.slice(Number(page) * 9, (Number(page) + 1) * 9);
   }
 
   res.status(200).json(courses);
 }
-
