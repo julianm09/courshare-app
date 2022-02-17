@@ -32,7 +32,7 @@ export default function Home() {
   const [rating, setRating] = useState("");
   const [sortBy, setSortBy] = useState(null);
 
-  const [viewCourse, setViewCourse] = useState(true)
+  const [viewCourse, setViewCourse] = useState(false)
 
   const [curriculumCategory, setCurriculumCategory] = useState([]);
 
