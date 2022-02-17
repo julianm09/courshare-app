@@ -19,7 +19,7 @@ export default function Home() {
         </Link>
       </LeftCont>
       <RightCont>
-        <GroupImg src="/landingvector.svg" />
+        <GroupImg src="/icons/Group.png" />
       </RightCont>
     </BigCont>
   );
@@ -28,8 +28,9 @@ export default function Home() {
 const BigCont = styled.div`
   width: 100%;
   height: 80vh;
+
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: row;
 `;
@@ -68,7 +69,4 @@ const Name = styled.div`
 
 const ExploreBtn = styled.button``;
 
-const GroupImg = styled.img`
-  width: 550px;
-  height: 620px;
-`;
+const GroupImg = styled.img``;

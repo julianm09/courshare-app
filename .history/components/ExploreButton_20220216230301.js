@@ -14,9 +14,9 @@ const ExploreBtn = styled.button`
   height: 45px;
   background-color: ${(props) => props.background};
   color: #fff;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 400;
 `;
 

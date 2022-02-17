@@ -10,22 +10,25 @@ const Cont = styled.div`
 `;
 
 const ExploreBtn = styled.button`
-  width: 120px;
-  height: 45px;
-  background-color: ${(props) => props.background};
-  color: #fff;
-  border-radius: 8px;
-  border: none;
-  font-size: 16px;
-  font-weight: 400;
-`;
+    width:188px;
+    height: 60px;
+    background-color: ${props=>props.background};
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+    font-size: 24px;
+    font-weight: 400;
+`
 
-const ExploreButton = ({ text = "Explore", background = "#4d328a" }) => {
-  return (
-    <Cont>
-      <ExploreBtn background={background}>{text}</ExploreBtn>
-    </Cont>
-  );
-};
+const ExploreButton = ({
+    text = "Explore",
+    background = "#4d328a"
+}) =>{
+    return (
+        <Cont>
+            <ExploreBtn background={background}>{text}</ExploreBtn>
+        </Cont>
+    )
+}
 
-export default ExploreButton;
+export default ExploreButton

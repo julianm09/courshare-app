@@ -6,12 +6,11 @@ import { useTheme } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 
 export default function Home() {
-  const { theme, setTheme } = useTheme();
   return (
     <BigCont>
       <LeftCont>
-        <Header color={comp_themes[theme].switch_text}>Welcome, Juhee!</Header>
-        <Name color={comp_themes[theme].switch_text}>
+        <Header>Welcome, Juhee!</Header>
+        <Name>
           Build Your Skills and explore our students' all-in-one curriculums.
         </Name>
         <Link href="/explore">
@@ -19,7 +18,7 @@ export default function Home() {
         </Link>
       </LeftCont>
       <RightCont>
-        <GroupImg src="/landingvector.svg" />
+        <GroupImg src="/icons/Group.png" />
       </RightCont>
     </BigCont>
   );
@@ -28,8 +27,9 @@ export default function Home() {
 const BigCont = styled.div`
   width: 100%;
   height: 80vh;
+
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: row;
 `;
@@ -56,19 +56,16 @@ const Header = styled.div`
   line-height: 70px;
   /* identical to box height, or 175% */
 
-  color: ${(props) => props.color};
+  color: #000000;
 `;
 
 const Name = styled.div`
   line-height: 50px;
   font-family: General Sans;
   font-size: 24px;
-  color: ${(props) => props.color};
+  color: #000000;
 `;
 
 const ExploreBtn = styled.button``;
 
-const GroupImg = styled.img`
-  width: 550px;
-  height: 620px;
-`;
+const GroupImg = styled.img``;
