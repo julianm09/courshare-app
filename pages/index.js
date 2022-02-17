@@ -4,9 +4,13 @@ import Link from "next/link";
 import { style } from "@mui/system";
 import { useTheme } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const { theme, setTheme } = useTheme();
+  const r = useRouter();
+
+
   return (
     <BigCont>
       <LeftCont>
@@ -15,7 +19,7 @@ export default function Home() {
           Build Your Skills and explore our students' all-in-one curriculums.
         </Name>
         <Link href="/explore">
-          <ExploreButton />
+          <ExploreButton onClick={() => r.push("/explore")}/>
         </Link>
       </LeftCont>
       <RightCont>
@@ -41,12 +45,20 @@ const LeftCont = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   padding: 2% 5%;
+
+  @media(max-width: 1000px){
+    width: 100%;
+  }
 `;
 const RightCont = styled.div`
   display: flex;
   flex-direction: column;
   padding: 5%;
   align-items: flex-start;
+
+  @media(max-width: 1000px){
+    display: none;
+  }
 `;
 
 const Header = styled.div`

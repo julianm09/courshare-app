@@ -11,6 +11,7 @@ import PageNavigationCourse from "@/components/PageNavigationCourse";
 import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
 import { useView } from "@/utils/provider";
 import CourseCard from "@/components/CourseCard";
+import CourseDetailCard from "@/components/CourseDetailCard";
 
 export default function Home() {
   const [courses, setCourses] = useState([]);
@@ -30,6 +31,8 @@ export default function Home() {
   const [level, setLevel] = useState([]);
   const [rating, setRating] = useState("");
   const [sortBy, setSortBy] = useState(null);
+
+  const [viewCourse, setViewCourse] = useState(true)
 
   const [curriculumCategory, setCurriculumCategory] = useState([]);
 
@@ -151,6 +154,8 @@ export default function Home() {
 
   return (
     <Cont>
+      {viewCourse ? <CourseDetailCard setViewCourse={setViewCourse}/> : <></>}
+      
       <FilterBar
         value={display}
         setValue={setDisplay}
@@ -197,6 +202,7 @@ export default function Home() {
             {courses &&
               courses.map((x, i) => (
                 <CourseCardLV
+                setViewCourse={setViewCourse}
                   setAddCurriculum={setAddCurriculum}
                   key={i}
                   courseName={x["Course Name"]}

@@ -9,11 +9,24 @@ import { yellow } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
 import RatingStars from "./RatingStars";
 
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.74);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+`;
+
 const BigCont = styled.div`
   display: flex;
   flex-direction: column;
   width: 956px;
-  height: 776px;
+
   background-color: #ffffff;
   box-shadow: 0px 2px 8px 0px rgba(185, 185, 185, 0.52);
   border-radius: 20px;
@@ -88,65 +101,68 @@ export default function CourseDetailCard({
   difficulty = "intermediate",
   description = "",
   skills = "",
+  setViewCourse
 }) {
   const [value, setValue] = React.useState(4);
   return (
-    <BigCont>
-      <ButtonCont>
-        <button style={{ border: "none", background: "none" }}>
-          <CloseIcon />
-        </button>
-      </ButtonCont>
-      <ContentCont>
-        <FristCont>
-          <LeftCont>
-            <Img src="https://images.unsplash.com/photo-1600869009498-8d429f88d4f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80" />
-          </LeftCont>
-          <RightCont>
-            <RightSmallCont>
-              <Heading1>{name}</Heading1>
-              <Checkbox
-                sx={{
-                  color: yellow[800],
-                  "&.Mui-checked": {
-                    color: yellow[600],
-                  },
-                }}
-                icon={<FavoriteBorder />}
-                checkedIcon={<Favorite />}
-              />
-            </RightSmallCont>
-            <RightSmallCont>
-              <GreyText>{school}</GreyText>
-            </RightSmallCont>
-            <RightSmallCont>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <RatingStars />
-                <Desc>{rating}</Desc>
-              </div>
-              <Desc>{difficulty}</Desc>
-            </RightSmallCont>
-            <RightSmallCont>
-              <RegisterButton />
-            </RightSmallCont>
-          </RightCont>
-        </FristCont>
-        <SecondCont>
-          <Heading2>Description</Heading2>
-          <Desc>{description}</Desc>
-        </SecondCont>
-        <ThirdCont>
-          <Heading2>Skills</Heading2>
-          <Desc>{skills}</Desc>
-        </ThirdCont>
-      </ContentCont>
-    </BigCont>
+    <Overlay onClick={() => setViewCourse(false)}>
+      <BigCont onClick={(e) => e.stopPropagation()}>
+        <ButtonCont>
+          <button style={{ border: "none", background: "none" }}>
+            <CloseIcon />
+          </button>
+        </ButtonCont>
+        <ContentCont>
+          <FristCont>
+            <LeftCont>
+              <Img src="https://images.unsplash.com/photo-1600869009498-8d429f88d4f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80" />
+            </LeftCont>
+            <RightCont>
+              <RightSmallCont>
+                <Heading1>{name}</Heading1>
+                <Checkbox
+                  sx={{
+                    color: yellow[800],
+                    "&.Mui-checked": {
+                      color: yellow[600],
+                    },
+                  }}
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite />}
+                />
+              </RightSmallCont>
+              <RightSmallCont>
+                <GreyText>{school}</GreyText>
+              </RightSmallCont>
+              <RightSmallCont>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <RatingStars />
+                  <Desc>{rating}</Desc>
+                </div>
+                <Desc>{difficulty}</Desc>
+              </RightSmallCont>
+              <RightSmallCont>
+                <RegisterButton />
+              </RightSmallCont>
+            </RightCont>
+          </FristCont>
+          <SecondCont>
+            <Heading2>Description</Heading2>
+            <Desc>{description}</Desc>
+          </SecondCont>
+          <ThirdCont>
+            <Heading2>Skills</Heading2>
+            <Desc>{skills}</Desc>
+          </ThirdCont>
+        </ContentCont>
+      </BigCont>
+    </Overlay>
   );
 }
