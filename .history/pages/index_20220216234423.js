@@ -27,7 +27,7 @@ export default function Home() {
 
 const BigCont = styled.div`
   width: 100%;
-  height: 80vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
