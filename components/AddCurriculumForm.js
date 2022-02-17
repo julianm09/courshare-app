@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import Checkbox from "./Checkbox";
+import AddedBadge from "./AddedBadge";
 
 export default function AddCurriculumForm({
   setAddCurriculum,
@@ -44,55 +45,71 @@ export default function AddCurriculumForm({
 
   const [showAll, setShowAll] = useState(false);
   const [selected, setSelected] = useState("");
+  const [addedCurriculum, setAddedCurriculum] = useState(false);
 
   const handleSelect = (x) => {
     setSelected(x);
   };
 
+  const handleAddCurriculum = () => {
+    setAddedCurriculum(true);
+
+    setTimeout(() => {
+      setAddCurriculum(false);
+      setAddedCurriculum(true);
+    }, 1000);
+  };
+
   return (
     <Overlay onClick={() => setAddCurriculum(false)}>
-      <Cont onClick={(e) => e.stopPropagation() }>
-        <Title>Add curriculum</Title>
-        <Label>Name</Label>
-        <Input />
-        <Label>Category</Label>
-        <Drowpdown onClick={() => setShowCategory(!showCategory)}>
-          Select your curriculum category
-          <Icon>
-            {showCategory ? (
-              <img src="/icons/up-caret.svg" />
-            ) : (
-              <img src="/icons/down-caret.svg" />
-            )}
-          </Icon>
-        </Drowpdown>
-        {showCategory ? (
-          <DrowpdownBox>
-            <CategoryCont>
-              {categories.slice(0, showAll ? 32 : 8).map((x) => (
-                <Category>
-                  <Checkbox
-                    handleSelect={handleSelect}
-                    x={x}
-                    setSelected={setSelected}
-                    selected={selected}
-                  />
-                  <div>{x}</div>
-                </Category>
-              ))}
-            </CategoryCont>
-            {showAll ? (
-              <ShowAll onClick={() => setShowAll(!showAll)}>Show Less</ShowAll>
-            ) : (
-              <ShowAll onClick={() => setShowAll(!showAll)}>Show All</ShowAll>
-            )}
-          </DrowpdownBox>
-        ) : (
-          <></>
-        )}
+      {addedCurriculum ? (
+        <AddedBadge/>
+      ) : (
+        <Cont onClick={(e) => e.stopPropagation()}>
+          <Title>Add curriculum</Title>
+          <Label>Name</Label>
+          <Input />
+          <Label>Category</Label>
+          <Drowpdown onClick={() => setShowCategory(!showCategory)}>
+            Select your curriculum category
+            <Icon>
+              {showCategory ? (
+                <img src="/icons/up-caret.svg" />
+              ) : (
+                <img src="/icons/down-caret.svg" />
+              )}
+            </Icon>
+          </Drowpdown>
+          {showCategory ? (
+            <DrowpdownBox>
+              <CategoryCont>
+                {categories.slice(0, showAll ? 32 : 8).map((x) => (
+                  <Category>
+                    <Checkbox
+                      handleSelect={handleSelect}
+                      x={x}
+                      setSelected={setSelected}
+                      selected={selected}
+                    />
+                    <div>{x}</div>
+                  </Category>
+                ))}
+              </CategoryCont>
+              {showAll ? (
+                <ShowAll onClick={() => setShowAll(!showAll)}>
+                  Show Less
+                </ShowAll>
+              ) : (
+                <ShowAll onClick={() => setShowAll(!showAll)}>Show All</ShowAll>
+              )}
+            </DrowpdownBox>
+          ) : (
+            <></>
+          )}
 
-        <AddButton>Add</AddButton>
-      </Cont>
+          <AddButton onClick={handleAddCurriculum}>Add</AddButton>
+        </Cont>
+      )}
     </Overlay>
   );
 }
@@ -107,6 +124,7 @@ const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 10000;
 `;
 
 const Cont = styled.div`
