@@ -52,7 +52,9 @@ export default function Home() {
         rating: rating,
       },
     });
-    setCourses(res.data);
+    setCourses(res.data.courses);
+    setCourseItems(res.data.length)
+    setCoursePage
     setSearching(false);
   };
 

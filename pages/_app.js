@@ -12,13 +12,13 @@ function MyApp({ Component, pageProps }) {
       <Navbar />
       <Component {...pageProps} />
 
-      <BotNav>
+{/*       <BotNav>
         <button onClick={() => r.push("/")}>Home</button>
         <button onClick={() => r.push("/comps/evie")}>Evie</button>
         <button onClick={() => r.push("/comps/john")}>John</button>
         <button onClick={() => r.push("/comps/juhee")}>Juhee</button>
         <button onClick={() => r.push("/comps/julian")}>Julian</button>
-      </BotNav>
+      </BotNav> */}
     </AppProvider>
   );
 }

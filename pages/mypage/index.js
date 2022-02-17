@@ -169,5 +169,5 @@ font-weight: 500;
 font-size: 55px;
 line-height: 74px;
 color: #000000;
-margin: 95px 0 ;
+margin: 95px 0 0 0 ;
 `;
