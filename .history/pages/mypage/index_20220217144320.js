@@ -169,5 +169,5 @@ const Greeting = styled.div`
   font-size: 34px;
   line-height: 74px;
   color: #000000;
-  margin: 95px 0 25px 0;
+  margin: 95px 0;
 `;

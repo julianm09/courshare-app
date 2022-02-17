@@ -104,13 +104,12 @@ export default function CourseDetailCard({
   setViewCourse,
 }) {
   const [value, setValue] = React.useState(4);
-
   return (
-    <Overlay>
+    <Overlay onClick={() => setViewCourse(false)}>
       <BigCont onClick={(e) => e.stopPropagation()}>
         <ButtonCont>
           <button style={{ border: "none", background: "none" }}>
-            <CloseIcon onClick={() => setViewCourse(false)} />
+            <CloseIcon onClick={() => setAddCurriculum(false)} />
           </button>
         </ButtonCont>
         <ContentCont>
