@@ -15,6 +15,7 @@ const Cont = styled.div`
   justify-content: space-between;
   width: 90%;
   margin: 0 0 49px 0;
+  cursor: pointer;
 `;
 
 const CourseCont = styled.div`
@@ -69,12 +70,13 @@ export default function CourseCardLV({
   ratingCount = 4.6,
   difficulty = " Intermediate",
   image,
-  setAddCurriculum
+  setAddCurriculum,
+  setViewCourse
 }) {
   const { theme, setTheme } = useTheme();
   return (
     <Cont>
-      <CourseCont>
+      <CourseCont onClick={() => setViewCourse(true)}>
         <CourseImg src={image} />
         <InfoCont>
           <Title color={comp_themes[theme].switch_text}>{courseName}</Title>

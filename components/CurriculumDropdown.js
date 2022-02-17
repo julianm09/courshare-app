@@ -13,7 +13,7 @@ const Cont = styled.div`
 
 const CurriculumList = styled.div`
   width: 186px;
-
+  background: white;
   border-radius: 10px;
   font-family: General Sans;
   font-style: normal;

@@ -85,6 +85,7 @@ const NavbarUI = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 10000;
 
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -102,6 +103,7 @@ const Navigation = styled.div`
   display: flex;
   justify-content: space-between;
   width: 400px;
+  z-index: 10000;
   @media (max-width: 1000px) {
     display: none;
   }

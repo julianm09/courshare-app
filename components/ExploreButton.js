@@ -18,12 +18,13 @@ const ExploreBtn = styled.button`
   border: none;
   font-size: 16px;
   font-weight: 400;
+  cursor: pointer;
 `;
 
-const ExploreButton = ({ text = "Explore", background = "#4d328a" }) => {
+const ExploreButton = ({ onClick, text = "Explore", background = "#4d328a" }) => {
   return (
     <Cont>
-      <ExploreBtn background={background}>{text}</ExploreBtn>
+      <ExploreBtn onClick={onClick} background={background}>{text}</ExploreBtn>
     </Cont>
   );
 };
