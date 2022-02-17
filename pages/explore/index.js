@@ -54,7 +54,6 @@ export default function Home() {
     });
     setCourses(res.data.courses);
     setCourseItems(res.data.length)
-    setCoursePage
     setSearching(false);
   };
 
