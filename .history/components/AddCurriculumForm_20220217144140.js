@@ -62,13 +62,13 @@ export default function AddCurriculumForm({
   };
 
   return (
-    <Overlay>
+    <Overlay onClick={() => setAddCurriculum(false)}>
       {addedCurriculum ? (
         <AddedBadge />
       ) : (
         <Cont onClick={(e) => e.stopPropagation()}>
           <ButtonCont>
-            <CloseIcon onClick={() => setAddCurriculum(false)} />
+            <CloseIcon />
           </ButtonCont>
           <ContentCont>
             <Title>Add curriculum</Title>
@@ -172,7 +172,8 @@ const Title = styled.div`
 const ButtonCont = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-right: 40px;
+  margin-right: 20px;
+  margin-top: 20px;
 `;
 
 const ContentCont = styled.div`
