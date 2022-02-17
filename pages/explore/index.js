@@ -155,7 +155,7 @@ export default function Home() {
 
   return (
     <Cont>
-      {viewCourse ? <CourseDetailCard setViewCourse={setViewCourse}/> : <></>}
+{/*       {viewCourse ? <CourseDetailCard setViewCourse={setViewCourse}/> : <></>}
       
       <FilterBar
         value={display}
@@ -262,7 +262,7 @@ export default function Home() {
         </>
       ) : (
         <></>
-      )}
+      )} */}
     </Cont>
   );
 }

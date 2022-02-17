@@ -76,7 +76,7 @@ export default function MyPage() {
   const { theme, setTheme } = useTheme();
   return (
     <Cont>
-      <Greeting>Hi, Juhee 👋</Greeting>
+{/*       <Greeting>Hi, Juhee 👋</Greeting>
       <SectionTabs
         value={display}
         setValue={setDisplay}
@@ -141,7 +141,7 @@ export default function MyPage() {
         </>
       ) : (
         <></>
-      )}
+      )} */}
     </Cont>
   );
 }
