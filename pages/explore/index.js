@@ -203,7 +203,7 @@ export default function Home() {
             {courses &&
               courses.map((x, i) => (
                 <CourseCardLV
-                setViewCourse={setViewCourse}
+                  setViewCourse={setViewCourse}
                   setAddCurriculum={setAddCurriculum}
                   key={i}
                   courseName={x["Course Name"]}
@@ -246,8 +246,9 @@ export default function Home() {
       ) : display == "Two" ? (
         <>
           {curriculums &&
-            curriculums.map((x) => (
+            curriculums.map((x, i) => (
               <CurriculumSlider
+              key={i}
                 avaText={x["name"]}
                 favouriteCount={x["likes"]}
                 courses={x["courses"]}

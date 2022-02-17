@@ -18,9 +18,9 @@ export default function Home() {
         <Name color={comp_themes[theme].switch_text}>
           Build Your Skills and explore our students' all-in-one curriculums.
         </Name>
-        <Link href="/explore">
+  
           <ExploreButton onClick={() => r.push("/explore")}/>
-        </Link>
+
       </LeftCont>
       <RightCont>
         <GroupImg src="/landingvector.svg" />

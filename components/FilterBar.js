@@ -106,8 +106,9 @@ export default function FilterBar({
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="FFC403"
+          textColor="inherit"
           aria-label="secondary tabs example"
+   
           TabIndicatorProps={{ className: classes.indicator }}
         >
           <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />

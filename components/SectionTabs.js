@@ -72,7 +72,7 @@ export default function FilterBar({ value, setValue, handleSearch, one, two }) {
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="#FFC403"
+          color="inherit"
           aria-label="secondary tabs example"
           TabIndicatorProps={{ className: classes.indicator }}
         >
