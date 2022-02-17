@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function Checkbox({ handleSelect, x, setSelected, selected }) {
   return (
-    <CheckboxUI selected={selected.includes(x)} onClick={() => handleSelect(x)} />
+    <CheckboxUI selected={selected && selected.includes(x)} onClick={() => handleSelect(x)} />
   );
 }
 

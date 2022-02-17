@@ -73,7 +73,24 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function FilterBar({ value, setValue, handleSearch, setUniversity, university }) {
+export default function FilterBar({
+  rating,
+  setRating,
+  level,
+  setLevel,
+  value,
+  setValue,
+  handleSearch,
+  setUniversity,
+  university,
+  curriculumCategory,
+  setCurriculumCategory,
+  setSearchCourse,
+  searchCourse,
+  setSearchCurriculum,
+  searchCurriculum,
+  display
+}) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -95,7 +112,7 @@ export default function FilterBar({ value, setValue, handleSearch, setUniversity
           <Tab value="Two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
         <Space />
-        <SearchBar handleSearch={handleSearch} />
+        <SearchBar handleSearch={handleSearch} value={display === "One" ? searchCourse : searchCurriculum} />
       </TopCont>
       <BottomCont>
         <FilterBy color={comp_themes[theme].switch_text}>Filter by</FilterBy>
@@ -103,17 +120,31 @@ export default function FilterBar({ value, setValue, handleSearch, setUniversity
         <ButtonCont>
           {value == "One" ? (
             <>
-              <FilterDropdown name="University" university={university} setUniversity={setUniversity}/>
+              <FilterDropdown
+                name="University"
+                selected={university}
+                setSelected={setUniversity}
+              />
               <Space />
 
-              <FilterDropdownSingle name="Level" />
+              <FilterDropdownSingle
+                name="Level"
+                selected={level}
+                setSelected={setLevel}
+                categories={["Beginner", "Intermediate", "Advanced"]}
+              />
               <Space />
 
-              <FilterDropdownSingle />
+              <FilterDropdownSingle selected={rating} setSelected={setRating} />
             </>
           ) : (
             <>
-              <FilterDropdown name="Category" />
+              <FilterDropdown
+                name="Category"
+                selected={curriculumCategory}
+                setSelected={setCurriculumCategory}
+                categories={["webdev", "communication", "math", "business"]}
+              />
               <Space />
             </>
           )}

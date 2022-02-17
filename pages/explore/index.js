@@ -1,5 +1,3 @@
-import Head from "next/head";
-import Image from "next/image";
 import styled from "styled-components";
 import ax from "axios";
 import { useEffect } from "react";
@@ -9,21 +7,35 @@ import AddCurriculumForm from "@/components/AddCurriculumForm";
 import CourseCardLV from "@/components/CourseCardLV";
 import SortDropdown from "@/components/SortDropdown";
 import CurriculumSlider from "@/components/CurriculumSlider";
-import PageNavigation from "@/components/PageNavigationCourse";
 import PageNavigationCourse from "@/components/PageNavigationCourse";
 import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
+import { useView } from "@/utils/provider";
+import CourseCard from "@/components/CourseCard";
 
 export default function Home() {
   const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
-  const [searchCourse, setSearchCourse] = useState(null);
   const [display, setDisplay] = useState("One");
   const [addCurriculum, setAddCurriculum] = useState(false);
   const [coursePage, setCoursePage] = useState(0);
   const [courseItems, setCourseItems] = useState(424);
+
   const [curriculumPage, setCurriculumPage] = useState(0);
   const [searching, setSearching] = useState(false);
-  const [university, setUniversity] = useState(null);
+
+  const [searchCourse, setSearchCourse] = useState(null);
+  const [searchCurriculum, setSearchCurriculum] = useState(null);
+
+  const [university, setUniversity] = useState([]);
+  const [level, setLevel] = useState([]);
+  const [rating, setRating] = useState("");
+  const [sortBy, setSortBy] = useState(null);
+
+  const [curriculumCategory, setCurriculumCategory] = useState([]);
+
+  const [sortDirection, setSortDirection] = useState(null);
+
+  const { view, setView } = useView();
 
   const getCourses = async () => {
     const res = await ax.get("./api/courses", {
@@ -31,20 +43,27 @@ export default function Home() {
         page: coursePage,
         search: searchCourse,
         university: university,
+        sortBy: sortBy,
+        sortDirection: sortDirection,
+        level: level,
+        rating: rating,
       },
     });
     setCourses(res.data);
     setSearching(false);
   };
 
-  console.log(university)
-
   const handleSearch = (e) => {
-    setSearchCourse(e.target.value);
+    if (display === "One") {
+      setSearchCourse(e.target.value);
+    }
+
+    if (display === "Two") {
+      setSearchCurriculum(e.target.value);
+    }
   };
 
   useEffect(() => {
-    console.log(searchCourse);
     let timer = setTimeout(() => {
       if (
         (searchCourse !== null && searchCourse.length > 1) ||
@@ -52,6 +71,7 @@ export default function Home() {
       ) {
         if (display === "One") {
           setSearching(true);
+          setCoursePage(0);
           getCourses();
         }
       }
@@ -61,6 +81,36 @@ export default function Home() {
   }, [searchCourse]);
 
   useEffect(() => {
+    if (level) {
+      getCourses();
+    }
+  }, [level]);
+
+  useEffect(() => {
+    if (rating) {
+      getCourses();
+    }
+  }, [rating]);
+
+  useEffect(() => {
+    if (sortBy) {
+      getCourses();
+    }
+  }, [sortBy]);
+
+  useEffect(() => {
+    if (university) {
+      getCourses();
+    }
+  }, [university]);
+
+  useEffect(() => {
+    if (coursePage) {
+      getCourses();
+    }
+  }, [coursePage]);
+
+  useEffect(() => {
     getCourses();
   }, []);
 
@@ -68,11 +118,36 @@ export default function Home() {
     const res = await ax.get("./api/curriculums", {
       params: {
         page: curriculumPage,
-        search: searchCourse,
+        category: curriculumCategory,
+        search: searchCurriculum,
       },
     });
     setCurriculums(res.data);
+    setSearching(false);
   };
+
+  useEffect(() => {
+    if (curriculumCategory) {
+      getCurriculums();
+    }
+  }, [curriculumCategory]);
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      if (
+        (searchCurriculum !== null && searchCurriculum.length > 1) ||
+        (searchCurriculum !== null && searchCurriculum === "")
+      ) {
+        if (display === "Two") {
+          setSearching(true);
+          setCurriculumPage(0);
+          getCurriculums();
+        }
+      }
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [searchCurriculum]);
 
   return (
     <Cont>
@@ -82,16 +157,30 @@ export default function Home() {
         handleSearch={handleSearch}
         university={university}
         setUniversity={setUniversity}
+        level={level}
+        setLevel={setLevel}
+        rating={rating}
+        setRating={setRating}
+        curriculumCategory={curriculumCategory}
+        setCurriculumCategory={setCurriculumCategory}
+        setSearchCourse={setSearchCourse}
+        searchCourse={searchCourse}
+        searchCurriculum={searchCurriculum}
+        setSearchCurriculum={setSearchCurriculum}
+        display={display}
       />
       <SortDropdown
+        setSortBy={setSortBy}
+        setSortDirection={setSortDirection}
         sort={
           display == "One"
             ? [
                 "A to Z",
-                "Level (ascending)",
+                "Z to A",
                 "Level (descending)",
-                "Ratings (ascending)",
+                "Level (ascending)",
                 "Ratings (descending)",
+                "Ratings (ascending)",
               ]
             : ["Top", "New"]
         }
@@ -102,19 +191,43 @@ export default function Home() {
       ) : (
         <></>
       )}
-      {display == "One" && !searching ? (
+      {display == "One" && view == "list" && !searching ? (
         <>
-          {courses &&
-            courses.map((x, i) => (
-              <CourseCardLV
-                key={i}
-                courseName={x["Course Name"]}
-                teachingSource={x["University"]}
-                ratingCount={x["Course Rating"]}
-                difficulty={x["Difficulty Level"]}
-                image={x.Image}
-              />
-            ))}
+          <ListView>
+            {courses &&
+              courses.map((x, i) => (
+                <CourseCardLV
+                  key={i}
+                  courseName={x["Course Name"]}
+                  teachingSource={x["University"]}
+                  ratingCount={x["Course Rating"]}
+                  difficulty={x["Difficulty Level"]}
+                  image={x.Image}
+                />
+              ))}
+          </ListView>
+          <PageNavigationCourse
+            setCoursePage={setCoursePage}
+            getCourses={getCourses}
+            coursePage={coursePage}
+            items={courseItems}
+          />
+        </>
+      ) : display == "One" && view == "grid" && !searching ? (
+        <>
+          <GridView>
+            {courses &&
+              courses.map((x, i) => (
+                <CourseCard
+                  key={i}
+                  courseName={x["Course Name"]}
+                  teachingSource={x["University"]}
+                  ratingCount={x["Course Rating"]}
+                  difficulty={x["Difficulty Level"]}
+                  image={x.Image}
+                />
+              ))}
+          </GridView>
           <PageNavigationCourse
             setCoursePage={setCoursePage}
             getCourses={getCourses}
@@ -157,5 +270,30 @@ const Cont = styled.div`
     width: 90%;
     flex-direction: column;
     padding: 0;
+  }
+`;
+
+const ListView = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const GridView = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr;
+  width: 90%;
+  grid-gap: 53px;
+
+  @media (max-width: 1400px) {
+    grid-template-columns: 2fr 2fr 2fr;
+  }
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 2fr 2fr;
+    width: 100%;
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: 2fr;
   }
 `;

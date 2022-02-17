@@ -3,8 +3,8 @@ import { useState } from "react";
 import Checkbox from "./Checkbox";
 
 export default function FilterDropdown({
-  setUniversity,
-  university,
+  setSelected = () => {},
+  selected = [],
   name = "Skills",
   categories = [
     "École Polytechnique",
@@ -16,16 +16,15 @@ export default function FilterDropdown({
   const [show, setShow] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
-  const [selected, setSelected] = useState([]);
-
   const handleSelect = (x) => {
-    if(name === "University"){
-      if (university.includes(x)) {
+    setSelected(x);
+    /*     if(name === "University"){
+      if (university && university.includes(x)) {
         setUniversity(university.filter((i) => i !== x));
       } else {
         setUniversity([...university, x]);
       }
-    }
+    } */
   };
 
   const clearAll = () => {
@@ -53,7 +52,7 @@ export default function FilterDropdown({
                   handleSelect={handleSelect}
                   x={x}
                   setSelected={setSelected}
-                  selected={university}
+                  selected={selected}
                 />
                 <div>{x}</div>
               </Category>

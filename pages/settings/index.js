@@ -131,7 +131,7 @@ export default function Settings() {
                 {...controlProps("b")}
                 size="small"
                 color="secondary"
-                onClick={() => setView(view === "gird" ? "default" : "grid")}
+                onClick={() => setView(view === "grid" ? "list" : "grid")}
               />
             </RightCont>
           </RowCont>
