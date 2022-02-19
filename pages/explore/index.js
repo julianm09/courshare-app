@@ -21,6 +21,8 @@ export default function Home() {
   const [coursePage, setCoursePage] = useState(0);
   const [courseItems, setCourseItems] = useState(424);
 
+  console.log(coursePage)
+
   const [curriculumPage, setCurriculumPage] = useState(0);
   const [searching, setSearching] = useState(false);
 
@@ -109,7 +111,7 @@ export default function Home() {
   }, [university]);
 
   useEffect(() => {
-    if (coursePage) {
+    if (coursePage || coursePage == 0) {
       getCourses();
     }
   }, [coursePage]);

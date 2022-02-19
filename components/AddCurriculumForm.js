@@ -62,7 +62,7 @@ export default function AddCurriculumForm({
   };
 
   return (
-    <Overlay>
+    <Overlay onClick={() => setAddCurriculum(false)}>
       {addedCurriculum ? (
         <AddedBadge />
       ) : (
@@ -133,6 +133,7 @@ const Overlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 10000;
+  cursor: pointer;
 `;
 
 const Cont = styled.div`
@@ -173,6 +174,7 @@ const ButtonCont = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-right: 40px;
+  cursor: pointer;
 `;
 
 const ContentCont = styled.div`

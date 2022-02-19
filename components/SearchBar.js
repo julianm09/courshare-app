@@ -35,7 +35,7 @@ export default function SearchBar({handleSearch, value}) {
   return (
     <Cont>
       <Searchimg src="/icons/search.png" />
-      <SearchBarInput value={value} onChange={(e) => handleSearch(e)}/>
+      <SearchBarInput value={value ? value : ''} onChange={(e) => handleSearch(e)}/>
     </Cont>
   );
 }
