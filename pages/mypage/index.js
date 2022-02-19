@@ -19,7 +19,7 @@ import { comp_themes } from "@/utils/variables";
 export default function MyPage() {
   const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
-  const [searchCourse, setSearchCourse] = useState(null);
+  const [searchCourse, setSearchCourse] = useState('');
   const [display, setDisplay] = useState("One");
   const [addCurriculum, setAddCurriculum] = useState(false);
   const [coursePage, setCoursePage] = useState(0);

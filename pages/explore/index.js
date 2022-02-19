@@ -26,19 +26,19 @@ export default function Home() {
   const [curriculumPage, setCurriculumPage] = useState(0);
   const [searching, setSearching] = useState(false);
 
-  const [searchCourse, setSearchCourse] = useState(null);
-  const [searchCurriculum, setSearchCurriculum] = useState(null);
+  const [searchCourse, setSearchCourse] = useState('');
+  const [searchCurriculum, setSearchCurriculum] = useState('');
 
   const [university, setUniversity] = useState([]);
   const [level, setLevel] = useState([]);
   const [rating, setRating] = useState("");
-  const [sortBy, setSortBy] = useState(null);
+  const [sortBy, setSortBy] = useState('');
 
   const [viewCourse, setViewCourse] = useState(false)
 
   const [curriculumCategory, setCurriculumCategory] = useState([]);
 
-  const [sortDirection, setSortDirection] = useState(null);
+  const [sortDirection, setSortDirection] = useState('');
 
   const { view, setView } = useView();
 
