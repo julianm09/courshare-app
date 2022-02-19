@@ -85,7 +85,7 @@ export default function Settings() {
   const { view, setView } = useView();
   return (
     <BigCont>
-{/*       <HeadingCont>
+      <HeadingCont>
         <Heading color={comp_themes[theme].switch_text}>Settings</Heading>
       </HeadingCont>
       <Divider light />
@@ -138,7 +138,7 @@ export default function Settings() {
         </Cont>
         <Divider light />
         <Cont></Cont>
-      </ContentCont> */}
+      </ContentCont>
     </BigCont>
   );
 }
