@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ax from "axios";
 import { useEffect, useState } from "react";
+import { useView } from "@/utils/provider";
 import FilterBar from "@/components/FilterBar";
 import AddCurriculumForm from "@/components/AddCurriculumForm";
 import CourseCardLV from "@/components/CourseCardLV";
@@ -8,39 +9,52 @@ import SortDropdown from "@/components/SortDropdown";
 import CurriculumSlider from "@/components/CurriculumSlider";
 import PageNavigationCourse from "@/components/PageNavigationCourse";
 import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
-import { useView } from "@/utils/provider";
 import CourseCard from "@/components/CourseCard";
 import CourseDetailCard from "@/components/CourseDetailCard";
 
 export default function Home() {
+  //display courses and currciculums
   const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
+
+  //display courses and currciculums
   const [display, setDisplay] = useState("One");
+
+  //show currciculum form
   const [addCurriculum, setAddCurriculum] = useState(false);
+
+  //vew course details
+  const [viewCourse, setViewCourse] = useState(false);
+
+  //course pagination items and page number
   const [coursePage, setCoursePage] = useState(0);
   const [courseItems, setCourseItems] = useState(424);
 
-  console.log(coursePage)
-
+  //currciculm pagination items and page number
   const [curriculumPage, setCurriculumPage] = useState(0);
+  const [curriculumItems, setCurriculumItems] = useState(424);
+
+  //load after api call
   const [searching, setSearching] = useState(false);
 
-  const [searchCourse, setSearchCourse] = useState('');
-  const [searchCurriculum, setSearchCurriculum] = useState('');
+  //search bar states
+  const [searchCourse, setSearchCourse] = useState("");
+  const [searchCurriculum, setSearchCurriculum] = useState("");
 
-  const [university, setUniversity] = useState([]);
-  const [level, setLevel] = useState([]);
+  //filter and sorting states courses
+  const [university, setUniversity] = useState("");
+  const [level, setLevel] = useState("");
   const [rating, setRating] = useState("");
-  const [sortBy, setSortBy] = useState('');
+  const [sortBy, setSortBy] = useState("");
 
-  const [viewCourse, setViewCourse] = useState(false)
-
+  //filter and sorting states curriculums
+  const [sortDirection, setSortDirection] = useState("");
   const [curriculumCategory, setCurriculumCategory] = useState([]);
 
-  const [sortDirection, setSortDirection] = useState('');
-
+  //provider states
   const { view, setView } = useView();
 
+  //get courses from api courses
   const getCourses = async () => {
     const res = await ax.get("./api/courses", {
       params: {
@@ -54,10 +68,11 @@ export default function Home() {
       },
     });
     setCourses(res.data.courses);
-    setCourseItems(res.data.length)
+    setCourseItems(res.data.length);
     setSearching(false);
   };
 
+  //handle sreach based on display
   const handleSearch = (e) => {
     if (display === "One") {
       setSearchCourse(e.target.value);
@@ -68,6 +83,26 @@ export default function Home() {
     }
   };
 
+  //get curriculums from api curriculums
+  const getCurriculums = async () => {
+    const res = await ax.get("./api/curriculums", {
+      params: {
+        page: curriculumPage,
+        category: curriculumCategory,
+        search: searchCurriculum,
+      },
+    });
+    setCurriculums(res.data);
+    setSearching(false);
+  };
+
+  useEffect(() => {
+    if (curriculumCategory) {
+      getCurriculums();
+    }
+  }, [curriculumCategory]);
+
+  //handle state changes
   useEffect(() => {
     let timer = setTimeout(() => {
       if (
@@ -110,32 +145,10 @@ export default function Home() {
   }, [university]);
 
   useEffect(() => {
-    if (coursePage || coursePage == 0) {
+    if (coursePage) {
       getCourses();
     }
   }, [coursePage]);
-
-  useEffect(() => {
-    getCourses();
-  }, []);
-
-  const getCurriculums = async () => {
-    const res = await ax.get("./api/curriculums", {
-      params: {
-        page: curriculumPage,
-        category: curriculumCategory,
-        search: searchCurriculum,
-      },
-    });
-    setCurriculums(res.data);
-    setSearching(false);
-  };
-
-  useEffect(() => {
-    if (curriculumCategory) {
-      getCurriculums();
-    }
-  }, [curriculumCategory]);
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -156,8 +169,8 @@ export default function Home() {
 
   return (
     <Cont>
-      {viewCourse ? <CourseDetailCard setViewCourse={setViewCourse}/> : <></>}
-      
+      {viewCourse ? <CourseDetailCard setViewCourse={setViewCourse} /> : <></>}
+
       <FilterBar
         value={display}
         setValue={setDisplay}
@@ -249,7 +262,7 @@ export default function Home() {
           {curriculums &&
             curriculums.map((x, i) => (
               <CurriculumSlider
-              key={i}
+                key={i}
                 avaText={x["name"]}
                 favouriteCount={x["likes"]}
                 courses={x["courses"]}
