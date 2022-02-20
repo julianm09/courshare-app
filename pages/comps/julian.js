@@ -8,7 +8,7 @@ import DifficultyBar from "@/components/DifficultyBar";
 export default function julian() {
   return (
     <Cont>
-      <FilterDropdown />
+{/*       <FilterDropdown />
       <Space />
       <FilterDropdownSingle />
       <Space />
@@ -21,7 +21,7 @@ export default function julian() {
       />
       <Space />
       <DifficultyBar difficulty={"Beginner"} size={"large"} />
-      <Space />
+      <Space /> */}
     </Cont>
   );
 }

@@ -7,11 +7,11 @@ export default function Juhee() {
   return (
     <Cont>
       {/* make components here */}
-      <CourseDetailCard></CourseDetailCard>
+{/*       <CourseDetailCard></CourseDetailCard>
       <Space />
       <PageNavigation></PageNavigation>
       <Space />
-      <FilterBar></FilterBar>
+      <FilterBar></FilterBar> */}
     </Cont>
   );
 }

@@ -8,11 +8,11 @@ import Search from "@/components/SearchBar";
 export default function Evie() {
   return (
     <Cont>
-      <RegisterButton/>
+{/*       <RegisterButton/>
       <AddCurriculum/>
       <InformCard/>
       <CourseCard/>
-      <Search/>
+      <Search/> */}
     </Cont>
   )
 }

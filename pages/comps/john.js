@@ -9,11 +9,11 @@ import styled from "styled-components";
 export default function John() {
   return (
     <Cont>
-      <AddedBadge/>
+{/*       <AddedBadge/>
       <ExploreButton/>
       <SortDropdown/>
       <CurriculumDropdown />
-      <CourseCardLV />
+      <CourseCardLV /> */}
       {/* <CurriculumSlider /> */}
     </Cont>
   )
