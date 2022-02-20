@@ -11,7 +11,6 @@ export default function FilterDropdownSingle({
   showFilter,
   setShowFilter,
 }) {
-
   const [showAll, setShowAll] = useState(false);
 
   const handleSelect = (x) => {
