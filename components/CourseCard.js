@@ -13,40 +13,41 @@ const CourseCard = ({
   difficulty = "Intermediate",
   ratingCount,
   image,
+  handleAddCurriculum,
 }) => {
   return (
     <CourseCont>
       <Redimg src={image} />
 
       <InfoCont>
-        <Header>{courseName}</Header>
+        <Row style={{ alignItems: "flex-start" }}>
+          <Header>{courseName}</Header>
+        </Row>
+
         <Name>{teachingSource}</Name>
-
-        {/*       <LeftSmallBox>
-        <Checkbox
-          sx={{
-            color: purple[800],
-            "&.Mui-checked": {
-              color: purple[600],
-            },
-          }}
-          icon={<FavoriteBorder />}
-          checkedIcon={<Favorite />}
-        />
-      </LeftSmallBox> */}
-
         <RatingBar>
-          <RatingStars />
+          <RatingStars defaultValue={ratingCount}/>
           {ratingCount}
         </RatingBar>
+        <SmallBar>
+          <Text>{difficulty}</Text>
+        </SmallBar>
 
         <Row>
-          <SmallBar>
-            <Text>{difficulty}</Text>
-          </SmallBar>
           <AddBar>
-            <AddCurriculum />
+            <AddCurriculum handleAddCurriculum={handleAddCurriculum}/>
           </AddBar>
+
+          <Checkbox
+            sx={{
+              color: purple[800],
+              "&.Mui-checked": {
+                color: purple[600],
+              },
+            }}
+            icon={<FavoriteBorder />}
+            checkedIcon={<Favorite />}
+          />
         </Row>
       </InfoCont>
     </CourseCont>
@@ -61,11 +62,20 @@ const CourseCont = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  just0fy-content: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  &:hover {
+    box-shadow: 0px 2px 20px 10px rgba(255, 196, 3, 0.15);
+  }
 `;
 
 const InfoCont = styled.div`
   margin: 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const Redimg = styled.img`
@@ -100,6 +110,7 @@ const LeftSmallBox = styled.div`
 
 const SmallBar = styled.div`
   display: flex;
+  margin: 0 0 24px 0;
 `;
 
 const Text = styled.div`
@@ -115,7 +126,7 @@ const Text = styled.div`
 const RatingBar = styled.div`
   display: flex;
   align-items: center;
-  margin: 0 0 42px 0;
+  margin: 0 0 12px 0;
 `;
 
 const AddBar = styled.div`

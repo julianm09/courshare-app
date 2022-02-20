@@ -15,11 +15,12 @@ export default function handler(req, res) {
     });
   }
 
+  const length = courses.length
+
   if (page) {
     courses = courses.slice(Number(page) * 3, (Number(page) + 1) * 3)
   }
 
-
-  res.status(200).json(courses);
+  res.status(200).json({courses, length: length});
 }
 

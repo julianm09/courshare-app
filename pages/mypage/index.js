@@ -61,7 +61,7 @@ export default function MyPage() {
         page: curriculumPage,
       },
     });
-    setCurriculums(res.data);
+    setCurriculums(res.data.courses);
   };
 
   const handleSearch = (e) => {

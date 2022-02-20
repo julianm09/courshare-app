@@ -54,6 +54,10 @@ export default function Home() {
   //provider states
   const { view, setView } = useView();
 
+  const handleAddCurriculum = () => {
+    setAddCurriculum(true)
+  }
+
   //get courses from api courses
   const getCourses = async () => {
     const res = await ax.get("./api/courses", {
@@ -92,7 +96,8 @@ export default function Home() {
         search: searchCurriculum,
       },
     });
-    setCurriculums(res.data);
+    setCurriculums(res.data.courses);
+    setCurriculumItems(res.data.length);
     setSearching(false);
   };
 
@@ -189,6 +194,7 @@ export default function Home() {
         setSearchCurriculum={setSearchCurriculum}
         display={display}
       />
+      
       <SortDropdown
         setSortBy={setSortBy}
         setSortDirection={setSortDirection}
@@ -211,7 +217,7 @@ export default function Home() {
       ) : (
         <></>
       )}
-      {display == "One" && view == "list" && !searching ? (
+      {display && display == "One" && view == "list" && !searching ? (
         <>
           <ListView>
             {courses &&
@@ -247,6 +253,7 @@ export default function Home() {
                   ratingCount={x["Course Rating"]}
                   difficulty={x["Difficulty Level"]}
                   image={x.Image}
+                  handleAddCurriculum={handleAddCurriculum}
                 />
               ))}
           </GridView>
@@ -271,7 +278,8 @@ export default function Home() {
           <PageNavigationCurriculum
             setCurriculumPage={setCurriculumPage}
             curriculumPage={curriculumPage}
-            getCurriculums={() => getCurriculums()}
+            getCurriculums={getCurriculums}
+            items={curriculumItems}
           />
         </>
       ) : (

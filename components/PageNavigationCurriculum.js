@@ -40,7 +40,7 @@ export default function PageNavigationCurriculum({items=5, setCurriculumPage, cu
     <Cont>
       <Pagination
         onChange={handleChange}
-        count={Math.round(items / 3)}
+        count={ items < 3  ? 1 : Math.round(items / 3)}
         variant="outlined"
         shape="rounded"
         classes={{ ul: classes.ul }}

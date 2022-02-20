@@ -7,8 +7,11 @@ export default function FilterDropdownSingle({
   categories = ["4.5 - 5.5", "4.0 - 4.5", "3.5 - 4.0", "0 - 3.5"],
   selected,
   setSelected = () => {},
+  show,
+  showFilter,
+  setShowFilter,
 }) {
-  const [show, setShow] = useState(false);
+
   const [showAll, setShowAll] = useState(false);
 
   const handleSelect = (x) => {
@@ -21,7 +24,13 @@ export default function FilterDropdownSingle({
 
   return (
     <Cont>
-      <Dropdown onClick={() => setShow(!show)}>
+      <Dropdown
+        onClick={
+          showFilter == name
+            ? () => setShowFilter("")
+            : () => setShowFilter(name)
+        }
+      >
         {name}
         <Icon>
           {show ? (

@@ -12,19 +12,14 @@ export default function FilterDropdown({
     "Arizona State University",
     "University of Illinois at Urbana-Champaign",
   ],
+  show,
+  showFilter,
+  setShowFilter,
 }) {
-  const [show, setShow] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
   const handleSelect = (x) => {
     setSelected(x);
-    /*     if(name === "University"){
-      if (university && university.includes(x)) {
-        setUniversity(university.filter((i) => i !== x));
-      } else {
-        setUniversity([...university, x]);
-      }
-    } */
   };
 
   const clearAll = () => {
@@ -33,7 +28,13 @@ export default function FilterDropdown({
 
   return (
     <Cont>
-      <Dropdown onClick={() => setShow(!show)}>
+      <Dropdown
+        onClick={
+          showFilter == name
+            ? () => setShowFilter("")
+            : () => setShowFilter(name)
+        }
+      >
         {name}
         <Icon>
           {show ? (

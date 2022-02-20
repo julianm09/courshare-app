@@ -21,6 +21,8 @@ const TopCont = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  color: ${props => props.color};
+  font-family: General Sans;
   align-items: center;
   margin: 0 0 71px 0;
   min-height: 50px;
@@ -55,7 +57,6 @@ const ButtonCont = styled.div`
   @media (max-width: 1000px) {
     width: 100%;
     flex-direction: column;
-
   }
 `;
 
@@ -91,7 +92,7 @@ export default function FilterBar({
   searchCourse,
   setSearchCurriculum,
   searchCurriculum,
-  display
+  display,
 }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -100,22 +101,26 @@ export default function FilterBar({
   const classes = useStyles();
   const { theme, setTheme } = useTheme();
 
+  const [showFilter, setShowFilter] = useState("");
+
   return (
     <BigCont>
-      <TopCont>
+      <TopCont color={theme === "dark" ? "white" : "black"}>
         <Tabs
           value={value}
           onChange={handleChange}
           textColor="inherit"
           aria-label="secondary tabs example"
-   
           TabIndicatorProps={{ className: classes.indicator }}
         >
           <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
           <Tab value="Two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
         <Space />
-        <SearchBar handleSearch={handleSearch} value={display === "One" ? searchCourse : searchCurriculum} />
+        <SearchBar
+          handleSearch={handleSearch}
+          value={display === "One" ? searchCourse : searchCurriculum}
+        />
       </TopCont>
       <BottomCont>
         <FilterBy color={comp_themes[theme].switch_text}>Filter by</FilterBy>
@@ -127,6 +132,9 @@ export default function FilterBar({
                 name="University"
                 selected={university}
                 setSelected={setUniversity}
+                show={showFilter == "University"}
+                showFilter={showFilter}
+                setShowFilter={setShowFilter}
               />
               <Space />
 
@@ -135,10 +143,20 @@ export default function FilterBar({
                 selected={level}
                 setSelected={setLevel}
                 categories={["Beginner", "Intermediate", "Advanced"]}
+                show={showFilter == "Level"}
+                showFilter={showFilter}
+                setShowFilter={setShowFilter}
               />
               <Space />
 
-              <FilterDropdownSingle selected={rating} setSelected={setRating} />
+              <FilterDropdownSingle
+                name="Rating"
+                selected={rating}
+                setSelected={setRating}
+                show={showFilter == "Rating"}
+                showFilter={showFilter}
+                setShowFilter={setShowFilter}
+              />
             </>
           ) : (
             <>
