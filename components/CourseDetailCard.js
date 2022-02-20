@@ -35,7 +35,7 @@ export default function CourseDetailCard({
         <ContentCont>
           <FristCont>
             <LeftCont>
-              <Img src={activeCourse["Image"]} />
+              <Img src={activeCourse["Image"] && activeCourse["Image"]} />
             </LeftCont>
             <RightCont>
               <RightSmallCont>
