@@ -114,7 +114,7 @@ export default function FilterBar({
           TabIndicatorProps={{ className: classes.indicator }}
         >
           <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
-          <Tab value="Two" label="Curriculums" style={{ marginLeft: 30, fontFamily }} />
+          <Tab value="Two" label="Curriculums" style={{ marginLeft: 30 }} />
         </Tabs>
         <Space />
         <SearchBar
