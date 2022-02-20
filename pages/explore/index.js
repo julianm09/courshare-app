@@ -174,9 +174,9 @@ export default function Home() {
 
   return (
     <Cont>
-{/*       {viewCourse ? <CourseDetailCard setViewCourse={setViewCourse} /> : <></>}
+      {viewCourse ? <CourseDetailCard setViewCourse={setViewCourse} /> : <></>}
 
-      <FilterBar
+{/*       <FilterBar
         value={display}
         setValue={setDisplay}
         handleSearch={handleSearch}
@@ -193,7 +193,7 @@ export default function Home() {
         searchCurriculum={searchCurriculum}
         setSearchCurriculum={setSearchCurriculum}
         display={display}
-      />
+      /> */}
       
       <SortDropdown
         setSortBy={setSortBy}
@@ -284,7 +284,7 @@ export default function Home() {
         </>
       ) : (
         <></>
-      )} */}
+      )}
     </Cont>
   );
 }
