@@ -14,9 +14,11 @@ const CourseCard = ({
   ratingCount,
   image,
   handleAddCurriculum,
+  handleViewCourse,
+  course
 }) => {
   return (
-    <CourseCont>
+    <CourseCont onClick={() => handleViewCourse(course)}>
       <Redimg src={image} />
 
       <InfoCont>
@@ -26,7 +28,7 @@ const CourseCard = ({
 
         <Name>{teachingSource}</Name>
         <RatingBar>
-          <RatingStars defaultValue={ratingCount}/>
+          <RatingStars defaultValue={ratingCount} />
           {ratingCount}
         </RatingBar>
         <SmallBar>
@@ -35,7 +37,7 @@ const CourseCard = ({
 
         <Row>
           <AddBar>
-            <AddCurriculum handleAddCurriculum={handleAddCurriculum}/>
+            <AddCurriculum handleAddCurriculum={handleAddCurriculum} />
           </AddBar>
 
           <Checkbox

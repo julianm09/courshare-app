@@ -37,7 +37,7 @@ export default function PageNavigationCourse({ items = 424, setCoursePage }) {
     <Cont>
       <Pagination
         onChange={handleChange}
-        count={items < 9 ? 1 : Math.round(items / 9)}
+        count={items < 12 ? 1 : Math.round(items / 12)}
         variant="outlined"
         shape="rounded"
         classes={{ ul: classes.ul }}

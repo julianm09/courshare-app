@@ -12,13 +12,14 @@ import PageNavigation from "@/components/PageNavigationCourse";
 import PageNavigationCourse from "@/components/PageNavigationCourse";
 import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
 import SectionTabs from "@/components/SectionTabs";
-import { useTheme } from "@/utils/provider";
+import { useTheme, useView } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
+import CourseCard from "@/components/CourseCard";
 
 export default function MyPage() {
   const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
-  const [searchCourse, setSearchCourse] = useState('');
+  const [searchCourse, setSearchCourse] = useState("");
   const [display, setDisplay] = useState("One");
   const [addCurriculum, setAddCurriculum] = useState(false);
   const [coursePage, setCoursePage] = useState(0);
@@ -51,7 +52,7 @@ export default function MyPage() {
       },
     });
     setCourses(res.data.courses);
-    setCourseItems(res.data.length)
+    setCourseItems(res.data.length);
     setSearching(false);
   };
 
@@ -73,18 +74,21 @@ export default function MyPage() {
     getCurriculums();
   }, []);
   const { theme, setTheme } = useTheme();
+  const { view, setView } = useView();
   return (
     <Cont>
       <Greeting>Hi, Juhee 👋</Greeting>
       <SectionTabs
         value={display}
         setValue={setDisplay}
-        one="Saved"
-        two="Your Curriculums"
+        one="Saved Courses"
+        two="Saved Curriculums"
+        three="Your Curriculums"
         handleSearch={handleSearch}
+        display={display}
       />
 
-      {display == "One" ? (
+      {display == "One" && view === "list" ? (
         <>
           {courses &&
             courses.map((x) => (
@@ -103,11 +107,31 @@ export default function MyPage() {
             coursePage={coursePage}
             items={courseItems}
           />
-
-          <Header color={comp_themes[theme].switch_text}>
-            Saved Curriculums
-          </Header>
-
+        </>
+      ) : display == "One" && view === "grid" ? (
+        <>
+          <GridView>
+            {courses &&
+              courses.map((x) => (
+                <CourseCard
+                  courseName={x["Course Name"]}
+                  teachingSource={x["University"]}
+                  ratingCount={x["Course Rating"]}
+                  difficulty={x["Difficulty Level"]}
+                  image={x.Image}
+                  setAddCurriculum={setAddCurriculum}
+                />
+              ))}
+          </GridView>
+          <PageNavigationCourse
+            setCoursePage={setCoursePage}
+            getCourses={() => getCourses()}
+            coursePage={coursePage}
+            items={courseItems}
+          />
+        </>
+      ) : display == "Two" ? (
+        <>
           {curriculums &&
             curriculums.map((x) => (
               <CurriculumSlider
@@ -122,7 +146,7 @@ export default function MyPage() {
             getCurriculums={() => getCurriculums()}
           />
         </>
-      ) : display == "Two" ? (
+      ) : display == "Three" ? (
         <>
           {curriculums &&
             curriculums.map((x) => (
@@ -146,12 +170,20 @@ export default function MyPage() {
 }
 
 const Cont = styled.div`
-  width: 90%;
-  margin: 0 5%;
-  padding: 0 0 0 8%;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    padding: 0;
+  }
 `;
 
 const Header = styled.div`
@@ -162,6 +194,7 @@ const Header = styled.div`
   line-height: 43px;
   color: ${(props) => props.color};
   margin: 176px 0 86px;
+  width: 80%;
 `;
 
 const Greeting = styled.div`
@@ -172,4 +205,25 @@ const Greeting = styled.div`
   line-height: 74px;
   color: #000000;
   margin: 95px 0 25px 0;
+  width: 80%;
+`;
+
+const GridView = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr;
+  width: 80%;
+  grid-gap: 53px;
+
+  @media (max-width: 1400px) {
+    grid-template-columns: 2fr 2fr 2fr;
+  }
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 2fr 2fr;
+    width: 90%;
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: 2fr;
+  }
 `;

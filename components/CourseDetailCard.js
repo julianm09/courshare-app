@@ -8,6 +8,85 @@ import RegisterButton from "../components/RegisterButton";
 import { yellow } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
 import RatingStars from "./RatingStars";
+import AddCurriculum from "./AddCurriculum";
+
+export default function CourseDetailCard({
+  name = "3D  CAD Fundamental",
+  school = "National Taiwan University",
+  rating = 4.6,
+  difficulty = "intermediate",
+  description = "",
+  skills = "",
+  setViewCourse,
+  activeCourse
+}) {
+  const [value, setValue] = React.useState(4);
+
+  return (
+    <Overlay onClick={() => setViewCourse(false)}>
+      <BigCont onClick={(e) => e.stopPropagation()}>
+        <ButtonCont>
+          <button
+            style={{ border: "none", background: "none", cursor: "pointer" }}
+          >
+            <CloseIcon onClick={() => setViewCourse(false)} />
+          </button>
+        </ButtonCont>
+        <ContentCont>
+          <FristCont>
+            <LeftCont>
+              <Img src={activeCourse["Image"]} />
+            </LeftCont>
+            <RightCont>
+              <RightSmallCont>
+{/*                 <Heading1>{activeCourse["Course Name"]}</Heading1> */}
+                <Checkbox
+                  sx={{
+                    color: yellow[800],
+                    "&.Mui-checked": {
+                      color: yellow[600],
+                    },
+                  }}
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite />}
+                />
+                <AddCurriculum/>
+              </RightSmallCont>
+              <RightSmallCont>
+                <GreyText>{activeCourse["University"]}</GreyText>
+              </RightSmallCont>
+              <RightSmallCont>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <RatingStars defaultValue={activeCourse["Course Rating"]}/>
+                  <Desc>{activeCourse["Course Rating"]}</Desc>
+                </div>
+                <Desc>{activeCourse["Difficulty Level"]}</Desc>
+              </RightSmallCont>
+              <RightSmallCont>
+                <RegisterButton link={activeCourse["Course URL"]}/>
+              </RightSmallCont>
+            </RightCont>
+          </FristCont>
+          <SecondCont>
+            <Heading2>Description</Heading2>
+            <Desc>{activeCourse["Course Description"].length > 500 ? activeCourse["Course Description"].slice(0, 500) + "..." : activeCourse["Course Description"]}</Desc>
+          </SecondCont>
+          <ThirdCont>
+            <Heading2>Skills</Heading2>
+            <Desc>{activeCourse["Skills"]}</Desc>
+          </ThirdCont>
+        </ContentCont>
+      </BigCont>
+    </Overlay>
+  );
+}
 
 const Overlay = styled.div`
   position: fixed;
@@ -48,17 +127,16 @@ const ContentCont = styled.div`
 const FristCont = styled.div`
   display: flex;
   flex-direction: row;
+  height: 225px;
 `;
 const LeftCont = styled.div``;
 
 const Img = styled.img`
-  width: 245px;
-  height: 245px;
+height: 100%;
   border-radius: 10px;
 `;
 const Heading1 = styled.p`
   font-size: 24px;
-  margin: 0;
   font-weight: 450;
 `;
 
@@ -67,22 +145,21 @@ const GreyText = styled.p`
   font-size: 14px;
 `;
 const RightCont = styled.div`
-  height: 245px;
+  height: 100%;
+  width: 100%;
   margin-left: 60px;
   display: flex;
   flex-direction: column;
-  align-items: space-between;
+  justify-content: space-between;
 `;
 const RightSmallCont = styled.div`
-  width: 350px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5%;
 `;
 const SecondCont = styled.div`
-  margin-top: 20px;
+  margin: 20px 0;
 `;
 const Heading2 = styled.p`
   font-size: 20px;
@@ -90,80 +167,6 @@ const Heading2 = styled.p`
 `;
 const Desc = styled.p`
   font-size: 14px;
-  margin-left: 20px;
+
 `;
 const ThirdCont = styled.div``;
-
-export default function CourseDetailCard({
-  name = "3D  CAD Fundamental",
-  school = "National Taiwan University",
-  rating = 4.6,
-  difficulty = "intermediate",
-  description = "",
-  skills = "",
-  setViewCourse,
-}) {
-  const [value, setValue] = React.useState(4);
-
-  return (
-    <Overlay onClick={() => setViewCourse(false)}>
-      <BigCont onClick={(e) => e.stopPropagation()}>
-        <ButtonCont>
-          <button style={{ border: "none", background: "none", cursor: "pointer" }}>
-            <CloseIcon onClick={() => setViewCourse(false)} />
-          </button>
-        </ButtonCont>
-        <ContentCont>
-          <FristCont>
-            <LeftCont>
-              <Img src="https://images.unsplash.com/photo-1600869009498-8d429f88d4f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80" />
-            </LeftCont>
-            <RightCont>
-              <RightSmallCont>
-                <Heading1>{name}</Heading1>
-                <Checkbox
-                  sx={{
-                    color: yellow[800],
-                    "&.Mui-checked": {
-                      color: yellow[600],
-                    },
-                  }}
-                  icon={<FavoriteBorder />}
-                  checkedIcon={<Favorite />}
-                />
-              </RightSmallCont>
-              <RightSmallCont>
-                <GreyText>{school}</GreyText>
-              </RightSmallCont>
-              <RightSmallCont>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <RatingStars />
-                  <Desc>{rating}</Desc>
-                </div>
-                <Desc>{difficulty}</Desc>
-              </RightSmallCont>
-              <RightSmallCont>
-                <RegisterButton />
-              </RightSmallCont>
-            </RightCont>
-          </FristCont>
-          <SecondCont>
-            <Heading2>Description</Heading2>
-            <Desc>{description}</Desc>
-          </SecondCont>
-          <ThirdCont>
-            <Heading2>Skills</Heading2>
-            <Desc>{skills}</Desc>
-          </ThirdCont>
-        </ContentCont>
-      </BigCont>
-    </Overlay>
-  );
-}

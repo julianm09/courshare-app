@@ -13,8 +13,9 @@ const Cont = styled.div`
   font-family: General Sans;
   font-style: normal;
   font-weight: normal;
-  width: auto;
+  width: 100%;
   margin: 0 0 112px 0;
+
 `;
 
 const TitleCont = styled.div`
@@ -22,6 +23,7 @@ const TitleCont = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 0 32px 0;
+  padding: 0 10%;
 `;
 
 const LeftCont = styled.div`
@@ -32,7 +34,7 @@ const LeftCont = styled.div`
 const Avatar = styled.img`
   width: 40px;
   height: 40px;
-  margin-right: 10%;
+  margin-right: 20px;
 `;
 
 const AvatarText = styled.div`
@@ -51,6 +53,10 @@ const RightCont = styled.div`
 const ContentCont = styled.div`
   display: flex;
   justify-content: space-between;
+  overflow-x: scroll;
+  width: 100%;
+  padding: 10px 0 10px 10%;
+
 `;
 
 const BoxCont = styled.div`
@@ -59,6 +65,7 @@ const BoxCont = styled.div`
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   border-radius: 10px;
   margin: 0 45px 0 0;
+  cursor: pointer;
 `;
 
 const InfoCont = styled.div`
@@ -110,6 +117,7 @@ export default function CurriculumSlider({
   ratingCount1 = 4.6,
   difficulty1 = " Beginner",
   courses,
+  handleViewCourse
 }) {
   const { theme, setTheme } = useTheme();
   return (
@@ -139,7 +147,7 @@ export default function CurriculumSlider({
       </TitleCont>
       <ContentCont>
         {courses.map((x) => (
-          <BoxCont>
+          <BoxCont onClick={() => handleViewCourse(x)}>
             <Img src={x["Image"]} />
             <InfoCont>
               <Title color={comp_themes[theme].switch_text}>

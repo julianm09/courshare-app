@@ -11,7 +11,7 @@ import { useTheme } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 
 const BigCont = styled.div`
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -35,6 +35,10 @@ const Header = styled.div`
   font-size: 24px;
 
   color: ${(props) => props.color};
+
+  @media (max-width: 1000px) {
+margin: 0 0 20px 0;
+  }
 `;
 const BottomCont = styled.div`
   display: flex;
@@ -59,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FilterBar({ value, setValue, handleSearch, one, two }) {
+export default function FilterBar({ display, value, setValue, handleSearch, one, two, three }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -78,10 +82,11 @@ export default function FilterBar({ value, setValue, handleSearch, one, two }) {
         >
           <Tab classes={{ tabs: classes.tabs }} value="One" label={one} />
           <Tab value="Two" label={two} style={{ marginLeft: 30 }} />
+          <Tab value="Three" label={three} style={{ marginLeft: 30 }} />
         </Tabs>
       </TopCont>
       <BottomCont>
-        <Header color={comp_themes[theme].switch_text}>Saved Courses</Header>
+        <Header color={comp_themes[theme].switch_text}>{display == "One" ? one : display === "Two" ? two : three}</Header>
         <SearchBar handleSearch={handleSearch}/>
       </BottomCont>
     </BigCont>

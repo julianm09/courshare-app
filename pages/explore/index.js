@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ax from "axios";
 import { useEffect, useState } from "react";
-import { useView } from "@/utils/provider";
+import { useView, useActiveCourse } from "@/utils/provider";
 import FilterBar from "@/components/FilterBar";
 import AddCurriculumForm from "@/components/AddCurriculumForm";
 import CourseCardLV from "@/components/CourseCardLV";
@@ -22,9 +22,6 @@ export default function Home() {
 
   //show currciculum form
   const [addCurriculum, setAddCurriculum] = useState(false);
-
-  //vew course details
-  const [viewCourse, setViewCourse] = useState(false);
 
   //course pagination items and page number
   const [coursePage, setCoursePage] = useState(0);
@@ -53,10 +50,13 @@ export default function Home() {
 
   //provider states
   const { view, setView } = useView();
+  const { activeCourse, handleViewCourse, viewCourse, setViewCourse } =
+    useActiveCourse();
 
-  const handleAddCurriculum = () => {
-    setAddCurriculum(true)
-  }
+  const handleAddCurriculum = (e) => {
+    e.stopPropagation();
+    setAddCurriculum(true);
+  };
 
   //get courses from api courses
   const getCourses = async () => {
@@ -150,7 +150,7 @@ export default function Home() {
   }, [university]);
 
   useEffect(() => {
-    if (coursePage) {
+    if (coursePage || coursePage === 0) {
       getCourses();
     }
   }, [coursePage]);
@@ -174,7 +174,14 @@ export default function Home() {
 
   return (
     <Cont>
-      {viewCourse ? <CourseDetailCard setViewCourse={setViewCourse} /> : <></>}
+      {viewCourse ? (
+        <CourseDetailCard
+          setViewCourse={setViewCourse}
+          activeCourse={activeCourse}
+        />
+      ) : (
+        <></>
+      )}
 
       <FilterBar
         value={display}
@@ -193,9 +200,6 @@ export default function Home() {
         searchCurriculum={searchCurriculum}
         setSearchCurriculum={setSearchCurriculum}
         display={display}
-      />
-      
-      <SortDropdown
         setSortBy={setSortBy}
         setSortDirection={setSortDirection}
         sort={
@@ -211,6 +215,7 @@ export default function Home() {
             : ["Top", "New"]
         }
       />
+
       {searching ? <>searching</> : <></>}
       {addCurriculum ? (
         <AddCurriculumForm setAddCurriculum={setAddCurriculum} />
@@ -231,6 +236,8 @@ export default function Home() {
                   ratingCount={x["Course Rating"]}
                   difficulty={x["Difficulty Level"]}
                   image={x.Image}
+                  course={x}
+                  handleViewCourse={handleViewCourse}
                 />
               ))}
           </ListView>
@@ -248,12 +255,14 @@ export default function Home() {
               courses.map((x, i) => (
                 <CourseCard
                   key={i}
+                  course={x}
                   courseName={x["Course Name"]}
                   teachingSource={x["University"]}
                   ratingCount={x["Course Rating"]}
                   difficulty={x["Difficulty Level"]}
                   image={x.Image}
                   handleAddCurriculum={handleAddCurriculum}
+                  handleViewCourse={handleViewCourse}
                 />
               ))}
           </GridView>
@@ -273,6 +282,7 @@ export default function Home() {
                 avaText={x["name"]}
                 favouriteCount={x["likes"]}
                 courses={x["courses"]}
+                handleViewCourse={handleViewCourse}
               />
             ))}
           <PageNavigationCurriculum
@@ -290,15 +300,17 @@ export default function Home() {
 }
 
 const Cont = styled.div`
-  width: 90%;
-  margin: 0 5%;
-  padding: 0 0 0 8%;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
 
   @media (max-width: 1000px) {
-    width: 90%;
     flex-direction: column;
     padding: 0;
   }
@@ -307,12 +319,14 @@ const Cont = styled.div`
 const ListView = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
 `;
 
 const GridView = styled.div`
   display: grid;
   grid-template-columns: 2fr 2fr 2fr 2fr;
-  width: 90%;
+  width: 80%;
   grid-gap: 53px;
 
   @media (max-width: 1400px) {
@@ -321,7 +335,7 @@ const GridView = styled.div`
 
   @media (max-width: 1000px) {
     grid-template-columns: 2fr 2fr;
-    width: 100%;
+    width: 90%;
   }
 
   @media (max-width: 700px) {

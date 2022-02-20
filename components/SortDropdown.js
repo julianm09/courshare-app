@@ -43,12 +43,10 @@ const SortDropdown = ({
 };
 
 const Cont = styled.div`
-  width: 90%;
-  margin: 0 0 54px 0;
   display: flex;
   position: relative;
 
-  justify-content: flex-end;
+  justify-content: flex-start;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */

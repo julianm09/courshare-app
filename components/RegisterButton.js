@@ -1,7 +1,22 @@
 import styled from "styled-components";
 
-const RegisterBtn = styled.button`
-  width: 166px;
+const RegisterButton = ({
+  text = "View on Coursera",
+  data = "Starts Feb 2nd",
+  background = "#FFC403",
+  link
+}) => {
+  return (
+    <RegisterBtn href={link} target="_blank" background={background}>
+      <Header>{text}</Header>
+    </RegisterBtn>
+  );
+};
+
+export default RegisterButton;
+
+const RegisterBtn = styled.a`
+  width: 200px;
   height: 57px;
   background-color: ${(props) => props.background};
   color: #000000;
@@ -17,7 +32,7 @@ const Header = styled.div`
   font-family: General Sans;
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   color: #000000;
   margin-left: auto;
   margin-right: auto;
@@ -29,23 +44,5 @@ font-style: normal;
 font-weight: normal;
 font-size: 12px;
 color: #000000;
-margin-left: auto;
-margin-right: auto;
-
 }
 `;
-
-const RegisterButton = ({
-  text = "View Course",
-  data = "Starts Feb 2nd",
-  background = "#FFC403",
-}) => {
-  return (
-    <RegisterBtn background={background}>
-      <Header>{text}</Header>
-      <Text>{data}</Text>
-    </RegisterBtn>
-  );
-};
-
-export default RegisterButton;

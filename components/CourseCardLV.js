@@ -13,7 +13,7 @@ import { comp_themes } from "@/utils/variables";
 const Cont = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 90%;
+  width: 80%;
   margin: 0 0 49px 0;
   cursor: pointer;
 `;
@@ -71,12 +71,14 @@ export default function CourseCardLV({
   difficulty = " Intermediate",
   image,
   setAddCurriculum,
-  setViewCourse
+  setViewCourse,
+  handleViewCourse,
+  course
 }) {
   const { theme, setTheme } = useTheme();
   return (
     <Cont>
-      <CourseCont onClick={() => setViewCourse(true)}>
+      <CourseCont onClick={() => handleViewCourse(course)}>
         <CourseImg src={image} />
         <InfoCont>
           <Title color={comp_themes[theme].switch_text}>{courseName}</Title>
@@ -95,15 +97,15 @@ export default function CourseCardLV({
         </InfoCont>
       </CourseCont>
       <Selection>
-        <CurriculumDropdown setAddCurriculum={setAddCurriculum}/>
-        <Break />
         <Checkbox
           sx={{
             color: yellow[800],
-            height: 30,
+            height: 0,
+            width: 0,
             "&.Mui-checked": {
               color: yellow[600],
-              height: 30,
+              height: 0,
+              width: 0,
             },
           }}
           icon={<FavoriteBorder />}
