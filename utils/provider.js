@@ -35,7 +35,7 @@ export default function AppProvider({ children }) {
         setActiveCourse,
         handleViewCourse,
         viewCourse,
-        setViewCourse
+        setViewCourse,
       }}
     >
       <style jsx global>

@@ -45,7 +45,6 @@ const SortDropdown = ({
 const Cont = styled.div`
   display: flex;
   position: relative;
-
   justify-content: flex-start;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -112,8 +111,8 @@ const Category = styled.div`
   cursor: pointer;
   padding: 0 18px;
 
-  &:hover{
-    background: #FEF3D0;
+  &:hover {
+    background: #fef3d0;
   }
 `;
 

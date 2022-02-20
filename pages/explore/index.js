@@ -54,6 +54,7 @@ export default function Home() {
     useActiveCourse();
 
   const handleAddCurriculum = (e) => {
+    console.log("e")
     e.stopPropagation();
     setAddCurriculum(true);
   };
@@ -87,6 +88,20 @@ export default function Home() {
     }
   };
 
+  const useSearch = () => {
+    if (searchCourse !== null && display === "One") {
+      setSearching(true);
+      setCoursePage(0);
+      getCourses();
+    }
+
+    if (searchCurriculum !== null && display === "Two") {
+      setSearching(true);
+      setCurriculumPage(0);
+      getCurriculums();
+    }
+  };
+
   //get curriculums from api curriculums
   const getCurriculums = async () => {
     const res = await ax.get("./api/curriculums", {
@@ -108,22 +123,6 @@ export default function Home() {
   }, [curriculumCategory]);
 
   //handle state changes
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      if (
-        (searchCourse !== null && searchCourse.length > 1) ||
-        (searchCourse !== null && searchCourse === "")
-      ) {
-        if (display === "One") {
-          setSearching(true);
-          setCoursePage(0);
-          getCourses();
-        }
-      }
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, [searchCourse]);
 
   useEffect(() => {
     if (level) {
@@ -155,23 +154,6 @@ export default function Home() {
     }
   }, [coursePage]);
 
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      if (
-        (searchCurriculum !== null && searchCurriculum.length > 1) ||
-        (searchCurriculum !== null && searchCurriculum === "")
-      ) {
-        if (display === "Two") {
-          setSearching(true);
-          setCurriculumPage(0);
-          getCurriculums();
-        }
-      }
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, [searchCurriculum]);
-
   return (
     <Cont>
       {viewCourse ? (
@@ -184,6 +166,7 @@ export default function Home() {
       )}
 
       <FilterBar
+        useSearch={useSearch}
         value={display}
         setValue={setDisplay}
         handleSearch={handleSearch}
@@ -238,6 +221,7 @@ export default function Home() {
                   image={x.Image}
                   course={x}
                   handleViewCourse={handleViewCourse}
+                  handleAddCurriculum={handleAddCurriculum}
                 />
               ))}
           </ListView>
@@ -263,6 +247,8 @@ export default function Home() {
                   image={x.Image}
                   handleAddCurriculum={handleAddCurriculum}
                   handleViewCourse={handleViewCourse}
+                  setViewCourse={setViewCourse}
+                  setAddCurriculum={setAddCurriculum}
                 />
               ))}
           </GridView>

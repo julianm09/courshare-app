@@ -9,9 +9,11 @@ import { Checkbox } from "@mui/material";
 import { yellow } from "@mui/material/colors";
 import { useTheme } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
+import AddCurriculum from "./AddCurriculum";
 
 const Cont = styled.div`
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
   width: 80%;
   margin: 0 0 49px 0;
@@ -57,7 +59,8 @@ const Challenge = styled.div`
 
 const Selection = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 const Break = styled.div`
@@ -72,8 +75,9 @@ export default function CourseCardLV({
   image,
   setAddCurriculum,
   setViewCourse,
+  handleAddCurriculum,
   handleViewCourse,
-  course
+  course,
 }) {
   const { theme, setTheme } = useTheme();
   return (
@@ -111,6 +115,9 @@ export default function CourseCardLV({
           icon={<FavoriteBorder />}
           checkedIcon={<Favorite />}
         />
+        <div style={{margin: '0 0 0 25px'}}>
+          <AddCurriculum handleAddCurriculum={handleAddCurriculum}/>
+        </div>
       </Selection>
     </Cont>
   );

@@ -37,7 +37,7 @@ const Header = styled.div`
   color: ${(props) => props.color};
 
   @media (max-width: 1000px) {
-margin: 0 0 20px 0;
+    margin: 0 0 20px 0;
   }
 `;
 const BottomCont = styled.div`
@@ -63,7 +63,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FilterBar({ display, value, setValue, handleSearch, one, two, three }) {
+export default function FilterBar({
+  display,
+  value,
+  setValue,
+  handleSearch,
+  one,
+  two,
+  three,
+  useSearch,
+  setSearchCourse,
+  searchCourse,
+  setSearchCurriculum,
+  searchCurriculum,
+  searchMyCurriculum,
+
+}) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -86,8 +101,14 @@ export default function FilterBar({ display, value, setValue, handleSearch, one,
         </Tabs>
       </TopCont>
       <BottomCont>
-        <Header color={comp_themes[theme].switch_text}>{display == "One" ? one : display === "Two" ? two : three}</Header>
-        <SearchBar handleSearch={handleSearch}/>
+        <Header color={comp_themes[theme].switch_text}>
+          {display == "One" ? one : display === "Two" ? two : three}
+        </Header>
+        <SearchBar
+          handleSearch={handleSearch}
+          useSearch={useSearch}
+          value={display === "One" ? searchCourse : display === "Two" ? searchCurriculum : searchMyCurriculum}
+        />
       </BottomCont>
     </BigCont>
   );

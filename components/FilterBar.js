@@ -34,14 +34,13 @@ export default function FilterBar({
   university,
   curriculumCategory,
   setCurriculumCategory,
-  setSearchCourse,
   searchCourse,
-  setSearchCurriculum,
   searchCurriculum,
   display,
   setSortBy,
   setSortDirection,
   sort,
+  useSearch,
 }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -67,6 +66,7 @@ export default function FilterBar({
         </Tabs>
         <Space />
         <SearchBar
+          useSearch={useSearch}
           handleSearch={handleSearch}
           value={display === "One" ? searchCourse : searchCurriculum}
         />
@@ -110,7 +110,6 @@ export default function FilterBar({
                 <Space />
               </FilterCont>
 
-
               <SortDropdown
                 setSortBy={setSortBy}
                 setSortDirection={setSortDirection}
@@ -124,6 +123,9 @@ export default function FilterBar({
                 selected={curriculumCategory}
                 setSelected={setCurriculumCategory}
                 categories={["webdev", "communication", "math", "business"]}
+                show={showFilter == "Category"}
+                showFilter={showFilter}
+                setShowFilter={setShowFilter}
               />
               <Space />
 
