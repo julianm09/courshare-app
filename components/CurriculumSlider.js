@@ -111,11 +111,6 @@ export default function CurriculumSlider({
   avasrc = "/avatar.png",
   avaText = "Juhee's UX/UI DesignCurriculum",
   favouriteCount = "4561",
-  coursesrc1 = "/Testing1.png",
-  courseName1 = "UX Research",
-  teachingSource1 = "University of Toronto",
-  ratingCount1 = 4.6,
-  difficulty1 = " Beginner",
   courses,
   handleViewCourse
 }) {

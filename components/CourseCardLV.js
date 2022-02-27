@@ -73,8 +73,6 @@ export default function CourseCardLV({
   ratingCount = 4.6,
   difficulty = " Intermediate",
   image,
-  setAddCurriculum,
-  setViewCourse,
   handleAddCurriculum,
   handleViewCourse,
   course,

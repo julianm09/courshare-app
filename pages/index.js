@@ -5,22 +5,22 @@ import { style } from "@mui/system";
 import { useTheme } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 import { useRouter } from "next/router";
+import clientPromise from "../lib/mongodb";
 
-export default function Home() {
+export default function Home({ isConnected }) {
   const { theme, setTheme } = useTheme();
   const r = useRouter();
-
 
   return (
     <BigCont>
       <LeftCont>
+        {isConnected ? "connected" : "not connected"}
         <Header color={comp_themes[theme].switch_text}>Welcome, Juhee!</Header>
         <Name color={comp_themes[theme].switch_text}>
           Build Your Skills and explore our students' all-in-one curriculums.
         </Name>
-  
-          <ExploreButton onClick={() => r.push("/explore")}/>
 
+        <ExploreButton onClick={() => r.push("/explore")} />
       </LeftCont>
       <RightCont>
         <GroupImg src="/landingvector.svg" />
@@ -46,7 +46,7 @@ const LeftCont = styled.div`
   align-items: flex-start;
   padding: 2% 5%;
 
-  @media(max-width: 1000px){
+  @media (max-width: 1000px) {
     width: 100%;
   }
 `;
@@ -56,7 +56,7 @@ const RightCont = styled.div`
   align-items: flex-end;
   padding: 0 5% 0 0;
 
-  @media(max-width: 1000px){
+  @media (max-width: 1000px) {
     display: none;
   }
 `;
@@ -83,3 +83,22 @@ const ExploreBtn = styled.button``;
 const GroupImg = styled.img`
   width: 70%;
 `;
+
+export async function getServerSideProps(context) {
+  try {
+    // client.db() will be the default database passed in the MONGODB_URI
+    // You can change the database by calling the client.db() function and specifying a database like:
+    // const db = client.db("myDatabase");
+    // Then you can execute queries against your database like so:
+    // db.find({}) or any of the MongoDB Node Driver commands
+    await clientPromise;
+    return {
+      props: { isConnected: true },
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      props: { isConnected: false },
+    };
+  }
+}

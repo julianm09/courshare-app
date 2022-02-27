@@ -16,8 +16,6 @@ export default function Home() {
   //display courses and currciculums
   const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
-
-  //display courses and currciculums
   const [display, setDisplay] = useState("One");
 
   //show currciculum form
@@ -53,8 +51,9 @@ export default function Home() {
   const { activeCourse, handleViewCourse, viewCourse, setViewCourse } =
     useActiveCourse();
 
+  //display currciculum popup
   const handleAddCurriculum = (e) => {
-    console.log("e")
+    console.log("e");
     e.stopPropagation();
     setAddCurriculum(true);
   };
@@ -76,6 +75,13 @@ export default function Home() {
     setCourseItems(res.data.length);
     setSearching(false);
   };
+
+  const getMovies = async () => {
+    const res = await ax.get("./api/movies");
+    console.log(res);
+  };
+
+  getMovies()
 
   //handle sreach based on display
   const handleSearch = (e) => {
@@ -125,34 +131,17 @@ export default function Home() {
   //handle state changes
 
   useEffect(() => {
-    if (level) {
+    if (
+      level ||
+      rating ||
+      sortBy ||
+      university ||
+      coursePage ||
+      coursePage === 0
+    ) {
       getCourses();
     }
-  }, [level]);
-
-  useEffect(() => {
-    if (rating) {
-      getCourses();
-    }
-  }, [rating]);
-
-  useEffect(() => {
-    if (sortBy) {
-      getCourses();
-    }
-  }, [sortBy]);
-
-  useEffect(() => {
-    if (university) {
-      getCourses();
-    }
-  }, [university]);
-
-  useEffect(() => {
-    if (coursePage || coursePage === 0) {
-      getCourses();
-    }
-  }, [coursePage]);
+  }, [level, rating, sortBy, university, coursePage]);
 
   return (
     <Cont>
