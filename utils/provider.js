@@ -5,10 +5,12 @@ const initialStates = {
   theme: "default",
   view: "grid",
   activeCourse: {},
+  user: "",
   setTheme: () => {},
   setView: () => {},
   setActiveCourse: () => {},
   setViewCourse: () => {},
+  setUser: () => {},
 };
 
 const MyContext = createContext(initialStates);
@@ -19,6 +21,7 @@ export default function AppProvider({ children }) {
   const [view, setView] = useState(initialStates.view);
   const [activeCourse, setActiveCourse] = useState(initialStates.activeCourse);
   const [viewCourse, setViewCourse] = useState(false);
+  const [user, setUser] = useState(initialStates.user);
   const handleViewCourse = (course) => {
     setActiveCourse(course);
     setViewCourse(true);
@@ -36,6 +39,8 @@ export default function AppProvider({ children }) {
         handleViewCourse,
         viewCourse,
         setViewCourse,
+        user,
+        setUser,
       }}
     >
       <style jsx global>
@@ -59,6 +64,11 @@ export const useTheme = () => {
 export const useView = () => {
   const { view, setView } = useContext(MyContext);
   return { view, setView };
+};
+
+export const useUser = () => {
+  const { user, setUser } = useContext(MyContext);
+  return { user, setUser };
 };
 
 export const useActiveCourse = () => {

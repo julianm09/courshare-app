@@ -2,30 +2,42 @@ import styled from "styled-components";
 import ExploreButton from "@/components/ExploreButton";
 import Link from "next/link";
 import { style } from "@mui/system";
-import { useTheme } from "@/utils/provider";
+import { useTheme, useUser } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 import { useRouter } from "next/router";
 import clientPromise from "../lib/mongodb";
+import { useEffect } from "react";
+import Login from "./login";
 
 export default function Home({ isConnected }) {
   const { theme, setTheme } = useTheme();
-  const r = useRouter();
+
+  const { user, setUser } = useUser();
+
+  console.log(user);
+
+  const firstName = user && user.displayName.split(/ (.+)/)[0];
 
   return (
-    <BigCont>
-      <LeftCont>
-        {isConnected ? "connected" : "not connected"}
-        <Header color={comp_themes[theme].switch_text}>Welcome, Juhee!</Header>
-        <Name color={comp_themes[theme].switch_text}>
-          Build Your Skills and explore our students' all-in-one curriculums.
-        </Name>
+    <>
+      {!user ? <Login /> : <></>}
+      <BigCont>
+        <LeftCont>
+          {isConnected ? "connected" : "not connected"}
+          <Header color={comp_themes[theme].switch_text}>
+            Welcome, {firstName}!
+          </Header>
+          <Name color={comp_themes[theme].switch_text}>
+            Build Your Skills and explore our students' all-in-one curriculums.
+          </Name>
 
-        <ExploreButton onClick={() => r.push("/explore")} />
-      </LeftCont>
-      <RightCont>
-        <GroupImg src="/landingvector.svg" />
-      </RightCont>
-    </BigCont>
+          <ExploreButton onClick={() => r.push("/explore")} />
+        </LeftCont>
+        <RightCont>
+          <GroupImg src="/landingvector.svg" />
+        </RightCont>
+      </BigCont>
+    </>
   );
 }
 
