@@ -1,6 +1,9 @@
 import { connectToDatabase } from "../../utils/mongodb";
 export default async (req, res) => {
   const { db } = await connectToDatabase();
+
+  console.log(db)
+
   const movies = await db
     .collection("movies")
     .find({})
@@ -9,3 +12,4 @@ export default async (req, res) => {
     .toArray();
   res.json(movies);
 };
+

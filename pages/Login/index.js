@@ -9,14 +9,38 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@/utils/provider";
+import ax from "axios";
 
 const Login = ({}) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState("Julian");
+  const [email, setEmail] = useState("julianmayes@gmail.com");
+  const [password, setPassword] = useState("Hello123!");
+
+  const createUser = async (user) => {
+    await ax
+      .post("http://localhost:5000/user/add", {
+        name: name,
+        email: user.email,
+        uid: user.uid,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   const { user, setUser } = useUser();
+
+  const getUserById = async (user) => {
+    const res = await ax.get(`http://localhost:5000/user/${user.uid}`);
+    /* console.log(res.data); */
+    setUser(res.data[0]);
+    localStorage.setItem("user", JSON.stringify(res.data[0]));
+  };
 
   const googleSignIn = async (e) => {
     const provider = new GoogleAuthProvider();
@@ -28,8 +52,9 @@ const Login = ({}) => {
         const token = credential && credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        setUser(user);
-        // ...
+        createUser(user).then(() => {
+          getUserById(user);
+        });
       })
       .catch((error) => {
         // Handle Errors here.
@@ -49,7 +74,6 @@ const Login = ({}) => {
         // Signed in
         const user = userCredential.user;
         // ...
-        setUser(user);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -64,7 +88,9 @@ const Login = ({}) => {
         // Signed in
         const user = userCredential.user;
         // ...
-        setUser(user);
+        createUser(user).then(() => {
+          getUserById(user);
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -90,7 +116,8 @@ const Login = ({}) => {
       <LogoImg src="/icons/clogo.png" />
       <Header>Welcome!</Header>
       <Name>Sign up and build your skills with professional courses.</Name>
-
+      <Text>Name</Text>
+      <Input value={name} onChange={(e) => setName(e.target.value)} />
       <Text>Email</Text>
       <Input value={email} onChange={(e) => setEmail(e.target.value)} />
       <Data>Password</Data>

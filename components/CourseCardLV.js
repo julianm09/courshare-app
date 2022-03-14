@@ -76,6 +76,8 @@ export default function CourseCardLV({
   handleAddCurriculum,
   handleViewCourse,
   course,
+  handleSaveCourse,
+  savedCourses
 }) {
   const { theme, setTheme } = useTheme();
   return (
@@ -100,6 +102,8 @@ export default function CourseCardLV({
       </CourseCont>
       <Selection>
         <Checkbox
+        checked={savedCourses && savedCourses.some(i => i["Course Name"].includes(courseName))}
+        onClick={(e) => handleSaveCourse(e, course)}
           sx={{
             color: yellow[800],
             height: 0,
@@ -114,7 +118,7 @@ export default function CourseCardLV({
           checkedIcon={<Favorite />}
         />
         <div style={{margin: '0 0 0 25px'}}>
-          <AddCurriculum handleAddCurriculum={handleAddCurriculum}/>
+          <AddCurriculum handleAddCurriculum={handleAddCurriculum} course={course}/>
         </div>
       </Selection>
     </Cont>

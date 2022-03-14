@@ -3,6 +3,8 @@ import { useState } from "react";
 import Checkbox from "./Checkbox";
 import AddedBadge from "./AddedBadge";
 import CloseIcon from "@mui/icons-material/Close";
+import ax from "axios";
+import { useActiveCourse, useUser } from "@/utils/provider";
 
 export default function AddCurriculumForm({
   setAddCurriculum,
@@ -46,7 +48,10 @@ export default function AddCurriculumForm({
 
   const [showAll, setShowAll] = useState(false);
   const [selected, setSelected] = useState("");
+  const [curriculumName, setCurriculumName] = useState("");
   const [addedCurriculum, setAddedCurriculum] = useState(false);
+  const { user, setUser } = useUser();
+  const { activeCourse } = useActiveCourse();
 
   const handleSelect = (x) => {
     setSelected(x);
@@ -54,11 +59,29 @@ export default function AddCurriculumForm({
 
   const handleAddCurriculum = () => {
     setAddedCurriculum(true);
+    createCurriculum();
 
     setTimeout(() => {
       setAddCurriculum(false);
       setAddedCurriculum(true);
     }, 1000);
+  };
+
+  const createCurriculum = async (course) => {
+    await ax
+      .post("http://localhost:5000/curriculum/add", {
+        name: curriculumName,
+        username: user.name,
+        uid: user.uid,
+        category: selected,
+        course: activeCourse,
+      })
+      .then(function (response) {
+        console.log(response.data.courses);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -73,7 +96,10 @@ export default function AddCurriculumForm({
           <ContentCont>
             <Title>Add curriculum</Title>
             <Label>Name</Label>
-            <Input />
+            <Input
+              value={curriculumName}
+              onChange={(e) => setCurriculumName(e.target.value)}
+            />
             <Label>Category</Label>
             <Drowpdown onClick={() => setShowCategory(!showCategory)}>
               Select your curriculum category

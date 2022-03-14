@@ -6,14 +6,46 @@ import GridViewIcon from "@mui/icons-material/GridView";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import Switch from "@mui/material/Switch";
 import Radio from "@mui/material/Radio";
-import { useTheme } from "@/utils/provider";
+import { useTheme, useUser } from "@/utils/provider";
 import { useView } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
+import { auth } from "@/config/firebase";
+import { signOut } from "firebase/auth";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Settings() {
-  
   const { theme, setTheme } = useTheme();
   const { view, setView } = useView();
+
+  const r = useRouter();
+
+  const { user, setUser } = useUser();
+
+  useEffect(() => {
+    const localUser = localStorage.getItem("user");
+
+    if (localUser) {
+      setUser(JSON.parse(localUser));
+      console.log(JSON.parse(localUser));
+    } else {
+      return;
+    }
+  }, []);
+
+  const handleSignOut = async (e) => {
+    if (user) {
+      signOut(auth)
+        .then(() => {
+          setUser(null);
+          localStorage.clear();
+          r.push("/");
+        })
+        .catch((error) => {
+          // An error happened.
+        });
+    }
+  };
 
   return (
     <BigCont>
@@ -76,6 +108,7 @@ export default function Settings() {
         </Cont>
         <Divider light />
         <Cont></Cont>
+        <div onClick={handleSignOut}>sign out</div>
       </ContentCont>
     </BigCont>
   );

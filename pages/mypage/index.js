@@ -6,7 +6,14 @@ import CurriculumSlider from "@/components/CurriculumSlider";
 import PageNavigationCourse from "@/components/PageNavigationCourse";
 import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
 import SectionTabs from "@/components/SectionTabs";
-import { useTheme, useView, useActiveCourse } from "@/utils/provider";
+import {
+  useTheme,
+  useView,
+  useActiveCourse,
+  useUser,
+  useSavedCourses,
+  useSavedCurriculums,
+} from "@/utils/provider";
 import CourseCard from "@/components/CourseCard";
 import CourseDetailCard from "@/components/CourseDetailCard";
 
@@ -54,13 +61,85 @@ export default function MyPage() {
 
   //provider states
   const { view, setView } = useView();
+  const { savedCourses, setSavedCourses } = useSavedCourses();
   const { activeCourse, handleViewCourse, viewCourse, setViewCourse } =
     useActiveCourse();
+
+  const { user, setUser } = useUser();
+  const { savedCurriculums,setSavedCurriculums } = useSavedCurriculums();
+
+  useEffect(() => {
+    const localUser = localStorage.getItem("user");
+
+    if (localUser) {
+      setUser(JSON.parse(localUser));
+      console.log(JSON.parse(localUser));
+    } else {
+      return;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      getSavedCourses();
+      getSavedCurriculums();
+    }
+  }, [user, display]);
+
+  const getSavedCurriculums = async (course) => {
+    await ax
+      .post("http://localhost:5000/user/getSavedCurriculums", {
+        uid: user.uid,
+      })
+      .then(function (response) {
+        console.log(response.data);
+        setSavedCurriculums(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   const handleAddCurriculum = (e) => {
     console.log("e");
     e.stopPropagation();
     setAddCurriculum(true);
+  };
+
+  //display currciculum popup
+  const handleSaveCourse = (e, course) => {
+    /* console.log(course); */
+    e.stopPropagation();
+    saveCourse(course);
+  };
+
+  const saveCourse = async (course) => {
+    await ax
+      .post("http://localhost:5000/user/saveCourse", {
+        course: course,
+        uid: user.uid,
+      })
+      .then(function (response) {
+        console.log(response.data.courses);
+        setSavedCourses(response.data.courses);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const getSavedCourses = async () => {
+    await ax
+      .post("http://localhost:5000/user/getSavedCourses", {
+        uid: user.uid,
+      })
+      .then(function (response) {
+        console.log(response.data);
+        setSavedCourses(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   //get courses from api courses
@@ -97,7 +176,7 @@ export default function MyPage() {
 
   //get curriculums from api curriculums
   const getMyCurriculums = async () => {
-    const res = await ax.get("./api/curriculums", {
+    const res = await ax.get(`http://localhost:5000/curriculum/${user.uid}`, {
       params: {
         page: myCurriculumPage,
         category: curriculumCategory,
@@ -167,12 +246,15 @@ export default function MyPage() {
       {viewCourse ? (
         <CourseDetailCard
           setViewCourse={setViewCourse}
-          activeCourse={activeCourse}
+          course={activeCourse}
+          courseName={activeCourse && activeCourse["Course Name"]}
+          handleSaveCourse={handleSaveCourse}
+          savedCourses={savedCourses && savedCourses}
         />
       ) : (
         <></>
       )}
-      <Greeting>Hi, Juhee 👋</Greeting>
+      <Greeting>Hi, {user.name} 👋</Greeting>
       <SectionTabs
         useSearch={useSearch}
         value={display}
@@ -192,8 +274,8 @@ export default function MyPage() {
 
       {display == "One" && view === "list" ? (
         <>
-          {courses &&
-            courses.map((x, i) => (
+          {savedCourses &&
+            savedCourses.map((x, i) => (
               <CourseCardLV
                 setViewCourse={setViewCourse}
                 setAddCurriculum={setAddCurriculum}
@@ -206,6 +288,8 @@ export default function MyPage() {
                 course={x}
                 handleViewCourse={handleViewCourse}
                 handleAddCurriculum={handleAddCurriculum}
+                handleSaveCourse={handleSaveCourse}
+                savedCourses={savedCourses && savedCourses}
               />
             ))}
           <PageNavigationCourse
@@ -218,8 +302,8 @@ export default function MyPage() {
       ) : display == "One" && view === "grid" ? (
         <>
           <GridView>
-            {courses &&
-              courses.map((x, i) => (
+            {savedCourses &&
+              savedCourses.map((x, i) => (
                 <CourseCard
                   key={i}
                   course={x}
@@ -232,6 +316,8 @@ export default function MyPage() {
                   handleViewCourse={handleViewCourse}
                   setViewCourse={setViewCourse}
                   setAddCurriculum={setAddCurriculum}
+                  handleSaveCourse={handleSaveCourse}
+                  savedCourses={savedCourses && savedCourses}
                 />
               ))}
           </GridView>
@@ -244,14 +330,15 @@ export default function MyPage() {
         </>
       ) : display == "Two" ? (
         <>
-          {curriculums &&
-            curriculums.map((x, i) => (
+          {savedCurriculums &&
+            savedCurriculums.map((x, i) => (
               <CurriculumSlider
                 key={i}
                 avaText={x["name"]}
                 favouriteCount={x["likes"]}
                 courses={x["courses"]}
                 handleViewCourse={handleViewCourse}
+                curriculum={x}
               />
             ))}
           <PageNavigationCurriculum
@@ -271,6 +358,7 @@ export default function MyPage() {
                 favouriteCount={x["likes"]}
                 courses={x["courses"]}
                 handleViewCourse={handleViewCourse}
+                curriculum={x}
               />
             ))}
           <PageNavigationCurriculum

@@ -6,8 +6,95 @@ import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { Checkbox } from "@mui/material";
 import { purple } from "@mui/material/colors";
-import { useTheme } from "@/utils/provider";
+import { useSavedCurriculums, useTheme, useUser } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
+import ax from "axios";
+
+export default function CurriculumSlider({
+  avasrc = "/avatar.png",
+  avaText = "Juhee's UX/UI DesignCurriculum",
+  favouriteCount = "4561",
+  courses,
+  handleViewCourse,
+  curriculum,
+}) {
+  const { theme, setTheme } = useTheme();
+  const { user } = useUser();
+  const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
+
+  const saveCurriculum = async (curriculum) => {
+    await ax
+      .post("http://localhost:5000/user/saveCurriculum", {
+        curriculum: curriculum,
+        uid: user.uid,
+      })
+      .then(function (response) {
+        console.log(response.data.curriculums);
+        setSavedCurriculums(response.data.curriculums);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const handleSaveCurriculum = () => {
+    saveCurriculum(curriculum);
+  };
+
+  return (
+    <Cont>
+      <TitleCont>
+        <LeftCont>
+          <Avatar src={avasrc} />
+          <AvatarText color={comp_themes[theme].switch_text}>
+            {avaText}
+          </AvatarText>
+        </LeftCont>
+        <RightCont color={comp_themes[theme].switch_text}>
+          {favouriteCount}
+          <Checkbox
+            checked={
+              savedCurriculums &&
+              savedCurriculums.some((i) => i["id"].includes(curriculum.id))
+            }
+            onClick={handleSaveCurriculum}
+            sx={{
+              color: purple[800],
+              height: 30,
+              "&.Mui-checked": {
+                color: purple[600],
+                height: 30,
+              },
+            }}
+            icon={<FavoriteBorder />}
+            checkedIcon={<Favorite />}
+          />
+        </RightCont>
+      </TitleCont>
+      <ContentCont>
+        {courses.map((x, i) => (
+          <BoxCont key={i} onClick={() => handleViewCourse(x)}>
+            <Img src={x["Image"]} />
+            <InfoCont>
+              <Title color={comp_themes[theme].switch_text}>
+                {x["Course Name"]}
+              </Title>
+              <Source>{x["University"]}</Source>
+              <Rating>
+                <RatingStars />
+                {x["Course Rating"]}
+              </Rating>
+              <Challenge>
+                <DifficultyBar difficulty="beginner" />
+                {x["Difficulty Level"]}
+              </Challenge>
+            </InfoCont>
+          </BoxCont>
+        ))}
+      </ContentCont>
+    </Cont>
+  );
+}
 
 const Cont = styled.div`
   font-family: General Sans;
@@ -15,7 +102,6 @@ const Cont = styled.div`
   font-weight: normal;
   width: 100%;
   margin: 0 0 112px 0;
-
 `;
 
 const TitleCont = styled.div`
@@ -56,7 +142,6 @@ const ContentCont = styled.div`
   overflow-x: scroll;
   width: 100%;
   padding: 10px 0 10px 10%;
-
 `;
 
 const BoxCont = styled.div`
@@ -106,61 +191,3 @@ const Rating = styled.div`
 const Challenge = styled.div`
   font-size: 12px;
 `;
-
-export default function CurriculumSlider({
-  avasrc = "/avatar.png",
-  avaText = "Juhee's UX/UI DesignCurriculum",
-  favouriteCount = "4561",
-  courses,
-  handleViewCourse
-}) {
-  const { theme, setTheme } = useTheme();
-  return (
-    <Cont>
-      <TitleCont>
-        <LeftCont>
-          <Avatar src={avasrc} />
-          <AvatarText color={comp_themes[theme].switch_text}>
-            {avaText}
-          </AvatarText>
-        </LeftCont>
-        <RightCont color={comp_themes[theme].switch_text}>
-          {favouriteCount}
-          <Checkbox
-            sx={{
-              color: purple[800],
-              height: 30,
-              "&.Mui-checked": {
-                color: purple[600],
-                height: 30,
-              },
-            }}
-            icon={<FavoriteBorder />}
-            checkedIcon={<Favorite />}
-          />
-        </RightCont>
-      </TitleCont>
-      <ContentCont>
-        {courses.map((x) => (
-          <BoxCont onClick={() => handleViewCourse(x)}>
-            <Img src={x["Image"]} />
-            <InfoCont>
-              <Title color={comp_themes[theme].switch_text}>
-                {x["Course Name"]}
-              </Title>
-              <Source>{x["University"]}</Source>
-              <Rating>
-                <RatingStars />
-                {x["Course Rating"]}
-              </Rating>
-              <Challenge>
-                <DifficultyBar difficulty="beginner" />
-                {x["Difficulty Level"]}
-              </Challenge>
-            </InfoCont>
-          </BoxCont>
-        ))}
-      </ContentCont>
-    </Cont>
-  );
-}

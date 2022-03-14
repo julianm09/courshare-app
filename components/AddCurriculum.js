@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { useState } from "react";
+import AddedBadge from "./AddedBadge";
 
 const AddCurriculum = ({
+  course,
   text = "Add to Curriculum",
   background = "rgba(255, 255, 255, 1)",
   handleAddCurriculum = () => {},
@@ -18,9 +20,15 @@ const AddCurriculum = ({
     setShow(!show);
   };
 
-  const addCurriculum = (e) => {
+  const addCurriculum = (e, course) => {
     e.stopPropagation();
-    handleAddCurriculum(e);
+    handleAddCurriculum(e, course);
+    setShow(!show);
+  };
+
+  const addToCurriculum = (e, course) => {
+    e.stopPropagation();
+
     setShow(!show);
   };
 
@@ -32,12 +40,12 @@ const AddCurriculum = ({
 
       {show ? (
         <CurriculumList>
-          <CreateText onClick={(e) => addCurriculum(e)}>
+          <CreateText onClick={(e) => addCurriculum(e, course)}>
             Create new curriculum
           </CreateText>
           <Break></Break>
           {curriculums.map((x) => (
-            <Curriculums>
+            <Curriculums onClick={(e) => addToCurriculum(e, course)}>
               <div>{x}</div>
             </Curriculums>
           ))}
@@ -50,6 +58,20 @@ const AddCurriculum = ({
 };
 
 export default AddCurriculum;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.74);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  cursor: pointer;
+`;
 
 const AddCurr = styled.button`
   width: 200x;

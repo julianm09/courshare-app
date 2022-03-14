@@ -19,7 +19,7 @@ const SortDropdown = ({
 
   return (
     <Cont>
-      <Drowpdown onClick={() => setOpen(!open)}>
+      <Drowpdown onBlur={() => setOpen(false)} onClick={() => setOpen(!open)} >
         {text}
         <Icon>
           {open ? (

@@ -1,31 +1,37 @@
 import styled from "styled-components";
 import ExploreButton from "@/components/ExploreButton";
-import Link from "next/link";
-import { style } from "@mui/system";
 import { useTheme, useUser } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 import { useRouter } from "next/router";
-import clientPromise from "../lib/mongodb";
 import { useEffect } from "react";
+import ax from "axios";
 import Login from "./login";
 
-export default function Home({ isConnected }) {
+export default function Home({}) {
+  const r = useRouter();
+
   const { theme, setTheme } = useTheme();
 
   const { user, setUser } = useUser();
 
-  console.log(user);
+  useEffect(() => {
+    const localUser = localStorage.getItem("user");
 
-  const firstName = user && user.displayName.split(/ (.+)/)[0];
+    if (localUser) {
+      setUser(JSON.parse(localUser));
+      console.log(JSON.parse(localUser));
+    } else {
+      return;
+    }
+  }, []);
 
   return (
     <>
       {!user ? <Login /> : <></>}
       <BigCont>
         <LeftCont>
-          {isConnected ? "connected" : "not connected"}
           <Header color={comp_themes[theme].switch_text}>
-            Welcome, {firstName}!
+            Welcome, {user && user.name}!
           </Header>
           <Name color={comp_themes[theme].switch_text}>
             Build Your Skills and explore our students' all-in-one curriculums.
@@ -90,13 +96,11 @@ const Name = styled.div`
   color: ${(props) => props.color};
 `;
 
-const ExploreBtn = styled.button``;
-
 const GroupImg = styled.img`
   width: 70%;
 `;
 
-export async function getServerSideProps(context) {
+/* export async function getServerSideProps(context) {
   try {
     // client.db() will be the default database passed in the MONGODB_URI
     // You can change the database by calling the client.db() function and specifying a database like:
@@ -114,3 +118,4 @@ export async function getServerSideProps(context) {
     };
   }
 }
+ */

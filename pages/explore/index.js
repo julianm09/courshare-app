@@ -1,7 +1,13 @@
 import styled from "styled-components";
 import ax from "axios";
 import { useEffect, useState } from "react";
-import { useView, useActiveCourse } from "@/utils/provider";
+import {
+  useView,
+  useActiveCourse,
+  useUser,
+  useSavedCourses,
+  useSavedCurriculums,
+} from "@/utils/provider";
 import FilterBar from "@/components/FilterBar";
 import AddCurriculumForm from "@/components/AddCurriculumForm";
 import CourseCardLV from "@/components/CourseCardLV";
@@ -20,6 +26,7 @@ export default function Home() {
 
   //show currciculum form
   const [addCurriculum, setAddCurriculum] = useState(false);
+  const [courseToAdd, setCourseToAdd] = useState("");
 
   //course pagination items and page number
   const [coursePage, setCoursePage] = useState(0);
@@ -48,15 +55,94 @@ export default function Home() {
 
   //provider states
   const { view, setView } = useView();
-  const { activeCourse, handleViewCourse, viewCourse, setViewCourse } =
-    useActiveCourse();
+  const {
+    activeCourse,
+    setActiveCourse,
+    handleViewCourse,
+    viewCourse,
+    setViewCourse,
+  } = useActiveCourse();
+
+  const { savedCourses, setSavedCourses } = useSavedCourses();
+  const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
+
+  const { user, setUser } = useUser();
+
+  useEffect(() => {
+    const localUser = localStorage.getItem("user");
+
+    if (localUser) {
+      setUser(JSON.parse(localUser));
+      console.log(JSON.parse(localUser));
+    } else {
+      return;
+    }
+  }, []);
 
   //display currciculum popup
-  const handleAddCurriculum = (e) => {
-    console.log("e");
+  const handleAddCurriculum = (e, course) => {
+    console.log(course);
+    setActiveCourse(course);
     e.stopPropagation();
     setAddCurriculum(true);
   };
+
+  //display currciculum popup
+  const handleSaveCourse = (e, course) => {
+    /* console.log(course); */
+    e.stopPropagation();
+    saveCourse(course);
+  };
+
+  const saveCourse = async (course) => {
+    await ax
+      .post("http://localhost:5000/user/saveCourse", {
+        course: course,
+        uid: user.uid,
+      })
+      .then(function (response) {
+        console.log(response.data.courses);
+        setSavedCourses(response.data.courses);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const getSavedCourses = async (course) => {
+    await ax
+      .post("http://localhost:5000/user/getSavedCourses", {
+        uid: user.uid,
+      })
+      .then(function (response) {
+        console.log(response.data);
+        setSavedCourses(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const getSavedCurriculums = async (course) => {
+    await ax
+      .post("http://localhost:5000/user/getSavedCurriculums", {
+        uid: user.uid,
+      })
+      .then(function (response) {
+        console.log(response.data);
+        setSavedCurriculums(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (user) {
+      getSavedCourses();
+      getSavedCurriculums();
+    }
+  }, [user, display]);
 
   //get courses from api courses
   const getCourses = async () => {
@@ -75,13 +161,6 @@ export default function Home() {
     setCourseItems(res.data.length);
     setSearching(false);
   };
-
-  const getMovies = async () => {
-    const res = await ax.get("./api/movies");
-    console.log(res);
-  };
-
-  getMovies()
 
   //handle sreach based on display
   const handleSearch = (e) => {
@@ -110,11 +189,12 @@ export default function Home() {
 
   //get curriculums from api curriculums
   const getCurriculums = async () => {
-    const res = await ax.get("./api/curriculums", {
+    const res = await ax.get("http://localhost:5000/curriculum", {
       params: {
         page: curriculumPage,
         category: curriculumCategory,
         search: searchCurriculum,
+        sortBy: sortBy,
       },
     });
     setCurriculums(res.data.courses);
@@ -126,7 +206,7 @@ export default function Home() {
     if (curriculumCategory) {
       getCurriculums();
     }
-  }, [curriculumCategory]);
+  }, [curriculumCategory, sortBy]);
 
   //handle state changes
 
@@ -148,12 +228,14 @@ export default function Home() {
       {viewCourse ? (
         <CourseDetailCard
           setViewCourse={setViewCourse}
-          activeCourse={activeCourse}
+          course={activeCourse}
+          courseName={activeCourse && activeCourse["Course Name"]}
+          handleSaveCourse={handleSaveCourse}
+          savedCourses={savedCourses && savedCourses}
         />
       ) : (
         <></>
       )}
-
       <FilterBar
         useSearch={useSearch}
         value={display}
@@ -211,6 +293,8 @@ export default function Home() {
                   course={x}
                   handleViewCourse={handleViewCourse}
                   handleAddCurriculum={handleAddCurriculum}
+                  handleSaveCourse={handleSaveCourse}
+                  savedCourses={savedCourses && savedCourses}
                 />
               ))}
           </ListView>
@@ -238,6 +322,8 @@ export default function Home() {
                   handleViewCourse={handleViewCourse}
                   setViewCourse={setViewCourse}
                   setAddCurriculum={setAddCurriculum}
+                  handleSaveCourse={handleSaveCourse}
+                  savedCourses={savedCourses}
                 />
               ))}
           </GridView>
@@ -253,6 +339,9 @@ export default function Home() {
           {curriculums &&
             curriculums.map((x, i) => (
               <CurriculumSlider
+                curriculum={x}
+                savedCurriculums={savedCurriculums}
+                setSavedCurriculums={setSavedCurriculums}
                 key={i}
                 avaText={x["name"]}
                 favouriteCount={x["likes"]}

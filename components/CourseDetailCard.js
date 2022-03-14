@@ -11,14 +11,16 @@ import RatingStars from "./RatingStars";
 import AddCurriculum from "./AddCurriculum";
 
 export default function CourseDetailCard({
-  name = "3D  CAD Fundamental",
+  courseName = "3D  CAD Fundamental",
   school = "National Taiwan University",
   rating = 4.6,
   difficulty = "intermediate",
   description = "",
   skills = "",
   setViewCourse,
-  activeCourse
+  course,
+  handleSaveCourse,
+  savedCourses,
 }) {
   const [value, setValue] = React.useState(4);
 
@@ -35,12 +37,19 @@ export default function CourseDetailCard({
         <ContentCont>
           <FristCont>
             <LeftCont>
-              <Img src={activeCourse["Image"]} />
+              <Img src={course["Image"]} />
             </LeftCont>
             <RightCont>
               <RightSmallCont>
-{/*                 <Heading1>{activeCourse["Course Name"]}</Heading1> */}
+                {/*                 <Heading1>{course["Course Name"]}</Heading1> */}
                 <Checkbox
+                  checked={
+                    savedCourses &&
+                    savedCourses.some((i) =>
+                      i["Course Name"].includes(courseName)
+                    )
+                  }
+                  onClick={(e) => handleSaveCourse(e, course)}
                   sx={{
                     color: yellow[800],
                     "&.Mui-checked": {
@@ -50,10 +59,10 @@ export default function CourseDetailCard({
                   icon={<FavoriteBorder />}
                   checkedIcon={<Favorite />}
                 />
-                <AddCurriculum/>
+                <AddCurriculum />
               </RightSmallCont>
               <RightSmallCont>
-                <GreyText>{activeCourse["University"]}</GreyText>
+                <GreyText>{course["University"]}</GreyText>
               </RightSmallCont>
               <RightSmallCont>
                 <div
@@ -64,23 +73,27 @@ export default function CourseDetailCard({
                     alignItems: "center",
                   }}
                 >
-                  <RatingStars defaultValue={activeCourse["Course Rating"]}/>
-                  <Desc>{activeCourse["Course Rating"]}</Desc>
+                  <RatingStars defaultValue={course["Course Rating"]} />
+                  <Desc>{course["Course Rating"]}</Desc>
                 </div>
-                <Desc>{activeCourse["Difficulty Level"]}</Desc>
+                <Desc>{course["Difficulty Level"]}</Desc>
               </RightSmallCont>
               <RightSmallCont>
-                <RegisterButton link={activeCourse["Course URL"]}/>
+                <RegisterButton link={course["Course URL"]} />
               </RightSmallCont>
             </RightCont>
           </FristCont>
           <SecondCont>
             <Heading2>Description</Heading2>
-            <Desc>{activeCourse["Course Description"].length > 500 ? activeCourse["Course Description"].slice(0, 500) + "..." : activeCourse["Course Description"]}</Desc>
+            <Desc>
+              {course["Course Description"].length > 500
+                ? course["Course Description"].slice(0, 500) + "..."
+                : course["Course Description"]}
+            </Desc>
           </SecondCont>
           <ThirdCont>
             <Heading2>Skills</Heading2>
-            <Desc>{activeCourse["Skills"]}</Desc>
+            <Desc>{course["Skills"]}</Desc>
           </ThirdCont>
         </ContentCont>
       </BigCont>
@@ -132,7 +145,7 @@ const FristCont = styled.div`
 const LeftCont = styled.div``;
 
 const Img = styled.img`
-height: 100%;
+  height: 100%;
   border-radius: 10px;
 `;
 const Heading1 = styled.p`
@@ -167,6 +180,5 @@ const Heading2 = styled.p`
 `;
 const Desc = styled.p`
   font-size: 14px;
-
 `;
 const ThirdCont = styled.div``;

@@ -6,11 +6,15 @@ const initialStates = {
   view: "grid",
   activeCourse: {},
   user: "",
+  savedCourses: [],
+  savedCurriculums: [],
   setTheme: () => {},
   setView: () => {},
   setActiveCourse: () => {},
   setViewCourse: () => {},
   setUser: () => {},
+  setSavedCourses: () => {},
+  setSavedCurriculums: () => {},
 };
 
 const MyContext = createContext(initialStates);
@@ -22,6 +26,8 @@ export default function AppProvider({ children }) {
   const [activeCourse, setActiveCourse] = useState(initialStates.activeCourse);
   const [viewCourse, setViewCourse] = useState(false);
   const [user, setUser] = useState(initialStates.user);
+  const [savedCourses, setSavedCourses] = useState(initialStates.user);
+  const [savedCurriculums, setSavedCurriculums] = useState(initialStates.user);
   const handleViewCourse = (course) => {
     setActiveCourse(course);
     setViewCourse(true);
@@ -41,6 +47,10 @@ export default function AppProvider({ children }) {
         setViewCourse,
         user,
         setUser,
+        savedCourses,
+        setSavedCourses,
+        savedCurriculums,
+        setSavedCurriculums,
       }}
     >
       <style jsx global>
@@ -69,6 +79,16 @@ export const useView = () => {
 export const useUser = () => {
   const { user, setUser } = useContext(MyContext);
   return { user, setUser };
+};
+
+export const useSavedCourses = () => {
+  const { savedCourses, setSavedCourses } = useContext(MyContext);
+  return { savedCourses, setSavedCourses };
+};
+
+export const useSavedCurriculums = () => {
+  const { savedCurriculums, setSavedCurriculums } = useContext(MyContext);
+  return { savedCurriculums, setSavedCurriculums };
 };
 
 export const useActiveCourse = () => {
