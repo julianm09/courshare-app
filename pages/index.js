@@ -5,7 +5,7 @@ import { comp_themes } from "@/utils/variables";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import ax from "axios";
-import Login from "./login";
+import Login from "@/components/Login";
 
 export default function Home({}) {
   const r = useRouter();
