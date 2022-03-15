@@ -9,8 +9,8 @@ const initialStates = {
   myCurriculums: [],
   savedCourses: [],
   savedCurriculums: [],
-  server: "http://localhost:5000",
-/*   server: "https://courshare.herokuapp.com", */
+/*   server: "http://localhost:5000", */
+  server: "https://courshare.herokuapp.com",
   setTheme: () => {},
   setView: () => {},
   setActiveCourse: () => {},
