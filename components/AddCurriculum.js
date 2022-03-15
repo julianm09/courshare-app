@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useCurriculums, useUser } from "@/utils/provider";
+import {
+  useCurriculums,
+  useMyCurriculums,
+  useServer,
+  useUser,
+} from "@/utils/provider";
+import ax from "axios";
 
 const AddCurriculum = ({
   course,
@@ -9,8 +15,9 @@ const AddCurriculum = ({
   handleAddCurriculum = () => {},
 }) => {
   const [show, setShow] = useState(false);
-  const { curriculums, setCurriculums } = useCurriculums();
+  const { myCurriculums, setMyCurriculums } = useMyCurriculums();
   const { user } = useUser();
+  const { server } = useServer();
 
   const handleDropdown = (e) => {
     e.stopPropagation();
@@ -23,10 +30,24 @@ const AddCurriculum = ({
     setShow(!show);
   };
 
-  const addToCurriculum = (e, course) => {
+  const addToCurriculum = (e, currciculum, course) => {
     e.stopPropagation();
-
+    createCurriculum(currciculum, course);
     setShow(!show);
+  };
+
+  const createCurriculum = async (currciculum, course) => {
+    await ax
+      .post(`${server}/curriculum/addCourse`, {
+        uid: currciculum.uid,
+        course: course,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -40,10 +61,10 @@ const AddCurriculum = ({
           <CreateText onClick={(e) => addCurriculum(e, course)}>
             Create new curriculum
           </CreateText>
-          <Break></Break>
-          {Object.values(curriculums).map((x) =>
+          {myCurriculums.length > 0 ? <Break></Break> : <></>}
+          {Object.values(myCurriculums).map((x) =>
             x.uid === user.uid ? (
-              <Curriculums onClick={(e) => addToCurriculum(e, course)}>
+              <Curriculums onClick={(e) => addToCurriculum(e, x, course)}>
                 <div>{x.name}</div>
               </Curriculums>
             ) : (

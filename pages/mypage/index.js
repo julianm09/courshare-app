@@ -14,6 +14,7 @@ import {
   useSavedCourses,
   useSavedCurriculums,
   useServer,
+  useCurriculums,
 } from "@/utils/provider";
 import CourseCard from "@/components/CourseCard";
 import CourseDetailCard from "@/components/CourseDetailCard";

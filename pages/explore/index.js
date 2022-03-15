@@ -9,6 +9,7 @@ import {
   useSavedCurriculums,
   useServer,
   useCurriculums,
+  useMyCurriculums,
 } from "@/utils/provider";
 import FilterBar from "@/components/FilterBar";
 import AddCurriculumForm from "@/components/AddCurriculumForm";
@@ -22,7 +23,7 @@ import CourseDetailCard from "@/components/CourseDetailCard";
 export default function Home() {
   //display courses and currciculums
   const [courses, setCourses] = useState([]);
-  const [ curriculums, setCurriculums ] = useState([]);
+  const [curriculums, setCurriculums] = useState([]);
   const [display, setDisplay] = useState("One");
 
   //show currciculum form
@@ -66,6 +67,8 @@ export default function Home() {
     viewCourse,
     setViewCourse,
   } = useActiveCourse();
+
+  const { myCurriculums, setMyCurriculums } = useMyCurriculums();
 
   useEffect(() => {
     const localUser = localStorage.getItem("user");
@@ -134,6 +137,7 @@ export default function Home() {
     if (user) {
       getSavedCourses();
       getSavedCurriculums();
+      getMyCurriculums();
     }
   }, [user, display]);
 
@@ -200,6 +204,14 @@ export default function Home() {
       getCurriculums();
     }
   }, [curriculumCategory, sortBy]);
+
+  //get curriculums from api curriculums
+  const getMyCurriculums = async () => {
+    const res = await ax.get(`${server}/curriculum/uid/${user.uid}`, {
+      params: {},
+    });
+    setMyCurriculums(res.data.courses);
+  };
 
   useEffect(() => {
     if (

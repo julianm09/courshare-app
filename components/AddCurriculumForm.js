@@ -55,10 +55,10 @@ export default function AddCurriculumForm({
         username: user.name,
         uid: user.uid,
         category: selected,
-        course: activeCourse,
+        course: { ...activeCourse, complete: 0 },
       })
       .then(function (response) {
-        console.log(response.data.courses);
+        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
