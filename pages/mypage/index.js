@@ -178,7 +178,7 @@ export default function MyPage() {
 
   //get curriculums from api curriculums
   const getMyCurriculums = async () => {
-    const res = await ax.get(`${server}/curriculum/${user.uid}`, {
+    const res = await ax.get(`${server}/curriculum/uid/${user.uid}`, {
       params: {
         page: myCurriculumPage,
         category: curriculumCategory,

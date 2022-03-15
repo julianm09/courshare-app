@@ -1,18 +1,16 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useCurriculums, useUser } from "@/utils/provider";
 
 const AddCurriculum = ({
   course,
   text = "Add to Curriculum",
   background = "rgba(255, 255, 255, 1)",
   handleAddCurriculum = () => {},
-  curriculums = [
-    "UX/UI Design Course",
-    "Web Development Course",
-    "3D Modeling Course",
-  ],
 }) => {
   const [show, setShow] = useState(false);
+  const { curriculums, setCurriculums } = useCurriculums();
+  const { user } = useUser();
 
   const handleDropdown = (e) => {
     e.stopPropagation();
@@ -43,11 +41,15 @@ const AddCurriculum = ({
             Create new curriculum
           </CreateText>
           <Break></Break>
-          {curriculums.map((x) => (
-            <Curriculums onClick={(e) => addToCurriculum(e, course)}>
-              <div>{x}</div>
-            </Curriculums>
-          ))}
+          {Object.values(curriculums).map((x) =>
+            x.uid === user.uid ? (
+              <Curriculums onClick={(e) => addToCurriculum(e, course)}>
+                <div>{x.name}</div>
+              </Curriculums>
+            ) : (
+              <></>
+            )
+          )}
         </CurriculumList>
       ) : (
         <></>

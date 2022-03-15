@@ -6,6 +6,7 @@ import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { Checkbox } from "@mui/material";
 import { purple } from "@mui/material/colors";
+import { useRouter } from "next/router";
 import {
   useSavedCurriculums,
   useServer,
@@ -27,6 +28,7 @@ export default function CurriculumSlider({
   const { user } = useUser();
   const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
   const { server } = useServer();
+  const r = useRouter();
 
   const saveCurriculum = async (curriculum) => {
     await ax
@@ -51,9 +53,12 @@ export default function CurriculumSlider({
     <Cont>
       <TitleCont>
         <LeftCont>
-          <Avatar src={avasrc} />
-          <AvatarText color={comp_themes[theme].switch_text}>
-            {avaText}
+          {/* <Avatar src={avasrc} /> */}
+
+          <AvatarText color={comp_themes[theme].switch_text} onClick={() => r.push(`/curriculum/${curriculum.id}`)}>
+            {curriculum.uid === user.uid
+              ? avaText + " by " + "me"
+              : avaText + " by " + curriculum.username}
           </AvatarText>
         </LeftCont>
         <RightCont color={comp_themes[theme].switch_text}>
@@ -127,6 +132,13 @@ const Avatar = styled.img`
   width: 40px;
   height: 40px;
   margin-right: 20px;
+`;
+
+const Username = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 20px 0 0;
+  font-size: 20px;
 `;
 
 const AvatarText = styled.div`

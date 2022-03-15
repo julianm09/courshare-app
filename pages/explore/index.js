@@ -8,6 +8,7 @@ import {
   useSavedCourses,
   useSavedCurriculums,
   useServer,
+  useCurriculums,
 } from "@/utils/provider";
 import FilterBar from "@/components/FilterBar";
 import AddCurriculumForm from "@/components/AddCurriculumForm";
@@ -21,7 +22,7 @@ import CourseDetailCard from "@/components/CourseDetailCard";
 export default function Home() {
   //display courses and currciculums
   const [courses, setCourses] = useState([]);
-  const [curriculums, setCurriculums] = useState([]);
+  const [ curriculums, setCurriculums ] = useState([]);
   const [display, setDisplay] = useState("One");
 
   //show currciculum form
@@ -71,7 +72,6 @@ export default function Home() {
 
     if (localUser) {
       setUser(JSON.parse(localUser));
-      console.log(JSON.parse(localUser));
     } else {
       return;
     }
@@ -79,7 +79,6 @@ export default function Home() {
 
   //display currciculum popup
   const handleAddCurriculum = (e, course) => {
-    console.log(course);
     setActiveCourse(course);
     e.stopPropagation();
     setAddCurriculum(true);
@@ -98,7 +97,6 @@ export default function Home() {
         uid: user.uid,
       })
       .then(function (response) {
-        console.log(response.data.courses);
         setSavedCourses(response.data.courses);
       })
       .catch(function (error) {
@@ -112,7 +110,6 @@ export default function Home() {
         uid: user.uid,
       })
       .then(function (response) {
-        console.log(response.data);
         setSavedCourses(response.data);
       })
       .catch(function (error) {
@@ -126,7 +123,6 @@ export default function Home() {
         uid: user.uid,
       })
       .then(function (response) {
-        console.log(response.data);
         setSavedCurriculums(response.data);
       })
       .catch(function (error) {
