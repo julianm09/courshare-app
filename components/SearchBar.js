@@ -1,5 +1,27 @@
 import styled from "styled-components";
-import {Search} from 'react-feather'
+import { Search } from "react-feather";
+
+export default function SearchBar({ handleSearch, value, useSearch }) {
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      useSearch();
+    }
+  };
+
+  return (
+    <Cont>
+      <Searchimg>
+        <Search onClick={useSearch} />
+      </Searchimg>
+
+      <SearchBarInput
+        value={value ? value : ""}
+        onKeyDown={handleKeyDown}
+        onChange={(e) => handleSearch(e)}
+      />
+    </Cont>
+  );
+}
 
 const SearchBarInput = styled.input`
   width: 403px;
@@ -19,7 +41,7 @@ const SearchBarInput = styled.input`
 const Searchimg = styled.div`
   position: absolute;
   right: 12px;
-  color: #AAAAAA;
+  color: #aaaaaa;
   cursor: pointer;
 `;
 
@@ -30,25 +52,5 @@ const Cont = styled.div`
   align-items: center;
   @media (max-width: 1000px) {
     width: 100%;
-
   }
 `;
-
-export default function SearchBar({handleSearch, value, useSearch}) {
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      useSearch()
-    }
-  }
-  
-  return (
-    <Cont>
-      <Searchimg>
-        <Search onClick={useSearch}/>
-      </Searchimg>
-      
-      <SearchBarInput value={value ? value : ''} onKeyDown={handleKeyDown} onChange={(e) => handleSearch(e)}/>
-    </Cont>
-  );
-}

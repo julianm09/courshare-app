@@ -9,8 +9,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { useUser } from "@/utils/provider";
+import { useState } from "react";
+import { useServer, useUser } from "@/utils/provider";
 import ax from "axios";
 
 const Login = ({}) => {
@@ -18,9 +18,11 @@ const Login = ({}) => {
   const [email, setEmail] = useState("julianmayes@gmail.com");
   const [password, setPassword] = useState("Hello123!");
 
+  const { server } = useServer();
+
   const createUser = async (user) => {
     await ax
-      .post("http://localhost:5000/user/add", {
+      .post(`${server}/user/add`, {
         name: name,
         email: user.email,
         uid: user.uid,
@@ -36,7 +38,7 @@ const Login = ({}) => {
   const { user, setUser } = useUser();
 
   const getUserById = async (user) => {
-    const res = await ax.get(`http://localhost:5000/user/${user.uid}`);
+    const res = await ax.get(`${server}/user/${user.uid}`);
     /* console.log(res.data); */
     setUser(res.data[0]);
     localStorage.setItem("user", JSON.stringify(res.data[0]));

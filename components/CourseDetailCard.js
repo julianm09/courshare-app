@@ -41,8 +41,8 @@ export default function CourseDetailCard({
             </LeftCont>
             <RightCont>
               <RightSmallCont>
-                {/*                 <Heading1>{course["Course Name"]}</Heading1> */}
-                <Checkbox
+                <Heading1>{course["Course Name"]}</Heading1>
+                {/*                 <Checkbox
                   checked={
                     savedCourses &&
                     savedCourses.some((i) =>
@@ -59,7 +59,7 @@ export default function CourseDetailCard({
                   icon={<FavoriteBorder />}
                   checkedIcon={<Favorite />}
                 />
-                <AddCurriculum />
+                <AddCurriculum /> */}
               </RightSmallCont>
               <RightSmallCont>
                 <GreyText>{course["University"]}</GreyText>

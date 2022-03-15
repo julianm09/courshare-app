@@ -6,7 +6,12 @@ import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { Checkbox } from "@mui/material";
 import { purple } from "@mui/material/colors";
-import { useSavedCurriculums, useTheme, useUser } from "@/utils/provider";
+import {
+  useSavedCurriculums,
+  useServer,
+  useTheme,
+  useUser,
+} from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 import ax from "axios";
 
@@ -21,10 +26,11 @@ export default function CurriculumSlider({
   const { theme, setTheme } = useTheme();
   const { user } = useUser();
   const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
+  const { server } = useServer();
 
   const saveCurriculum = async (curriculum) => {
     await ax
-      .post("http://localhost:5000/user/saveCurriculum", {
+      .post(`${server}/user/saveCurriculum`, {
         curriculum: curriculum,
         uid: user.uid,
       })

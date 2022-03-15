@@ -13,6 +13,7 @@ import {
   useUser,
   useSavedCourses,
   useSavedCurriculums,
+  useServer,
 } from "@/utils/provider";
 import CourseCard from "@/components/CourseCard";
 import CourseDetailCard from "@/components/CourseDetailCard";
@@ -66,7 +67,8 @@ export default function MyPage() {
     useActiveCourse();
 
   const { user, setUser } = useUser();
-  const { savedCurriculums,setSavedCurriculums } = useSavedCurriculums();
+  const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
+  const { server } = useServer();
 
   useEffect(() => {
     const localUser = localStorage.getItem("user");
@@ -88,7 +90,7 @@ export default function MyPage() {
 
   const getSavedCurriculums = async (course) => {
     await ax
-      .post("http://localhost:5000/user/getSavedCurriculums", {
+      .post(`${server}/user/getSavedCurriculums`, {
         uid: user.uid,
       })
       .then(function (response) {
@@ -115,7 +117,7 @@ export default function MyPage() {
 
   const saveCourse = async (course) => {
     await ax
-      .post("http://localhost:5000/user/saveCourse", {
+      .post(`${server}/user/saveCourse`, {
         course: course,
         uid: user.uid,
       })
@@ -130,7 +132,7 @@ export default function MyPage() {
 
   const getSavedCourses = async () => {
     await ax
-      .post("http://localhost:5000/user/getSavedCourses", {
+      .post(`${server}/user/getSavedCourses`, {
         uid: user.uid,
       })
       .then(function (response) {
@@ -176,7 +178,7 @@ export default function MyPage() {
 
   //get curriculums from api curriculums
   const getMyCurriculums = async () => {
-    const res = await ax.get(`http://localhost:5000/curriculum/${user.uid}`, {
+    const res = await ax.get(`${server}/curriculum/${user.uid}`, {
       params: {
         page: myCurriculumPage,
         category: curriculumCategory,

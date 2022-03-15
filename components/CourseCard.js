@@ -17,11 +17,9 @@ const CourseCard = ({
   handleViewCourse,
   course,
   handleSaveCourse,
-  savedCourses
+  savedCourses,
 }) => {
-
-/*   console.log("saved", savedCourses && savedCourses.some(i => i["Course Name"].includes(courseName)))
- */  return (
+  return (
     <CourseCont onClick={() => handleViewCourse(course)}>
       <Redimg src={image} />
 
@@ -41,11 +39,17 @@ const CourseCard = ({
 
         <Row>
           <AddBar>
-            <AddCurriculum handleAddCurriculum={handleAddCurriculum} course={course}/>
+            <AddCurriculum
+              handleAddCurriculum={handleAddCurriculum}
+              course={course}
+            />
           </AddBar>
 
           <Checkbox
-            checked={savedCourses && savedCourses.some(i => i["Course Name"].includes(courseName))}
+            checked={
+              savedCourses &&
+              savedCourses.some((i) => i["Course Name"].includes(courseName))
+            }
             onClick={(e) => handleSaveCourse(e, course)}
             sx={{
               color: purple[800],

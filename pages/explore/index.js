@@ -7,11 +7,11 @@ import {
   useUser,
   useSavedCourses,
   useSavedCurriculums,
+  useServer,
 } from "@/utils/provider";
 import FilterBar from "@/components/FilterBar";
 import AddCurriculumForm from "@/components/AddCurriculumForm";
 import CourseCardLV from "@/components/CourseCardLV";
-import SortDropdown from "@/components/SortDropdown";
 import CurriculumSlider from "@/components/CurriculumSlider";
 import PageNavigationCourse from "@/components/PageNavigationCourse";
 import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
@@ -26,7 +26,6 @@ export default function Home() {
 
   //show currciculum form
   const [addCurriculum, setAddCurriculum] = useState(false);
-  const [courseToAdd, setCourseToAdd] = useState("");
 
   //course pagination items and page number
   const [coursePage, setCoursePage] = useState(0);
@@ -54,7 +53,11 @@ export default function Home() {
   const [curriculumCategory, setCurriculumCategory] = useState([]);
 
   //provider states
-  const { view, setView } = useView();
+  const { server } = useServer();
+  const { view } = useView();
+  const { savedCourses, setSavedCourses } = useSavedCourses();
+  const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
+  const { user, setUser } = useUser();
   const {
     activeCourse,
     setActiveCourse,
@@ -62,11 +65,6 @@ export default function Home() {
     viewCourse,
     setViewCourse,
   } = useActiveCourse();
-
-  const { savedCourses, setSavedCourses } = useSavedCourses();
-  const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
-
-  const { user, setUser } = useUser();
 
   useEffect(() => {
     const localUser = localStorage.getItem("user");
@@ -89,14 +87,13 @@ export default function Home() {
 
   //display currciculum popup
   const handleSaveCourse = (e, course) => {
-    /* console.log(course); */
     e.stopPropagation();
     saveCourse(course);
   };
 
   const saveCourse = async (course) => {
     await ax
-      .post("http://localhost:5000/user/saveCourse", {
+      .post(`${server}/user/saveCourse`, {
         course: course,
         uid: user.uid,
       })
@@ -111,7 +108,7 @@ export default function Home() {
 
   const getSavedCourses = async (course) => {
     await ax
-      .post("http://localhost:5000/user/getSavedCourses", {
+      .post(`${server}/user/getSavedCourses`, {
         uid: user.uid,
       })
       .then(function (response) {
@@ -125,7 +122,7 @@ export default function Home() {
 
   const getSavedCurriculums = async (course) => {
     await ax
-      .post("http://localhost:5000/user/getSavedCurriculums", {
+      .post(`${server}/user/getSavedCurriculums`, {
         uid: user.uid,
       })
       .then(function (response) {
@@ -189,7 +186,7 @@ export default function Home() {
 
   //get curriculums from api curriculums
   const getCurriculums = async () => {
-    const res = await ax.get("http://localhost:5000/curriculum", {
+    const res = await ax.get(`${server}/curriculum`, {
       params: {
         page: curriculumPage,
         category: curriculumCategory,
@@ -207,8 +204,6 @@ export default function Home() {
       getCurriculums();
     }
   }, [curriculumCategory, sortBy]);
-
-  //handle state changes
 
   useEffect(() => {
     if (

@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+const AddedBadge = ({
+  text = "Added to Curriculum",
+  background = "#ffecad",
+}) => {
+  return <AddedBtn background={background}>{text}</AddedBtn>;
+};
+
+export default AddedBadge;
+
 const Cont = styled.div`
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -24,12 +33,3 @@ const AddedBtn = styled.button`
   font-weight: 400;
   filter: drop-shadow(0px 2px 8px rgba(185, 185, 185, 0.52));
 `;
-
-const AddedBadge = ({
-  text = "Added to Curriculum",
-  background = "#ffecad",
-}) => {
-  return <AddedBtn background={background}>{text}</AddedBtn>;
-};
-
-export default AddedBadge;

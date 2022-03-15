@@ -2,6 +2,45 @@ import styled from "styled-components";
 import { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
+export default function CurriculumDropdown({
+  setAddCurriculum,
+  curriculums = [
+    "UX/UI Design Course",
+    "Web Development Course",
+    "3D Modeling Course",
+  ],
+}) {
+  const [show, setShow] = useState(false);
+
+  const addCurriculum = () => {
+    setAddCurriculum(true);
+    setShow(false);
+  };
+
+  return (
+    <Cont>
+      <MoreVertIcon
+        style={{ cursor: "pointer" }}
+        onClick={() => setShow(!show)}
+      />
+
+      {show ? (
+        <CurriculumList>
+          <CreateText onClick={addCurriculum}>Create new curriculum</CreateText>
+          <Break></Break>
+          {curriculums.map((x) => (
+            <Curriculums>
+              <div>{x}</div>
+            </Curriculums>
+          ))}
+        </CurriculumList>
+      ) : (
+        <></>
+      )}
+    </Cont>
+  );
+}
+
 const Cont = styled.div`
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -30,11 +69,11 @@ const CurriculumList = styled.div`
 
 const CreateText = styled.div`
   font-size: 14px;
-  padding:3% 5%;
+  padding: 3% 5%;
   cursor: pointer;
 
-  &:hover{
-    background: #FEF3D0;
+  &:hover {
+    background: #fef3d0;
   }
 `;
 
@@ -48,44 +87,7 @@ const Curriculums = styled.div`
   font-size: 12px;
   padding: 3% 5%;
   cursor: pointer;
-  &:hover{
-    background: #FEF3D0;
+  &:hover {
+    background: #fef3d0;
   }
 `;
-
-export default function CurriculumDropdown({
-  setAddCurriculum,
-  curriculums = [
-    "UX/UI Design Course",
-    "Web Development Course",
-    "3D Modeling Course",
-  ],
-  
-}) {
-  const [show, setShow] = useState(false);
-
-  const addCurriculum = () => {
-    setAddCurriculum(true)
-    setShow(false)
-  }
-
-  return (
-    <Cont>
-      <MoreVertIcon style={{cursor: "pointer"}} onClick={() => setShow(!show)} />
-
-      {show ? (
-        <CurriculumList>
-          <CreateText onClick={addCurriculum}>Create new curriculum</CreateText>
-          <Break></Break>
-          {curriculums.map((x) => (
-            <Curriculums>
-              <div>{x}</div>
-            </Curriculums>
-          ))}
-        </CurriculumList>
-      ) : (
-        <></>
-      )}
-    </Cont>
-  );
-}

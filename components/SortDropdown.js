@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import { useState } from "react";
-import ax from "axios";
-import CourseCardLV from "./CourseCardLV";
 
 const SortDropdown = ({
   text = "Sort by",
@@ -19,7 +17,7 @@ const SortDropdown = ({
 
   return (
     <Cont>
-      <Drowpdown onBlur={() => setOpen(false)} onClick={() => setOpen(!open)} >
+      <Drowpdown onBlur={() => setOpen(false)} onClick={() => setOpen(!open)}>
         {text}
         <Icon>
           {open ? (

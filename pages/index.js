@@ -4,13 +4,12 @@ import { useTheme, useUser } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import ax from "axios";
 import Login from "@/components/Login";
 
 export default function Home({}) {
   const r = useRouter();
 
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
   const { user, setUser } = useUser();
 
@@ -19,7 +18,6 @@ export default function Home({}) {
 
     if (localUser) {
       setUser(JSON.parse(localUser));
-      console.log(JSON.parse(localUser));
     } else {
       return;
     }
@@ -81,11 +79,8 @@ const RightCont = styled.div`
 
 const Header = styled.div`
   font-family: General Sans;
-
   font-size: 36px;
   line-height: 70px;
-  /* identical to box height, or 175% */
-
   color: ${(props) => props.color};
 `;
 
@@ -99,23 +94,3 @@ const Name = styled.div`
 const GroupImg = styled.img`
   width: 70%;
 `;
-
-/* export async function getServerSideProps(context) {
-  try {
-    // client.db() will be the default database passed in the MONGODB_URI
-    // You can change the database by calling the client.db() function and specifying a database like:
-    // const db = client.db("myDatabase");
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-    await clientPromise;
-    return {
-      props: { isConnected: true },
-    };
-  } catch (e) {
-    console.error(e);
-    return {
-      props: { isConnected: false },
-    };
-  }
-}
- */

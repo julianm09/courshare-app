@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState } from "react";
-import AddedBadge from "./AddedBadge";
 
 const AddCurriculum = ({
   course,

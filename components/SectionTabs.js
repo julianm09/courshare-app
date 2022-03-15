@@ -10,6 +10,62 @@ import SearchBar from "./SearchBar";
 import { useTheme } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 
+export default function FilterBar({
+  display,
+  value,
+  setValue,
+  handleSearch,
+  one,
+  two,
+  three,
+  useSearch,
+  setSearchCourse,
+  searchCourse,
+  setSearchCurriculum,
+  searchCurriculum,
+  searchMyCurriculum,
+}) {
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const classes = useStyles();
+  const { theme, setTheme } = useTheme();
+  return (
+    <BigCont>
+      <TopCont>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          textColor="inherit"
+          aria-label="secondary tabs example"
+          TabIndicatorProps={{ className: classes.indicator }}
+        >
+          <Tab classes={{ tabs: classes.tabs }} value="One" label={one} />
+          <Tab value="Two" label={two} style={{ marginLeft: 30 }} />
+          <Tab value="Three" label={three} style={{ marginLeft: 30 }} />
+        </Tabs>
+      </TopCont>
+      <BottomCont>
+        <Header color={comp_themes[theme].switch_text}>
+          {display == "One" ? one : display === "Two" ? two : three}
+        </Header>
+        <SearchBar
+          handleSearch={handleSearch}
+          useSearch={useSearch}
+          value={
+            display === "One"
+              ? searchCourse
+              : display === "Two"
+              ? searchCurriculum
+              : searchMyCurriculum
+          }
+        />
+      </BottomCont>
+    </BigCont>
+  );
+}
+
 const BigCont = styled.div`
   width: 80%;
   display: flex;
@@ -62,54 +118,3 @@ const useStyles = makeStyles((theme) => ({
     color: "#FFC403",
   },
 }));
-
-export default function FilterBar({
-  display,
-  value,
-  setValue,
-  handleSearch,
-  one,
-  two,
-  three,
-  useSearch,
-  setSearchCourse,
-  searchCourse,
-  setSearchCurriculum,
-  searchCurriculum,
-  searchMyCurriculum,
-
-}) {
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const classes = useStyles();
-  const { theme, setTheme } = useTheme();
-  return (
-    <BigCont>
-      <TopCont>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          textColor="inherit"
-          aria-label="secondary tabs example"
-          TabIndicatorProps={{ className: classes.indicator }}
-        >
-          <Tab classes={{ tabs: classes.tabs }} value="One" label={one} />
-          <Tab value="Two" label={two} style={{ marginLeft: 30 }} />
-          <Tab value="Three" label={three} style={{ marginLeft: 30 }} />
-        </Tabs>
-      </TopCont>
-      <BottomCont>
-        <Header color={comp_themes[theme].switch_text}>
-          {display == "One" ? one : display === "Two" ? two : three}
-        </Header>
-        <SearchBar
-          handleSearch={handleSearch}
-          useSearch={useSearch}
-          value={display === "One" ? searchCourse : display === "Two" ? searchCurriculum : searchMyCurriculum}
-        />
-      </BottomCont>
-    </BigCont>
-  );
-}

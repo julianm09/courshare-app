@@ -4,7 +4,7 @@ import Checkbox from "./Checkbox";
 import AddedBadge from "./AddedBadge";
 import CloseIcon from "@mui/icons-material/Close";
 import ax from "axios";
-import { useActiveCourse, useUser } from "@/utils/provider";
+import { useActiveCourse, useServer, useUser } from "@/utils/provider";
 
 export default function AddCurriculumForm({
   setAddCurriculum,
@@ -22,26 +22,6 @@ export default function AddCurriculumForm({
     "Data Management",
     "Communication",
     "Databases",
-    "Computer Networking",
-    "Computer Science",
-    "Finance",
-    "Machine Learning",
-    "Software Engineering",
-    "Computer Interaction",
-    "Probability & Statistics",
-    "Business Psychology",
-    "Security Engineering",
-    "Human Resources",
-    "Entrepreneurship",
-    "Computer Architecture",
-    "Operations",
-    "Research and Design",
-    "Cloud Computing",
-    "Marketing",
-    "Computer Graphics",
-    "Data Visualization",
-    "DevOps",
-    "Operating Systems",
   ],
 }) {
   const [showCategory, setShowCategory] = useState(false);
@@ -52,6 +32,7 @@ export default function AddCurriculumForm({
   const [addedCurriculum, setAddedCurriculum] = useState(false);
   const { user, setUser } = useUser();
   const { activeCourse } = useActiveCourse();
+  const { server } = useServer();
 
   const handleSelect = (x) => {
     setSelected(x);
@@ -69,7 +50,7 @@ export default function AddCurriculumForm({
 
   const createCurriculum = async (course) => {
     await ax
-      .post("http://localhost:5000/curriculum/add", {
+      .post(`${server}/curriculum/add`, {
         name: curriculumName,
         username: user.name,
         uid: user.uid,

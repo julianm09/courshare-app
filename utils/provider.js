@@ -8,6 +8,8 @@ const initialStates = {
   user: "",
   savedCourses: [],
   savedCurriculums: [],
+/*   server: "http://localhost:5000", */
+  server: "https://courshare.herokuapp.com",
   setTheme: () => {},
   setView: () => {},
   setActiveCourse: () => {},
@@ -15,6 +17,7 @@ const initialStates = {
   setUser: () => {},
   setSavedCourses: () => {},
   setSavedCurriculums: () => {},
+  setServer: () => {},
 };
 
 const MyContext = createContext(initialStates);
@@ -26,8 +29,11 @@ export default function AppProvider({ children }) {
   const [activeCourse, setActiveCourse] = useState(initialStates.activeCourse);
   const [viewCourse, setViewCourse] = useState(false);
   const [user, setUser] = useState(initialStates.user);
-  const [savedCourses, setSavedCourses] = useState(initialStates.user);
-  const [savedCurriculums, setSavedCurriculums] = useState(initialStates.user);
+  const [savedCourses, setSavedCourses] = useState(initialStates.savedCourses);
+  const [savedCurriculums, setSavedCurriculums] = useState(
+    initialStates.savedCurriculums
+  );
+  const [server, setServer] = useState(initialStates.server);
   const handleViewCourse = (course) => {
     setActiveCourse(course);
     setViewCourse(true);
@@ -51,6 +57,8 @@ export default function AppProvider({ children }) {
         setSavedCourses,
         savedCurriculums,
         setSavedCurriculums,
+        server,
+        setServer,
       }}
     >
       <style jsx global>
@@ -89,6 +97,11 @@ export const useSavedCourses = () => {
 export const useSavedCurriculums = () => {
   const { savedCurriculums, setSavedCurriculums } = useContext(MyContext);
   return { savedCurriculums, setSavedCurriculums };
+};
+
+export const useServer = () => {
+  const { server, setServer } = useContext(MyContext);
+  return { server, setServer };
 };
 
 export const useActiveCourse = () => {
