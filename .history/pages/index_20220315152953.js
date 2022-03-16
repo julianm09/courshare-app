@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Login from "@/components/Login";
 import DragComp from "@/components/DragComp";
-import ChatInput from "@/components/ChatInput";
 
 export default function Home({}) {
   const r = useRouter();
@@ -44,7 +43,6 @@ export default function Home({}) {
         </RightCont>
       </BigCont>
       <DragComp />
-      <ChatInput />
     </>
   );
 }
