@@ -55,7 +55,10 @@ export default function CurriculumSlider({
         <LeftCont>
           {/* <Avatar src={avasrc} /> */}
 
-          <AvatarText color={comp_themes[theme].switch_text} onClick={() => r.push(`/curriculum/${curriculum.id}`)}>
+          <AvatarText
+            color={comp_themes[theme].switch_text}
+            onClick={() => r.push(`/curriculum/${curriculum.id}`)}
+          >
             {curriculum.uid === user.uid
               ? avaText + " by " + "me"
               : avaText + " by " + curriculum.username}
@@ -88,7 +91,9 @@ export default function CurriculumSlider({
             <Img src={x["Image"]} />
             <InfoCont>
               <Title color={comp_themes[theme].switch_text}>
-                {x["Course Name"]}
+                {x["Course Name"].length > 20
+                  ? x["Course Name"].slice(0, 20) + "..."
+                  : x["Course Name"]}
               </Title>
               <Source>{x["University"]}</Source>
               <Rating>
@@ -156,10 +161,16 @@ const RightCont = styled.div`
 
 const ContentCont = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   overflow-x: scroll;
   width: 100%;
   padding: 10px 0 10px 10%;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const BoxCont = styled.div`
