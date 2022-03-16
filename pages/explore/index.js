@@ -50,6 +50,8 @@ export default function Home() {
   const [rating, setRating] = useState("");
   const [sortBy, setSortBy] = useState("");
 
+  const [universities, setUniversities] = useState([])
+
   //filter and sorting states curriculums
   const [sortDirection, setSortDirection] = useState("");
   const [curriculumCategory, setCurriculumCategory] = useState([]);
@@ -107,13 +109,16 @@ export default function Home() {
       });
   };
 
-  const getSavedCourses = async (course) => {
+  const getSavedCourses = async () => {
     await ax
       .post(`${server}/user/getSavedCourses`, {
         uid: user.uid,
+        search: searchCourse,
+        page: coursePage,
       })
       .then(function (response) {
-        setSavedCourses(response.data);
+        console.log(response.data);
+        setSavedCourses(response.data.courses);
       })
       .catch(function (error) {
         console.log(error);
@@ -156,6 +161,7 @@ export default function Home() {
     });
     setCourses(res.data.courses);
     setCourseItems(res.data.length);
+    setUniversities(res.data.universities)
     setSearching(false);
   };
 
@@ -244,6 +250,7 @@ export default function Home() {
         value={display}
         setValue={setDisplay}
         handleSearch={handleSearch}
+        universities={universities}
         university={university}
         setUniversity={setUniversity}
         level={level}

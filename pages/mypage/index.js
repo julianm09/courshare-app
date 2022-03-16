@@ -18,6 +18,7 @@ import {
 } from "@/utils/provider";
 import CourseCard from "@/components/CourseCard";
 import CourseDetailCard from "@/components/CourseDetailCard";
+import AddCurriculumForm from "@/components/AddCurriculumForm";
 
 export default function MyPage() {
   //display courses and currciculums
@@ -69,6 +70,7 @@ export default function MyPage() {
 
   const { user, setUser } = useUser();
   const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
+  const { setActiveCourse } = useActiveCourse();
   const { server } = useServer();
 
   useEffect(() => {
@@ -86,6 +88,7 @@ export default function MyPage() {
     if (user) {
       getSavedCourses();
       getSavedCurriculums();
+      getMyCurriculums();
     }
   }, [user, display]);
 
@@ -103,8 +106,8 @@ export default function MyPage() {
       });
   };
 
-  const handleAddCurriculum = (e) => {
-    console.log("e");
+  const handleAddCurriculum = (e, course) => {
+    setActiveCourse(course);
     e.stopPropagation();
     setAddCurriculum(true);
   };
@@ -135,32 +138,18 @@ export default function MyPage() {
     await ax
       .post(`${server}/user/getSavedCourses`, {
         uid: user.uid,
+        search: searchCourse,
+        page: coursePage,
       })
       .then(function (response) {
         console.log(response.data);
-        setSavedCourses(response.data);
+        setSavedCourses(response.data.courses);
+        setCourseItems(response.data.length);
+        setSearching(false);
       })
       .catch(function (error) {
         console.log(error);
       });
-  };
-
-  //get courses from api courses
-  const getCourses = async () => {
-    const res = await ax.get("./api/courses", {
-      params: {
-        page: coursePage,
-        search: searchCourse,
-        university: university,
-        sortBy: sortBy,
-        sortDirection: sortDirection,
-        level: level,
-        rating: rating,
-      },
-    });
-    setCourses(res.data.courses);
-    setCourseItems(res.data.length);
-    setSearching(false);
   };
 
   //get curriculums from api curriculums
@@ -207,10 +196,11 @@ export default function MyPage() {
   };
 
   const useSearch = () => {
+    console.log("searcing", searchCourse);
     if (searchCourse !== null && display === "One") {
       setSearching(true);
       setCoursePage(0);
-      getCourses();
+      getSavedCourses();
     }
 
     if (searchCurriculum !== null && display === "Two") {
@@ -228,7 +218,7 @@ export default function MyPage() {
 
   useEffect(() => {
     if (coursePage || coursePage === 0) {
-      getCourses();
+      getSavedCourses();
     }
   }, [coursePage]);
 
@@ -257,6 +247,11 @@ export default function MyPage() {
       ) : (
         <></>
       )}
+      {addCurriculum ? (
+        <AddCurriculumForm setAddCurriculum={setAddCurriculum} />
+      ) : (
+        <></>
+      )}
       <Greeting>Hi, {user.name} 👋</Greeting>
       <SectionTabs
         useSearch={useSearch}
@@ -275,7 +270,7 @@ export default function MyPage() {
         searchMyCurriculum={searchMyCurriculum}
       />
 
-      {display == "One" && view === "list" ? (
+      {display == "One" && view === "list" && savedCourses.length > 0 ? (
         <>
           {savedCourses &&
             savedCourses.map((x, i) => (
@@ -302,7 +297,7 @@ export default function MyPage() {
             items={courseItems}
           />
         </>
-      ) : display == "One" && view === "grid" ? (
+      ) : display == "One" && view === "grid" && savedCourses.length > 0 ? (
         <>
           <GridView>
             {savedCourses &&
@@ -331,7 +326,9 @@ export default function MyPage() {
             items={courseItems}
           />
         </>
-      ) : display == "Two" ? (
+      ) : display == "One" && view === "grid" && savedCourses.length == 0 ? (
+        <>Save a course to get started!</>
+      ) : display == "Two" && savedCurriculums.length > 0 ? (
         <>
           {savedCurriculums &&
             savedCurriculums.map((x, i) => (
@@ -351,7 +348,11 @@ export default function MyPage() {
             items={curriculumItems}
           />
         </>
-      ) : display == "Three" ? (
+      ) : display == "Two" &&
+        view === "grid" &&
+        savedCurriculums.length == 0 ? (
+        <>Save a currciculm to get started!</>
+      ) : display == "Three" && myCurriculums.length > 0 ? (
         <>
           {myCurriculums &&
             myCurriculums.map((x, i) => (
@@ -371,6 +372,8 @@ export default function MyPage() {
             items={myCurriculumItems}
           />
         </>
+      ) : display == "Three" && view === "grid" && myCurriculums.length == 0 ? (
+        <>Create a currciculm to get started!</>
       ) : (
         <></>
       )}

@@ -9,12 +9,21 @@ export default function handler(req, res) {
 
   courses = coursera;
 
+  const universities = [];
+
+  courses.forEach((e) => {
+    if (universities.includes(e["University"])) {
+    } else {
+      universities.push(e["University"]);
+    }
+  });
+
   if (university || search || rating || level) {
     courses = filtering(courses, {
       title: search,
       university: university,
       rating: rating,
-      level: level
+      level: level,
     });
   }
 
@@ -52,11 +61,11 @@ export default function handler(req, res) {
     }
   }
 
-  const length = courses.length
+  const length = courses.length;
 
   if (page) {
     courses = courses.slice(Number(page) * 12, (Number(page) + 1) * 12);
   }
 
-  res.status(200).json({courses, length: length});
+  res.status(200).json({ courses, length, universities });
 }
