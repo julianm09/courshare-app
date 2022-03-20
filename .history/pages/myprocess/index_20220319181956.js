@@ -1,13 +1,10 @@
 import styled from "styled-components";
 import ax from "axios";
 import { useEffect, useState } from "react";
-import { TouchBackend } from "react-dnd-touch-backend";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
 import QuestionButton from "@/components/QuestionBotton";
 import HighlightsL from "@/components/HighlightsL";
-import DropZone from "@/components/DropZone";
 import DragComp from "@/components/DragComp";
+import DropZone from "@/components/DropZone";
 
 export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
   return (
@@ -23,49 +20,27 @@ export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
           <Bar></Bar>
           <SubText>Curriculum Process ✔️</SubText>
         </SubHeading>
-        <DndProvider backend={HTML5Backend}>
-          <DragCont>
-            <ProcessCont>
-              <HighlightsL />
-              <DropZone
-                backend={TouchBackend}
-                options={{
-                  enableTouchEvents: false,
-                  enableMouseEvents: true,
-                }}
-              >
-                <DragComp />
-                <DragComp />
-                <DragComp />
-                <DragComp />
-                <DragComp />
-                <DragComp />
-              </DropZone>
-            </ProcessCont>
-            <ProcessCont>
-              <HighlightsL Label="Processing 💪 ✨" background="#FFEBCC" />
-
-              <DropZone
-                backend={TouchBackend}
-                options={{
-                  enableTouchEvents: false,
-                  enableMouseEvents: true,
-                }}
-              ></DropZone>
-            </ProcessCont>
-            <ProcessCont>
-              <HighlightsL Label="Completed 🙌 ✅ " background="#C8F8CD" />
-
-              <DropZone
-                backend={TouchBackend}
-                options={{
-                  enableTouchEvents: false,
-                  enableMouseEvents: true,
-                }}
-              ></DropZone>
-            </ProcessCont>
-          </DragCont>
-        </DndProvider>
+        <DragCont>
+          <ProcessCont>
+            <HighlightsL />
+            <WhiteBox>
+              <DragComp />
+              <DragComp />
+              <DragComp />
+              <DragComp />
+              <DragComp />
+              <DragComp />
+            </WhiteBox>
+          </ProcessCont>
+          <ProcessCont>
+            <HighlightsL Label="Processing 💪 ✨" background="#FFEBCC" />
+            <WhiteBox></WhiteBox>
+          </ProcessCont>
+          <ProcessCont>
+            <HighlightsL Label="Completed 🙌 ✅ " background="#C8F8CD" />
+            <WhiteBox></WhiteBox>
+          </ProcessCont>
+        </DragCont>
         <ChatCont></ChatCont>
       </BtCot>
     </Cont>
@@ -126,6 +101,15 @@ const SubText = styled.div`
 const ChatCont = styled.div``;
 
 const ProcessCont = styled.div``;
+const WhiteBox = styled.div`
+  width: 296px;
+  height: 1014px;
+  background: #fcfcfc;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px 0px rgba(185, 185, 185, 0.52);
+  margin: 20px 20px 20px 0;
+  padding: 20px;
+`;
 
 const Greeting = styled.div`
   font-family: General Sans;
