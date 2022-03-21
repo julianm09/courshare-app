@@ -15,6 +15,7 @@ import {
 } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 import ax from "axios";
+import ScrollContainer from "react-indiana-drag-scroll";
 
 export default function CurriculumSlider({
   avasrc = "/avatar.png",
@@ -30,6 +31,8 @@ export default function CurriculumSlider({
   const { server } = useServer();
   const r = useRouter();
 
+  const [likes, setLikes] = useState(null)
+
   const saveCurriculum = async (curriculum) => {
     await ax
       .post(`${server}/user/saveCurriculum`, {
@@ -39,6 +42,7 @@ export default function CurriculumSlider({
       .then(function (response) {
         console.log(response.data.curriculums);
         setSavedCurriculums(response.data.curriculums);
+        setLikes(response.data.likes)
       })
       .catch(function (error) {
         console.log(error);
@@ -49,12 +53,14 @@ export default function CurriculumSlider({
     saveCurriculum(curriculum);
   };
 
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <Cont>
       <TitleCont>
         <LeftCont>
-          {/* <Avatar src={avasrc} /> */}
-
           <AvatarText
             color={comp_themes[theme].switch_text}
             onClick={() => r.push(`/curriculum/${curriculum.id}`)}
@@ -65,13 +71,14 @@ export default function CurriculumSlider({
           </AvatarText>
         </LeftCont>
         <RightCont color={comp_themes[theme].switch_text}>
-          {favouriteCount}
+          {user.uid === curriculum.uid ? "delete" : ""}
+          {likes ? likes : favouriteCount}
           <Checkbox
             checked={
               savedCurriculums &&
               savedCurriculums.some((i) => i["id"].includes(curriculum.id))
             }
-            onClick={handleSaveCurriculum}
+            onClick={() => handleSaveCurriculum()}
             sx={{
               color: purple[800],
               height: 30,
@@ -85,29 +92,35 @@ export default function CurriculumSlider({
           />
         </RightCont>
       </TitleCont>
-      <ContentCont>
-        {courses.map((x, i) => (
-          <BoxCont key={i} onClick={() => handleViewCourse(x)}>
-            <Img src={x["Image"]} />
-            <InfoCont>
-              <Title color={comp_themes[theme].switch_text}>
-                {x["Course Name"].length > 20
-                  ? x["Course Name"].slice(0, 20) + "..."
-                  : x["Course Name"]}
-              </Title>
-              <Source>{x["University"]}</Source>
-              <Rating>
-                <RatingStars />
-                {x["Course Rating"]}
-              </Rating>
-              <Challenge>
-                <DifficultyBar difficulty="beginner" />
-                {x["Difficulty Level"]}
-              </Challenge>
-            </InfoCont>
-          </BoxCont>
-        ))}
-      </ContentCont>
+      <Slider className="scroll-container" onMouseDown={handleMouseDown}>
+        <InnerSlider>
+          {courses.map((x, i) => (
+            <BoxCont key={i} onClick={() => handleViewCourse(x)}>
+              <Img src={x["Image"]} onMouseDown={handleMouseDown} />
+              <InfoCont>
+                <Title color={comp_themes[theme].switch_text}>
+                  {x["Course Name"].length > 20
+                    ? x["Course Name"].slice(0, 20) + "..."
+                    : x["Course Name"]}
+                </Title>
+                <Source>
+                  {x["University"].length > 25
+                    ? x["University"].slice(0, 25) + "..."
+                    : x["University"]}
+                </Source>
+                <Rating color={comp_themes[theme].switch_text}>
+                  <RatingStars />
+                  {x["Course Rating"]}
+                </Rating>
+                <Challenge color={comp_themes[theme].switch_text}>
+                  <DifficultyBar difficulty="beginner" />
+                  {x["Difficulty Level"]}
+                </Challenge>
+              </InfoCont>
+            </BoxCont>
+          ))}
+        </InnerSlider>
+      </Slider>
     </Cont>
   );
 }
@@ -133,23 +146,11 @@ const LeftCont = styled.div`
   align-items: center;
 `;
 
-const Avatar = styled.img`
-  width: 40px;
-  height: 40px;
-  margin-right: 20px;
-`;
-
-const Username = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 0 20px 0 0;
-  font-size: 20px;
-`;
-
 const AvatarText = styled.div`
   font-size: 20px;
   white-space: nowrap;
   color: ${(props) => props.color};
+  cursor: pointer;
 `;
 
 const RightCont = styled.div`
@@ -159,24 +160,23 @@ const RightCont = styled.div`
   color: ${(props) => props.color};
 `;
 
-const ContentCont = styled.div`
+const Slider = styled(ScrollContainer)`
   display: flex;
   justify-content: flex-start;
-  overflow-x: scroll;
-  width: 100%;
-  padding: 10px 0 10px 10%;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  padding: 20px 0;
+`;
+
+const InnerSlider = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  left: 10%;
 `;
 
 const BoxCont = styled.div`
   height: 124px;
   display: flex;
-  box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
+  box-shadow: 0px 0px 8px rgba(185, 185, 185, 0.52);
   border-radius: 10px;
   margin: 0 45px 0 0;
   cursor: pointer;
@@ -215,8 +215,10 @@ const Rating = styled.div`
   align-items: center;
   margin-bottom: 15%;
   font-size: 12px;
+  color: ${(props) => props.color};
 `;
 
 const Challenge = styled.div`
   font-size: 12px;
+  color: ${(props) => props.color};
 `;

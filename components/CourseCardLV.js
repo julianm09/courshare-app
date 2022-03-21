@@ -31,11 +31,11 @@ export default function CourseCardLV({
         <InfoCont>
           <Title color={comp_themes[theme].switch_text}>{courseName}</Title>
           <Source>{teachingSource}</Source>
-          <Rating>
+          <Rating color={comp_themes[theme].switch_text}>
             <RatingStars defaultValue={ratingCount} />
             {ratingCount}
           </Rating>
-          <Challenge>
+          <Challenge color={comp_themes[theme].switch_text}>
             <DifficultyBar
               color={comp_themes[theme].switch_text}
               difficulty="intermediate"
@@ -115,10 +115,12 @@ const Source = styled.div`
 const Rating = styled.div`
   display: flex;
   align-items: center;
+  color: ${(props) => props.color};
 `;
 
 const Challenge = styled.div`
   font-size: 14px;
+  color: ${(props) => props.color};
 `;
 
 const Selection = styled.div`

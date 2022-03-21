@@ -203,6 +203,7 @@ export default function Home() {
     setCurriculums(res.data.courses);
     setCurriculumItems(res.data.length);
     setSearching(false);
+    console.log(res.data.courses)
   };
 
   useEffect(() => {

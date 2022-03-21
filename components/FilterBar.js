@@ -152,7 +152,20 @@ export default function FilterBar({
                 name="Category"
                 selected={curriculumCategory}
                 setSelected={setCurriculumCategory}
-                categories={["webdev", "communication", "math", "business"]}
+                categories={[
+                  "Design",
+                  "Accounting",
+                  "Data Analysis",
+                  "Management",
+                  "Logistics",
+                  "Business Analysis",
+                  "Programming",
+                  "Web Development",
+                  "Sales",
+                  "Data Management",
+                  "Communication",
+                  "Databases",
+                ]}
                 show={showFilter == "Category"}
                 showFilter={showFilter}
                 setShowFilter={setShowFilter}

@@ -19,6 +19,10 @@ const CourseCard = ({
   handleSaveCourse,
   savedCourses,
 }) => {
+
+  const { theme, setTheme } = useTheme();
+
+
   return (
     <CourseCont onClick={() => handleViewCourse(course)}>
       <Redimg src={image} />
