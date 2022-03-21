@@ -5,9 +5,7 @@ const DropZone = ({ children = null, onDropItem = () => {} }) => {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     // The type (or types) to accept - strings or symbols
     accept: "DragCont",
-    drop: (item, monitor) => {
-      onDropItem(item);
-    },
+    drop: (item, monitor) => {},
     // Props to collect
     collect: (monitor) => ({
       isOver: monitor.isOver(),

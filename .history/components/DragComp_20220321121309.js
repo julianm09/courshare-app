@@ -79,7 +79,7 @@ const CourseCont = styled.div`
   height: 145px;
   padding: 12px;
   ${({ position, left, top }) =>
-    position === "relative" &&
+    position === "fixed" &&
     `
     left:${left}px;
     top:${top}px;

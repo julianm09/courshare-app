@@ -32,7 +32,7 @@ const CourseCard = ({
   if (coords && isDragging) {
     sty.left = coords.x;
     sty.top = coords.y;
-    sty.position = "fixed";
+    sty.position = "relative";
   }
   //console.log(isDragging);
   return (

@@ -10,7 +10,7 @@ import DropZone from "@/components/DropZone";
 import DragComp from "@/components/DragComp";
 
 export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
-  const [ns, setNs] = useState({});
+  const [ns, setNs] = useState([]);
   return (
     <Cont>
       <TopCont>

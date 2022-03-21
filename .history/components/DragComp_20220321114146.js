@@ -11,55 +11,26 @@ const CourseCard = ({
   handleViewCourse,
   course,
 }) => {
-  const [{ isDragging, coords }, drag, dragPreview] = useDrag(() => ({
-    // "type" is required. It is used by the "accept" specification of drop targets.
-    type: "DragCont",
-    item: {},
-    // The collect function utilizes a "monitor" instance (see the Overview for what this is)
-    // to pull important pieces of state from the DnD system.
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      coords: monitor.getClientOffset(),
-    }),
-  }));
-
-  const sty = {
-    left: null,
-    top: null,
-    position: null,
-  };
-
-  if (coords && isDragging) {
-    sty.left = coords.x;
-    sty.top = coords.y;
-    sty.position = "fixed";
-  }
-  //console.log(isDragging);
+  const []
   return (
-    <CourseCont
-      onClick={() => handleViewCourse(course)}
-      ref={dragPreview}
-      {...sty}
-    >
-      <div ref={drag}>
-        <InfoCont>
-          <Header>{courseName}</Header>
-          <Name>{teachingSource}</Name>
-          <Row>
-            <RatingBar>
-              <RatingStars defaultValue={ratingCount} />
-              {ratingCount}
-            </RatingBar>
-            <SmallBar>
-              <Text>{difficulty}</Text>
-            </SmallBar>
-          </Row>
-        </InfoCont>
-        <ProcessCont>
-          <HighlightS />
-          <Date>May 14, 2022</Date>
-        </ProcessCont>
-      </div>
+    <CourseCont onClick={() => handleViewCourse(course)} ref={dragPreview}>
+      <InfoCont>
+        <Header>{courseName}</Header>
+        <Name>{teachingSource}</Name>
+        <Row>
+          <RatingBar>
+            <RatingStars defaultValue={ratingCount} />
+            {ratingCount}
+          </RatingBar>
+          <SmallBar>
+            <Text>{difficulty}</Text>
+          </SmallBar>
+        </Row>
+      </InfoCont>
+      <ProcessCont>
+        <HighlightS />
+        <Date>May 14, 2022</Date>
+      </ProcessCont>
     </CourseCont>
   );
 };
@@ -78,13 +49,6 @@ const CourseCont = styled.div`
   width: 250px;
   height: 145px;
   padding: 12px;
-  ${({ position, left, top }) =>
-    position === "relative" &&
-    `
-    left:${left}px;
-    top:${top}px;
-    position:${position};
-  `}
 
   &:hover {
     box-shadow: 0px 2px 20px 10px rgba(185, 185, 185, 0.15);

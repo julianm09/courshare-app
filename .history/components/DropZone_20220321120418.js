@@ -1,13 +1,11 @@
 import styled from "styled-components";
 import { useDrag, useDrop } from "react-dnd";
 
-const DropZone = ({ children = null, onDropItem = () => {} }) => {
+const DropZone = ({ children = null }) => {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     // The type (or types) to accept - strings or symbols
     accept: "DragCont",
-    drop: (item, monitor) => {
-      onDropItem(item);
-    },
+    drop: (item, monitor) => {},
     // Props to collect
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -15,7 +13,7 @@ const DropZone = ({ children = null, onDropItem = () => {} }) => {
     }),
   }));
   return (
-    <Cont ref={drop} bg={canDrop && isOver ? "#F3F3F3" : "#FcFcFc"}>
+    <Cont ref={drop} bg={canDrop && isOver ? "#FcFcFc" : "#F8F8F8"}>
       {children}
     </Cont>
   );

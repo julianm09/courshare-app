@@ -13,7 +13,7 @@ const CourseCard = ({
 }) => {
   const [{ isDragging, coords }, drag, dragPreview] = useDrag(() => ({
     // "type" is required. It is used by the "accept" specification of drop targets.
-    type: "DragCont",
+    type: "DropCont",
     item: {},
     // The collect function utilizes a "monitor" instance (see the Overview for what this is)
     // to pull important pieces of state from the DnD system.
@@ -24,16 +24,10 @@ const CourseCard = ({
   }));
 
   const sty = {
-    left: null,
-    top: null,
-    position: null,
+    left: type === "boardnotes" ? pos.left : null,
+    top: type === "boardnotes" ? pos.top : null,
+    position: type === "boardnotes" ? pos.position : null,
   };
-
-  if (coords && isDragging) {
-    sty.left = coords.x;
-    sty.top = coords.y;
-    sty.position = "fixed";
-  }
   //console.log(isDragging);
   return (
     <CourseCont
@@ -79,7 +73,7 @@ const CourseCont = styled.div`
   height: 145px;
   padding: 12px;
   ${({ position, left, top }) =>
-    position === "relative" &&
+    (position === "fixed" || position === "absolute") &&
     `
     left:${left}px;
     top:${top}px;
