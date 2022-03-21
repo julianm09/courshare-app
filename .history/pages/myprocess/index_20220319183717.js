@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ax from "axios";
 import { useEffect, useState } from "react";
 import { TouchBackend } from "react-dnd-touch-backend";
-import { HTML5Backend } from "react-dnd-html5-backend";
+//import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import QuestionButton from "@/components/QuestionBotton";
 import HighlightsL from "@/components/HighlightsL";
@@ -23,10 +23,10 @@ export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
           <Bar></Bar>
           <SubText>Curriculum Process ✔️</SubText>
         </SubHeading>
-        <DndProvider backend={HTML5Backend}>
-          <DragCont>
-            <ProcessCont>
-              <HighlightsL />
+        <DragCont>
+          <ProcessCont>
+            <HighlightsL />
+            <DndProvider>
               <DropZone
                 backend={TouchBackend}
                 options={{
@@ -41,31 +41,21 @@ export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
                 <DragComp />
                 <DragComp />
               </DropZone>
-            </ProcessCont>
-            <ProcessCont>
-              <HighlightsL Label="Processing 💪 ✨" background="#FFEBCC" />
-
-              <DropZone
-                backend={TouchBackend}
-                options={{
-                  enableTouchEvents: false,
-                  enableMouseEvents: true,
-                }}
-              ></DropZone>
-            </ProcessCont>
-            <ProcessCont>
-              <HighlightsL Label="Completed 🙌 ✅ " background="#C8F8CD" />
-
-              <DropZone
-                backend={TouchBackend}
-                options={{
-                  enableTouchEvents: false,
-                  enableMouseEvents: true,
-                }}
-              ></DropZone>
-            </ProcessCont>
-          </DragCont>
-        </DndProvider>
+            </DndProvider>
+          </ProcessCont>
+          <ProcessCont>
+            <HighlightsL Label="Processing 💪 ✨" background="#FFEBCC" />
+            <DndProvider>
+              <DropZone></DropZone>
+            </DndProvider>
+          </ProcessCont>
+          <ProcessCont>
+            <HighlightsL Label="Completed 🙌 ✅ " background="#C8F8CD" />
+            <DndProvider>
+              <DropZone></DropZone>
+            </DndProvider>
+          </ProcessCont>
+        </DragCont>
         <ChatCont></ChatCont>
       </BtCot>
     </Cont>

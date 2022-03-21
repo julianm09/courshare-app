@@ -1,5 +1,7 @@
 import styled from "styled-components";
+
 import RatingStars from "@/components/RatingStars";
+
 import HighlightS from "@/components/HighlightsS";
 
 const CourseCard = ({

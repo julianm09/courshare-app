@@ -1,5 +1,11 @@
 import styled from "styled-components";
+import Favorite from "@mui/icons-material/Favorite";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import { Checkbox } from "@mui/material";
+import { purple } from "@mui/material/colors";
+import DifficultyBar from "@/components/DifficultyBar";
 import RatingStars from "@/components/RatingStars";
+import AddCurriculum from "@/components/AddCurriculum";
 import HighlightS from "@/components/HighlightsS";
 
 const CourseCard = ({

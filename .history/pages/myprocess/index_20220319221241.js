@@ -23,10 +23,10 @@ export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
           <Bar></Bar>
           <SubText>Curriculum Process ✔️</SubText>
         </SubHeading>
-        <DndProvider backend={HTML5Backend}>
-          <DragCont>
-            <ProcessCont>
-              <HighlightsL />
+        <DragCont>
+          <ProcessCont>
+            <HighlightsL />
+            <DndProvider backend={HTML5Backend}>
               <DropZone
                 backend={TouchBackend}
                 options={{
@@ -41,10 +41,11 @@ export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
                 <DragComp />
                 <DragComp />
               </DropZone>
-            </ProcessCont>
-            <ProcessCont>
-              <HighlightsL Label="Processing 💪 ✨" background="#FFEBCC" />
-
+     
+          </ProcessCont>
+          <ProcessCont>
+            <HighlightsL Label="Processing 💪 ✨" background="#FFEBCC" />
+   
               <DropZone
                 backend={TouchBackend}
                 options={{
@@ -52,10 +53,11 @@ export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
                   enableMouseEvents: true,
                 }}
               ></DropZone>
-            </ProcessCont>
-            <ProcessCont>
-              <HighlightsL Label="Completed 🙌 ✅ " background="#C8F8CD" />
-
+   
+          </ProcessCont>
+          <ProcessCont>
+            <HighlightsL Label="Completed 🙌 ✅ " background="#C8F8CD" />
+      
               <DropZone
                 backend={TouchBackend}
                 options={{
@@ -63,9 +65,9 @@ export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
                   enableMouseEvents: true,
                 }}
               ></DropZone>
-            </ProcessCont>
-          </DragCont>
-        </DndProvider>
+                  </DndProvider>
+          </ProcessCont>
+        </DragCont>
         <ChatCont></ChatCont>
       </BtCot>
     </Cont>
