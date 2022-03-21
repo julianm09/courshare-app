@@ -103,7 +103,7 @@ const Dropdown = styled.div`
 `;
 
 const DrowpdownBox = styled.div`
-  min-height: 162px;
+
   height: auto;
   width: 460px;
   max-width: 395px;

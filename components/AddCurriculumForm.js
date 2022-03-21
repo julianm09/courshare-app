@@ -10,7 +10,7 @@ export default function AddCurriculumForm({
   setAddCurriculum,
   name = "",
   categories = [
-    "Design and Product",
+    "Design",
     "Accounting",
     "Data Analysis",
     "Management",
@@ -121,7 +121,7 @@ export default function AddCurriculumForm({
               <></>
             )}
 
-            <AddButton onClick={handleAddCurriculum}>Add</AddButton>
+            <AddButton onClick={handleAddCurriculum} showCategory={showCategory}>Add</AddButton>
           </ContentCont>
         </Cont>
       )}
@@ -265,6 +265,7 @@ const DrowpdownBox = styled.div`
   position: relative;
   z-index: 100;
   background: #ffffff;
+  margin: 0 0 12px 0;
 `;
 
 const CategoryCont = styled.div`
@@ -274,9 +275,9 @@ const CategoryCont = styled.div`
   grid-gap: 12px 0;
   grid-template-rowss: auto;
 
-  @media (max-width: 800px) {
+/*   @media (max-width: 800px) {
     grid-template-columns: 2fr;
-  }
+  } */
 `;
 
 const Category = styled.div`
@@ -320,8 +321,9 @@ const AddButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  bottom: 49px;
+  position: relative;
+  top: ${props => props.showCategory ? "" : "49px"}
+
 `;
 
 const Icon = styled.div`

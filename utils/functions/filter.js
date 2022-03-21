@@ -18,10 +18,7 @@ export function filtering(
       if (title) {
         cond =
           cond &&
-          o["Course Name"]
- 
-            .toLowerCase()
-            .includes(title.toLowerCase());
+          o["Course Name"].toLowerCase().includes(title.toLowerCase());
       }
 
       if (university) {
@@ -29,7 +26,15 @@ export function filtering(
       }
 
       if (rating) {
-        cond = cond && Number(o["Course Rating"]) >= Number(rating);
+        if (rating === "4.5 - 5.5") {
+          cond = cond && Number(o["Course Rating"]) >= 4.5;
+        } else if (rating === "4.0 - 4.5") {
+          cond = cond && Number(o["Course Rating"]) >= 4.5 && cond && Number(o["Course Rating"]) <= 4.5;
+        } else if (rating === "3.5 - 4.0") {
+          cond = cond && Number(o["Course Rating"]) >= 3.5 && cond && Number(o["Course Rating"]) <= 4.0;
+        } else if (rating === "0 - 3.5") {
+          cond = cond && Number(o["Course Rating"]) >= 0 && cond && Number(o["Course Rating"]) <= 3.5;
+        }
       }
 
       if (level) {
