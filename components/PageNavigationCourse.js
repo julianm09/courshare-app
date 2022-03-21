@@ -1,9 +1,26 @@
 import * as React from "react";
 import styled from "styled-components";
 import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
 import { makeStyles } from "@mui/styles";
-import { useState } from "react";
+
+export default function PageNavigationCourse({ items = 424, setCoursePage }) {
+  const handleChange = (e, v) => {
+    setCoursePage(v - 1);
+  };
+
+  const classes = useStyles();
+  return (
+    <Cont>
+      <Pagination
+        onChange={handleChange}
+        count={items < 12 ? 1 : Math.round(items / 12)}
+        variant="outlined"
+        shape="rounded"
+        classes={{ ul: classes.ul }}
+      />
+    </Cont>
+  );
+}
 
 const Cont = styled.div`
   width: 100%;
@@ -26,22 +43,3 @@ const useStyles = makeStyles(() => ({
     },
   },
 }));
-
-export default function PageNavigationCourse({ items = 424, setCoursePage }) {
-  const handleChange = (e, v) => {
-    setCoursePage(v - 1);
-  };
-
-  const classes = useStyles();
-  return (
-    <Cont>
-      <Pagination
-        onChange={handleChange}
-        count={items < 12 ? 1 : Math.round(items / 12)}
-        variant="outlined"
-        shape="rounded"
-        classes={{ ul: classes.ul }}
-      />
-    </Cont>
-  );
-}

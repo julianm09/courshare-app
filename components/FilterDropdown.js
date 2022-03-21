@@ -15,6 +15,7 @@ export default function FilterDropdown({
   show,
   showFilter,
   setShowFilter,
+  columns = 2,
 }) {
   const [showAll, setShowAll] = useState(false);
 
@@ -46,7 +47,7 @@ export default function FilterDropdown({
       </Dropdown>
       {show ? (
         <DrowpdownBox>
-          <CategoryCont>
+          <CategoryCont columns={columns}>
             {categories.slice(0, showAll ? 32 : 8).map((x) => (
               <Category>
                 <Checkbox
@@ -129,7 +130,8 @@ const DrowpdownBox = styled.div`
 const CategoryCont = styled.div`
   height: auto;
   display: grid;
-  grid-template-columns: 2fr 2fr;
+  grid-template-columns: ${(props) =>
+    props.columns == 2 ? "2fr 2fr" : "2fr 2fr 2fr 2fr"};
   grid-gap: 12px 0;
   grid-template-rowss: auto;
 

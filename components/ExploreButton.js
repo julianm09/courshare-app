@@ -1,5 +1,21 @@
 import styled from "styled-components";
 
+const ExploreButton = ({
+  onClick,
+  text = "Explore",
+  background = "#4d328a",
+}) => {
+  return (
+    <Cont>
+      <ExploreBtn onClick={onClick} background={background}>
+        {text}
+      </ExploreBtn>
+    </Cont>
+  );
+};
+
+export default ExploreButton;
+
 const Cont = styled.div`
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -20,13 +36,3 @@ const ExploreBtn = styled.button`
   font-weight: 400;
   cursor: pointer;
 `;
-
-const ExploreButton = ({ onClick, text = "Explore", background = "#4d328a" }) => {
-  return (
-    <Cont>
-      <ExploreBtn onClick={onClick} background={background}>{text}</ExploreBtn>
-    </Cont>
-  );
-};
-
-export default ExploreButton;

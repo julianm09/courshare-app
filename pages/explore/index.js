@@ -1,11 +1,19 @@
 import styled from "styled-components";
 import ax from "axios";
 import { useEffect, useState } from "react";
-import { useView, useActiveCourse } from "@/utils/provider";
+import {
+  useView,
+  useActiveCourse,
+  useUser,
+  useSavedCourses,
+  useSavedCurriculums,
+  useServer,
+  useCurriculums,
+  useMyCurriculums,
+} from "@/utils/provider";
 import FilterBar from "@/components/FilterBar";
 import AddCurriculumForm from "@/components/AddCurriculumForm";
 import CourseCardLV from "@/components/CourseCardLV";
-import SortDropdown from "@/components/SortDropdown";
 import CurriculumSlider from "@/components/CurriculumSlider";
 import PageNavigationCourse from "@/components/PageNavigationCourse";
 import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
@@ -16,8 +24,6 @@ export default function Home() {
   //display courses and currciculums
   const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
-
-  //display courses and currciculums
   const [display, setDisplay] = useState("One");
 
   //show currciculum form
@@ -44,20 +50,101 @@ export default function Home() {
   const [rating, setRating] = useState("");
   const [sortBy, setSortBy] = useState("");
 
+  const [universities, setUniversities] = useState([])
+
   //filter and sorting states curriculums
   const [sortDirection, setSortDirection] = useState("");
   const [curriculumCategory, setCurriculumCategory] = useState([]);
 
   //provider states
-  const { view, setView } = useView();
-  const { activeCourse, handleViewCourse, viewCourse, setViewCourse } =
-    useActiveCourse();
+  const { server } = useServer();
+  const { view } = useView();
+  const { savedCourses, setSavedCourses } = useSavedCourses();
+  const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
+  const { user, setUser } = useUser();
+  const {
+    activeCourse,
+    setActiveCourse,
+    handleViewCourse,
+    viewCourse,
+    setViewCourse,
+  } = useActiveCourse();
 
-  const handleAddCurriculum = (e) => {
-    console.log("e")
+  const { myCurriculums, setMyCurriculums } = useMyCurriculums();
+
+  useEffect(() => {
+    const localUser = localStorage.getItem("user");
+
+    if (localUser) {
+      setUser(JSON.parse(localUser));
+    } else {
+      return;
+    }
+  }, []);
+
+  //display currciculum popup
+  const handleAddCurriculum = (e, course) => {
+    setActiveCourse(course);
     e.stopPropagation();
     setAddCurriculum(true);
   };
+
+  //display currciculum popup
+  const handleSaveCourse = (e, course) => {
+    e.stopPropagation();
+    saveCourse(course);
+  };
+
+  const saveCourse = async (course) => {
+    await ax
+      .post(`${server}/user/saveCourse`, {
+        course: course,
+        uid: user.uid,
+      })
+      .then(function (response) {
+        setSavedCourses(response.data.courses);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const getSavedCourses = async () => {
+    await ax
+      .post(`${server}/user/getSavedCourses`, {
+        uid: user.uid,
+        search: searchCourse,
+        page: coursePage,
+      })
+      .then(function (response) {
+        console.log(response.data);
+        setSavedCourses(response.data.courses);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const getSavedCurriculums = async (course) => {
+    await ax
+      .post(`${server}/user/getSavedCurriculums`, {
+        uid: user.uid,
+      })
+      .then(function (response) {
+        setSavedCurriculums(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (user) {
+      getSavedCourses();
+      getSavedCurriculums();
+      getMyCurriculums();
+    }
+  }, [user, display]);
 
   //get courses from api courses
   const getCourses = async () => {
@@ -74,6 +161,7 @@ export default function Home() {
     });
     setCourses(res.data.courses);
     setCourseItems(res.data.length);
+    setUniversities(res.data.universities)
     setSearching(false);
   };
 
@@ -104,11 +192,12 @@ export default function Home() {
 
   //get curriculums from api curriculums
   const getCurriculums = async () => {
-    const res = await ax.get("./api/curriculums", {
+    const res = await ax.get(`${server}/curriculum`, {
       params: {
         page: curriculumPage,
         category: curriculumCategory,
         search: searchCurriculum,
+        sortBy: sortBy,
       },
     });
     setCurriculums(res.data.courses);
@@ -120,56 +209,48 @@ export default function Home() {
     if (curriculumCategory) {
       getCurriculums();
     }
-  }, [curriculumCategory]);
+  }, [curriculumCategory, sortBy]);
 
-  //handle state changes
-
-  useEffect(() => {
-    if (level) {
-      getCourses();
-    }
-  }, [level]);
-
-  useEffect(() => {
-    if (rating) {
-      getCourses();
-    }
-  }, [rating]);
+  //get curriculums from api curriculums
+  const getMyCurriculums = async () => {
+    const res = await ax.get(`${server}/curriculum/uid/${user.uid}`, {
+      params: {},
+    });
+    setMyCurriculums(res.data.courses);
+  };
 
   useEffect(() => {
-    if (sortBy) {
+    if (
+      level ||
+      rating ||
+      sortBy ||
+      university ||
+      coursePage ||
+      coursePage === 0
+    ) {
       getCourses();
     }
-  }, [sortBy]);
-
-  useEffect(() => {
-    if (university) {
-      getCourses();
-    }
-  }, [university]);
-
-  useEffect(() => {
-    if (coursePage || coursePage === 0) {
-      getCourses();
-    }
-  }, [coursePage]);
+  }, [level, rating, sortBy, university, coursePage]);
 
   return (
     <Cont>
       {viewCourse ? (
         <CourseDetailCard
           setViewCourse={setViewCourse}
-          activeCourse={activeCourse}
+          course={activeCourse}
+          courseName={activeCourse && activeCourse["Course Name"]}
+          handleSaveCourse={handleSaveCourse}
+          savedCourses={savedCourses && savedCourses}
         />
       ) : (
         <></>
       )}
-
       <FilterBar
         useSearch={useSearch}
         value={display}
         setValue={setDisplay}
         handleSearch={handleSearch}
+        universities={universities}
         university={university}
         setUniversity={setUniversity}
         level={level}
@@ -222,6 +303,8 @@ export default function Home() {
                   course={x}
                   handleViewCourse={handleViewCourse}
                   handleAddCurriculum={handleAddCurriculum}
+                  handleSaveCourse={handleSaveCourse}
+                  savedCourses={savedCourses && savedCourses}
                 />
               ))}
           </ListView>
@@ -249,6 +332,8 @@ export default function Home() {
                   handleViewCourse={handleViewCourse}
                   setViewCourse={setViewCourse}
                   setAddCurriculum={setAddCurriculum}
+                  handleSaveCourse={handleSaveCourse}
+                  savedCourses={savedCourses}
                 />
               ))}
           </GridView>
@@ -264,6 +349,9 @@ export default function Home() {
           {curriculums &&
             curriculums.map((x, i) => (
               <CurriculumSlider
+                curriculum={x}
+                savedCurriculums={savedCurriculums}
+                setSavedCurriculums={setSavedCurriculums}
                 key={i}
                 avaText={x["name"]}
                 favouriteCount={x["likes"]}

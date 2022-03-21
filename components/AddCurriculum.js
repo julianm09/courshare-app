@@ -1,27 +1,53 @@
 import styled from "styled-components";
 import { useState } from "react";
+import {
+  useCurriculums,
+  useMyCurriculums,
+  useServer,
+  useUser,
+} from "@/utils/provider";
+import ax from "axios";
 
 const AddCurriculum = ({
+  course,
   text = "Add to Curriculum",
   background = "rgba(255, 255, 255, 1)",
   handleAddCurriculum = () => {},
-  curriculums = [
-    "UX/UI Design Course",
-    "Web Development Course",
-    "3D Modeling Course",
-  ],
 }) => {
   const [show, setShow] = useState(false);
+  const { myCurriculums, setMyCurriculums } = useMyCurriculums();
+  const { user } = useUser();
+  const { server } = useServer();
 
   const handleDropdown = (e) => {
     e.stopPropagation();
     setShow(!show);
   };
 
-  const addCurriculum = (e) => {
+  const addCurriculum = (e, course) => {
     e.stopPropagation();
-    handleAddCurriculum(e);
+    handleAddCurriculum(e, course);
     setShow(!show);
+  };
+
+  const addToCurriculum = (e, currciculum, course) => {
+    e.stopPropagation();
+    createCurriculum(currciculum, course);
+    setShow(!show);
+  };
+
+  const createCurriculum = async (currciculum, course) => {
+    await ax
+      .post(`${server}/curriculum/addCourse`, {
+        id: currciculum.id,
+        course: course,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -32,15 +58,19 @@ const AddCurriculum = ({
 
       {show ? (
         <CurriculumList>
-          <CreateText onClick={(e) => addCurriculum(e)}>
+          <CreateText onClick={(e) => addCurriculum(e, course)}>
             Create new curriculum
           </CreateText>
-          <Break></Break>
-          {curriculums.map((x) => (
-            <Curriculums>
-              <div>{x}</div>
-            </Curriculums>
-          ))}
+          {myCurriculums.length > 0 ? <Break></Break> : <></>}
+          {Object.values(myCurriculums).map((x) =>
+            x.uid === user.uid ? (
+              <Curriculums onClick={(e) => addToCurriculum(e, x, course)}>
+                <div>{x.name}</div>
+              </Curriculums>
+            ) : (
+              <></>
+            )
+          )}
         </CurriculumList>
       ) : (
         <></>
@@ -50,6 +80,20 @@ const AddCurriculum = ({
 };
 
 export default AddCurriculum;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.74);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  cursor: pointer;
+`;
 
 const AddCurr = styled.button`
   width: 200x;

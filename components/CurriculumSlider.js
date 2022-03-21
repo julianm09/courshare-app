@@ -6,8 +6,111 @@ import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { Checkbox } from "@mui/material";
 import { purple } from "@mui/material/colors";
-import { useTheme } from "@/utils/provider";
+import { useRouter } from "next/router";
+import {
+  useSavedCurriculums,
+  useServer,
+  useTheme,
+  useUser,
+} from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
+import ax from "axios";
+
+export default function CurriculumSlider({
+  avasrc = "/avatar.png",
+  avaText = "Juhee's UX/UI DesignCurriculum",
+  favouriteCount = "4561",
+  courses,
+  handleViewCourse,
+  curriculum,
+}) {
+  const { theme, setTheme } = useTheme();
+  const { user } = useUser();
+  const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
+  const { server } = useServer();
+  const r = useRouter();
+
+  const saveCurriculum = async (curriculum) => {
+    await ax
+      .post(`${server}/user/saveCurriculum`, {
+        curriculum: curriculum,
+        uid: user.uid,
+      })
+      .then(function (response) {
+        console.log(response.data.curriculums);
+        setSavedCurriculums(response.data.curriculums);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const handleSaveCurriculum = () => {
+    saveCurriculum(curriculum);
+  };
+
+  return (
+    <Cont>
+      <TitleCont>
+        <LeftCont>
+          {/* <Avatar src={avasrc} /> */}
+
+          <AvatarText
+            color={comp_themes[theme].switch_text}
+            onClick={() => r.push(`/curriculum/${curriculum.id}`)}
+          >
+            {curriculum.uid === user.uid
+              ? avaText + " by " + "me"
+              : avaText + " by " + curriculum.username}
+          </AvatarText>
+        </LeftCont>
+        <RightCont color={comp_themes[theme].switch_text}>
+          {favouriteCount}
+          <Checkbox
+            checked={
+              savedCurriculums &&
+              savedCurriculums.some((i) => i["id"].includes(curriculum.id))
+            }
+            onClick={handleSaveCurriculum}
+            sx={{
+              color: purple[800],
+              height: 30,
+              "&.Mui-checked": {
+                color: purple[600],
+                height: 30,
+              },
+            }}
+            icon={<FavoriteBorder />}
+            checkedIcon={<Favorite />}
+          />
+        </RightCont>
+      </TitleCont>
+      <ContentCont>
+        {courses.map((x, i) => (
+          <BoxCont key={i} onClick={() => handleViewCourse(x)}>
+            <Img src={x["Image"]} />
+            <InfoCont>
+              <Title color={comp_themes[theme].switch_text}>
+                {x["Course Name"].length > 20
+                  ? x["Course Name"].slice(0, 20) + "..."
+                  : x["Course Name"]}
+              </Title>
+              <Source>{x["University"]}</Source>
+              <Rating>
+                <RatingStars />
+                {x["Course Rating"]}
+              </Rating>
+              <Challenge>
+                <DifficultyBar difficulty="beginner" />
+                {x["Difficulty Level"]}
+              </Challenge>
+            </InfoCont>
+          </BoxCont>
+        ))}
+      </ContentCont>
+    </Cont>
+  );
+}
 
 const Cont = styled.div`
   font-family: General Sans;
@@ -15,7 +118,6 @@ const Cont = styled.div`
   font-weight: normal;
   width: 100%;
   margin: 0 0 112px 0;
-
 `;
 
 const TitleCont = styled.div`
@@ -37,6 +139,13 @@ const Avatar = styled.img`
   margin-right: 20px;
 `;
 
+const Username = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 20px 0 0;
+  font-size: 20px;
+`;
+
 const AvatarText = styled.div`
   font-size: 20px;
   white-space: nowrap;
@@ -52,11 +161,16 @@ const RightCont = styled.div`
 
 const ContentCont = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   overflow-x: scroll;
   width: 100%;
   padding: 10px 0 10px 10%;
-
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const BoxCont = styled.div`
@@ -106,66 +220,3 @@ const Rating = styled.div`
 const Challenge = styled.div`
   font-size: 12px;
 `;
-
-export default function CurriculumSlider({
-  avasrc = "/avatar.png",
-  avaText = "Juhee's UX/UI DesignCurriculum",
-  favouriteCount = "4561",
-  coursesrc1 = "/Testing1.png",
-  courseName1 = "UX Research",
-  teachingSource1 = "University of Toronto",
-  ratingCount1 = 4.6,
-  difficulty1 = " Beginner",
-  courses,
-  handleViewCourse
-}) {
-  const { theme, setTheme } = useTheme();
-  return (
-    <Cont>
-      <TitleCont>
-        <LeftCont>
-          <Avatar src={avasrc} />
-          <AvatarText color={comp_themes[theme].switch_text}>
-            {avaText}
-          </AvatarText>
-        </LeftCont>
-        <RightCont color={comp_themes[theme].switch_text}>
-          {favouriteCount}
-          <Checkbox
-            sx={{
-              color: purple[800],
-              height: 30,
-              "&.Mui-checked": {
-                color: purple[600],
-                height: 30,
-              },
-            }}
-            icon={<FavoriteBorder />}
-            checkedIcon={<Favorite />}
-          />
-        </RightCont>
-      </TitleCont>
-      <ContentCont>
-        {courses.map((x) => (
-          <BoxCont onClick={() => handleViewCourse(x)}>
-            <Img src={x["Image"]} />
-            <InfoCont>
-              <Title color={comp_themes[theme].switch_text}>
-                {x["Course Name"]}
-              </Title>
-              <Source>{x["University"]}</Source>
-              <Rating>
-                <RatingStars />
-                {x["Course Rating"]}
-              </Rating>
-              <Challenge>
-                <DifficultyBar difficulty="beginner" />
-                {x["Difficulty Level"]}
-              </Challenge>
-            </InfoCont>
-          </BoxCont>
-        ))}
-      </ContentCont>
-    </Cont>
-  );
-}

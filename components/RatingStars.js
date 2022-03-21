@@ -12,9 +12,9 @@ export default function RatingStars({
 }) {
   return (
     <Rating
-      defaultValue={defaultValue}
-      precision={precision}
-      readOnly={readOnly}
+      value={Number(defaultValue)}
+      precision={Number(precision)}
+      readOnly={Boolean(readOnly)}
       size={size}
       style={{ color: color }}
     ></Rating>

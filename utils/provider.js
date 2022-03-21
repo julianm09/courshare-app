@@ -5,10 +5,21 @@ const initialStates = {
   theme: "default",
   view: "grid",
   activeCourse: {},
+  user: "",
+  myCurriculums: [],
+  savedCourses: [],
+  savedCurriculums: [],
+/*   server: "http://localhost:5000", */
+  server: "https://courshare.herokuapp.com",
   setTheme: () => {},
   setView: () => {},
   setActiveCourse: () => {},
   setViewCourse: () => {},
+  setUser: () => {},
+  setSavedCourses: () => {},
+  setSavedCurriculums: () => {},
+  setServer: () => {},
+  setMyCurriculums: () => {},
 };
 
 const MyContext = createContext(initialStates);
@@ -19,6 +30,13 @@ export default function AppProvider({ children }) {
   const [view, setView] = useState(initialStates.view);
   const [activeCourse, setActiveCourse] = useState(initialStates.activeCourse);
   const [viewCourse, setViewCourse] = useState(false);
+  const [user, setUser] = useState(initialStates.user);
+  const [myCurriculums, setMyCurriculums] = useState(initialStates.myCurriculums);
+  const [savedCourses, setSavedCourses] = useState(initialStates.savedCourses);
+  const [savedCurriculums, setSavedCurriculums] = useState(
+    initialStates.savedCurriculums
+  );
+  const [server, setServer] = useState(initialStates.server);
   const handleViewCourse = (course) => {
     setActiveCourse(course);
     setViewCourse(true);
@@ -36,6 +54,16 @@ export default function AppProvider({ children }) {
         handleViewCourse,
         viewCourse,
         setViewCourse,
+        user,
+        setUser,
+        savedCourses,
+        setSavedCourses,
+        savedCurriculums,
+        setSavedCurriculums,
+        server,
+        setServer,
+        myCurriculums,
+        setMyCurriculums,
       }}
     >
       <style jsx global>
@@ -59,6 +87,31 @@ export const useTheme = () => {
 export const useView = () => {
   const { view, setView } = useContext(MyContext);
   return { view, setView };
+};
+
+export const useUser = () => {
+  const { user, setUser } = useContext(MyContext);
+  return { user, setUser };
+};
+
+export const useMyCurriculums = () => {
+  const { myCurriculums, setMyCurriculums } = useContext(MyContext);
+  return { myCurriculums, setMyCurriculums };
+};
+
+export const useSavedCourses = () => {
+  const { savedCourses, setSavedCourses } = useContext(MyContext);
+  return { savedCourses, setSavedCourses };
+};
+
+export const useSavedCurriculums = () => {
+  const { savedCurriculums, setSavedCurriculums } = useContext(MyContext);
+  return { savedCurriculums, setSavedCurriculums };
+};
+
+export const useServer = () => {
+  const { server, setServer } = useContext(MyContext);
+  return { server, setServer };
 };
 
 export const useActiveCourse = () => {

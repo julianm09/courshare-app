@@ -6,9 +6,19 @@ import CurriculumSlider from "@/components/CurriculumSlider";
 import PageNavigationCourse from "@/components/PageNavigationCourse";
 import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
 import SectionTabs from "@/components/SectionTabs";
-import { useTheme, useView, useActiveCourse } from "@/utils/provider";
+import {
+  useTheme,
+  useView,
+  useActiveCourse,
+  useUser,
+  useSavedCourses,
+  useSavedCurriculums,
+  useServer,
+  useCurriculums,
+} from "@/utils/provider";
 import CourseCard from "@/components/CourseCard";
 import CourseDetailCard from "@/components/CourseDetailCard";
+import AddCurriculumForm from "@/components/AddCurriculumForm";
 
 export default function MyPage() {
   //display courses and currciculums
@@ -54,31 +64,92 @@ export default function MyPage() {
 
   //provider states
   const { view, setView } = useView();
+  const { savedCourses, setSavedCourses } = useSavedCourses();
   const { activeCourse, handleViewCourse, viewCourse, setViewCourse } =
     useActiveCourse();
 
-  const handleAddCurriculum = (e) => {
-    console.log("e");
+  const { user, setUser } = useUser();
+  const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
+  const { setActiveCourse } = useActiveCourse();
+  const { server } = useServer();
+
+  useEffect(() => {
+    const localUser = localStorage.getItem("user");
+
+    if (localUser) {
+      setUser(JSON.parse(localUser));
+      console.log(JSON.parse(localUser));
+    } else {
+      return;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      getSavedCourses();
+      getSavedCurriculums();
+      getMyCurriculums();
+    }
+  }, [user, display]);
+
+  const getSavedCurriculums = async (course) => {
+    await ax
+      .post(`${server}/user/getSavedCurriculums`, {
+        uid: user.uid,
+      })
+      .then(function (response) {
+        console.log(response.data);
+        setSavedCurriculums(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const handleAddCurriculum = (e, course) => {
+    setActiveCourse(course);
     e.stopPropagation();
     setAddCurriculum(true);
   };
 
-  //get courses from api courses
-  const getCourses = async () => {
-    const res = await ax.get("./api/courses", {
-      params: {
-        page: coursePage,
+  //display currciculum popup
+  const handleSaveCourse = (e, course) => {
+    /* console.log(course); */
+    e.stopPropagation();
+    saveCourse(course);
+  };
+
+  const saveCourse = async (course) => {
+    await ax
+      .post(`${server}/user/saveCourse`, {
+        course: course,
+        uid: user.uid,
+      })
+      .then(function (response) {
+        console.log(response.data.courses);
+        setSavedCourses(response.data.courses);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const getSavedCourses = async () => {
+    await ax
+      .post(`${server}/user/getSavedCourses`, {
+        uid: user.uid,
         search: searchCourse,
-        university: university,
-        sortBy: sortBy,
-        sortDirection: sortDirection,
-        level: level,
-        rating: rating,
-      },
-    });
-    setCourses(res.data.courses);
-    setCourseItems(res.data.length);
-    setSearching(false);
+        page: coursePage,
+      })
+      .then(function (response) {
+        console.log(response.data);
+        setSavedCourses(response.data.courses);
+        setCourseItems(response.data.length);
+        setSearching(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   //get curriculums from api curriculums
@@ -97,7 +168,7 @@ export default function MyPage() {
 
   //get curriculums from api curriculums
   const getMyCurriculums = async () => {
-    const res = await ax.get("./api/curriculums", {
+    const res = await ax.get(`${server}/curriculum/uid/${user.uid}`, {
       params: {
         page: myCurriculumPage,
         category: curriculumCategory,
@@ -125,10 +196,11 @@ export default function MyPage() {
   };
 
   const useSearch = () => {
+    console.log("searcing", searchCourse);
     if (searchCourse !== null && display === "One") {
       setSearching(true);
       setCoursePage(0);
-      getCourses();
+      getSavedCourses();
     }
 
     if (searchCurriculum !== null && display === "Two") {
@@ -146,7 +218,7 @@ export default function MyPage() {
 
   useEffect(() => {
     if (coursePage || coursePage === 0) {
-      getCourses();
+      getSavedCourses();
     }
   }, [coursePage]);
 
@@ -167,12 +239,20 @@ export default function MyPage() {
       {viewCourse ? (
         <CourseDetailCard
           setViewCourse={setViewCourse}
-          activeCourse={activeCourse}
+          course={activeCourse}
+          courseName={activeCourse && activeCourse["Course Name"]}
+          handleSaveCourse={handleSaveCourse}
+          savedCourses={savedCourses && savedCourses}
         />
       ) : (
         <></>
       )}
-      <Greeting>Hi, Juhee 👋</Greeting>
+      {addCurriculum ? (
+        <AddCurriculumForm setAddCurriculum={setAddCurriculum} />
+      ) : (
+        <></>
+      )}
+      <Greeting>Hi, {user.name} 👋</Greeting>
       <SectionTabs
         useSearch={useSearch}
         value={display}
@@ -190,10 +270,10 @@ export default function MyPage() {
         searchMyCurriculum={searchMyCurriculum}
       />
 
-      {display == "One" && view === "list" ? (
+      {display == "One" && view === "list" && savedCourses.length > 0 ? (
         <>
-          {courses &&
-            courses.map((x, i) => (
+          {savedCourses &&
+            savedCourses.map((x, i) => (
               <CourseCardLV
                 setViewCourse={setViewCourse}
                 setAddCurriculum={setAddCurriculum}
@@ -206,6 +286,8 @@ export default function MyPage() {
                 course={x}
                 handleViewCourse={handleViewCourse}
                 handleAddCurriculum={handleAddCurriculum}
+                handleSaveCourse={handleSaveCourse}
+                savedCourses={savedCourses && savedCourses}
               />
             ))}
           <PageNavigationCourse
@@ -215,11 +297,11 @@ export default function MyPage() {
             items={courseItems}
           />
         </>
-      ) : display == "One" && view === "grid" ? (
+      ) : display == "One" && view === "grid" && savedCourses.length > 0 ? (
         <>
           <GridView>
-            {courses &&
-              courses.map((x, i) => (
+            {savedCourses &&
+              savedCourses.map((x, i) => (
                 <CourseCard
                   key={i}
                   course={x}
@@ -232,6 +314,8 @@ export default function MyPage() {
                   handleViewCourse={handleViewCourse}
                   setViewCourse={setViewCourse}
                   setAddCurriculum={setAddCurriculum}
+                  handleSaveCourse={handleSaveCourse}
+                  savedCourses={savedCourses && savedCourses}
                 />
               ))}
           </GridView>
@@ -242,16 +326,19 @@ export default function MyPage() {
             items={courseItems}
           />
         </>
-      ) : display == "Two" ? (
+      ) : display == "One" && view === "grid" && savedCourses.length == 0 ? (
+        <>Save a course to get started!</>
+      ) : display == "Two" && savedCurriculums.length > 0 ? (
         <>
-          {curriculums &&
-            curriculums.map((x, i) => (
+          {savedCurriculums &&
+            savedCurriculums.map((x, i) => (
               <CurriculumSlider
                 key={i}
                 avaText={x["name"]}
                 favouriteCount={x["likes"]}
                 courses={x["courses"]}
                 handleViewCourse={handleViewCourse}
+                curriculum={x}
               />
             ))}
           <PageNavigationCurriculum
@@ -261,7 +348,11 @@ export default function MyPage() {
             items={curriculumItems}
           />
         </>
-      ) : display == "Three" ? (
+      ) : display == "Two" &&
+        view === "grid" &&
+        savedCurriculums.length == 0 ? (
+        <>Save a currciculm to get started!</>
+      ) : display == "Three" && myCurriculums.length > 0 ? (
         <>
           {myCurriculums &&
             myCurriculums.map((x, i) => (
@@ -271,6 +362,7 @@ export default function MyPage() {
                 favouriteCount={x["likes"]}
                 courses={x["courses"]}
                 handleViewCourse={handleViewCourse}
+                curriculum={x}
               />
             ))}
           <PageNavigationCurriculum
@@ -280,6 +372,8 @@ export default function MyPage() {
             items={myCurriculumItems}
           />
         </>
+      ) : display == "Three" && view === "grid" && myCurriculums.length == 0 ? (
+        <>Create a currciculm to get started!</>
       ) : (
         <></>
       )}
