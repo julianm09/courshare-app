@@ -118,7 +118,7 @@ const Login = ({}) => {
       <LogoImg src="/icons/clogo.png" />
       <Header>Welcome!</Header>
       <Name>Sign up and build your skills with professional courses.</Name>
-      <Text>Name</Text>
+      {/*       <Text>Name</Text>
       <Input value={name} onChange={(e) => setName(e.target.value)} />
       <Text>Email</Text>
       <Input value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -127,10 +127,11 @@ const Login = ({}) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <LoginBtn onClick={signIn}>Login</LoginBtn>
+      <LoginBtn onClick={signIn}>Login</LoginBtn> */}
       <LoginBtn onClick={googleSignIn}>Sign in With google</LoginBtn>
-      <Para>Don't have an account yet?</Para>
-      <Para1>Sign up</Para1>
+      {/*       <Para>Don't have an account yet?</Para>
+      <Para1 onClick={signUp}>Sign up</Para1>
+      <Para1 onClick={handleSignOut}>Sign out</Para1> */}
     </Cont>
   );
 };
@@ -221,7 +222,7 @@ const LoginBtn = styled.button`
   line-height: 19px;
   color: #797979;
   cursor: pointer;
-  &:hover {
+  &:hover{
     transition: 0.2s ease;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
   }

@@ -130,7 +130,6 @@ const Login = ({}) => {
       <LoginBtn onClick={signIn}>Login</LoginBtn>
       <LoginBtn onClick={googleSignIn}>Sign in With google</LoginBtn>
       <Para>Don't have an account yet?</Para>
-      <Para1>Sign up</Para1>
     </Cont>
   );
 };
