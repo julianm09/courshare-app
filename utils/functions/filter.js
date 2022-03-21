@@ -6,7 +6,7 @@ export function filtering(
     rating: null,
     level: null,
     skills: null,
-    category: null
+    category: null,
   }
 ) {
   const { title, university, rating, level, skills, category } = config;
@@ -17,7 +17,11 @@ export function filtering(
 
       if (title) {
         cond =
-          cond && o["Course Name"].toLowerCase().includes(title.toLowerCase());
+          cond &&
+          o["Course Name"]
+ 
+            .toLowerCase()
+            .includes(title.toLowerCase());
       }
 
       if (university) {

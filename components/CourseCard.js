@@ -48,7 +48,9 @@ const CourseCard = ({
           <Checkbox
             checked={
               savedCourses &&
-              savedCourses.some((i) => i["Course Name"].includes(courseName))
+              savedCourses.some(
+                (i) => i && i["Course Name"].includes(courseName)
+              )
             }
             onClick={(e) => handleSaveCourse(e, course)}
             sx={{

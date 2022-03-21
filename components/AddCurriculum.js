@@ -39,7 +39,7 @@ const AddCurriculum = ({
   const createCurriculum = async (currciculum, course) => {
     await ax
       .post(`${server}/curriculum/addCourse`, {
-        uid: currciculum.uid,
+        id: currciculum.id,
         course: course,
       })
       .then(function (response) {
