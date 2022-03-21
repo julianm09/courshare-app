@@ -7,7 +7,7 @@ const DropZone = ({ children = null, onDropItem = () => {} }) => {
     accept: "DragCont",
     drop: (item, monitor) => {
       onDropItem(item);
-      console.log(item);
+      console.log(item, "item");
     },
     // Props to collect
     collect: (monitor) => ({

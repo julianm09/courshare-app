@@ -11,9 +11,6 @@ import DragComp from "@/components/DragComp";
 
 export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
   const [ns, setNs] = useState({});
-  const onDropItem = (item) => {
-    console.log(item);
-  };
   return (
     <Cont>
       <TopCont>
