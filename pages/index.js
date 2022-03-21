@@ -40,7 +40,7 @@ export default function Home({}) {
           <ExploreButton onClick={() => r.push("/explore")} />
         </LeftCont>
         <RightCont>
-          <GroupImg src="/landingvector.svg" />
+          <GroupImg src="/LandingPage.gif" />
         </RightCont>
       </BigCont>
     </>
@@ -94,5 +94,5 @@ const Name = styled.div`
 `;
 
 const GroupImg = styled.img`
-  width: 70%;
+  width: 65%;
 `;
