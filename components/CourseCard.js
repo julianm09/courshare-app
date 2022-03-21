@@ -6,6 +6,7 @@ import { purple } from "@mui/material/colors";
 import DifficultyBar from "@/components/DifficultyBar";
 import RatingStars from "@/components/RatingStars";
 import AddCurriculum from "@/components/AddCurriculum";
+import { useTheme } from "@/utils/provider";
 
 const CourseCard = ({
   courseName,
