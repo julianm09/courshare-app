@@ -20,7 +20,7 @@ import ScrollContainer from "react-indiana-drag-scroll";
 export default function CurriculumSlider({
   avasrc = "/avatar.png",
   avaText = "Juhee's UX/UI DesignCurriculum",
-  favouriteCount = "4561",
+  favouriteCount = "",
   courses,
   handleViewCourse,
   curriculum,
@@ -51,6 +51,7 @@ export default function CurriculumSlider({
 
   const handleSaveCurriculum = () => {
     saveCurriculum(curriculum);
+    console.log(curriculum)
   };
 
   const handleMouseDown = (e) => {
