@@ -10,6 +10,10 @@ import DropZone from "@/components/DropZone";
 import DragComp from "@/components/DragComp";
 
 export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
+  const [ns, setNs] = useState({});
+  const onDropItem = (item) => {
+    console.log(item);
+  };
   return (
     <Cont>
       <TopCont>
@@ -33,6 +37,7 @@ export default function MyProcess({ username = "Julian", curriculum = "UX" }) {
                   enableTouchEvents: false,
                   enableMouseEvents: true,
                 }}
+                onDropItem={(item) => onDropItem(item)}
               >
                 <DragComp />
                 <DragComp />
