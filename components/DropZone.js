@@ -1,13 +1,21 @@
 import styled from "styled-components";
 import { useDrag, useDrop } from "react-dnd";
+import { useServer, useUser } from "@/utils/provider";
 
-const DropZone = ({ children = null, onDropItem = () => {} }) => {
+const DropZone = ({
+  complete = 0,
+  children = null,
+  onDropItem = () => {},
+  completeCourse = () => {},
+}) => {
+  const { user } = useUser();
+  const { server } = useServer();
+
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     // The type (or types) to accept - strings or symbols
     accept: "DragCont",
     drop: (item, monitor) => {
-      onDropItem(item);
-      console.log(item);
+      onDropItem(item.course);
     },
     // Props to collect
     collect: (monitor) => ({
@@ -26,7 +34,7 @@ export default DropZone;
 
 const Cont = styled.div`
   width: 296px;
-  height: 1014px;
+  min-height: 314px;
   background: ${({ bg }) => bg || "#FcFcFc"};
   border-radius: 10px;
   box-shadow: 0px 2px 8px 0px rgba(185, 185, 185, 0.52);

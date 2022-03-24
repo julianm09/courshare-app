@@ -10,11 +10,12 @@ const CourseCard = ({
   ratingCount,
   handleViewCourse,
   course,
+  complete,
 }) => {
   const [{ isDragging, coords }, drag, dragPreview] = useDrag(() => ({
     // "type" is required. It is used by the "accept" specification of drop targets.
     type: "DragCont",
-    item: { type: "DragCont" },
+    item: { course: course },
     // The collect function utilizes a "monitor" instance (see the Overview for what this is)
     // to pull important pieces of state from the DnD system.
     collect: (monitor) => ({
@@ -43,12 +44,20 @@ const CourseCard = ({
     >
       <div ref={drag}>
         <InfoCont>
-          <Header>{courseName}</Header>
-          <Name>{teachingSource}</Name>
+          <Header>
+            {courseName.length > 25
+              ? courseName.slice(0, 25) + " ..."
+              : courseName}
+          </Header>
+          <Name>
+            {teachingSource.length > 25
+              ? teachingSource.slice(0, 25) + " ..."
+              : teachingSource}
+          </Name>
           <Row>
             <RatingBar>
               <RatingStars defaultValue={ratingCount} />
-              {ratingCount}
+              {ratingCount.length > 3 ? "" : ratingCount}
             </RatingBar>
             <SmallBar>
               <Text>{difficulty}</Text>
@@ -56,8 +65,19 @@ const CourseCard = ({
           </Row>
         </InfoCont>
         <ProcessCont>
-          <HighlightS />
-          <Date>May 14, 2022</Date>
+          <HighlightS
+            Label={
+              complete == 0
+                ? "Haven't started yet 🤞🍀"
+                : complete == 1
+                ? "Haven't started yet 🤞🍀"
+                : "Completed 🙌 ✅ "
+            }
+            background={
+              complete == 0 ? "#ffdcdc" : complete == 1 ? "#FFEBCC" : "#C8F8CD"
+            }
+          />
+          {/*           <Date>May 14, 2022</Date> */}
         </ProcessCont>
       </div>
     </CourseCont>

@@ -40,7 +40,7 @@ const AddCurriculum = ({
     await ax
       .post(`${server}/curriculum/addCourse`, {
         id: currciculum.id,
-        course: course,
+        course: { ...course, complete: 0 },
       })
       .then(function (response) {
         console.log(response);
