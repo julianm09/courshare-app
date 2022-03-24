@@ -72,7 +72,7 @@ export default function CurriculumSlider({
           </AvatarText>
         </LeftCont>
         <RightCont color={comp_themes[theme].switch_text}>
-          {user.uid === curriculum.uid ? "delete" : ""}
+          {/* {user.uid === curriculum.uid ? "delete" : ""} */}
           {likes ? likes : favouriteCount}
           <Checkbox
             checked={

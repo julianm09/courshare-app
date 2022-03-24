@@ -15,9 +15,11 @@ import ax from "axios";
 import { Directions } from "@mui/icons-material";
 
 const Login = ({}) => {
-  const [name, setName] = useState("Julian");
-  const [email, setEmail] = useState("julianmayes@gmail.com");
-  const [password, setPassword] = useState("Hello123!");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [showSignUp, setShowSignUp] = useState(false);
 
   const { server } = useServer();
 
@@ -77,6 +79,10 @@ const Login = ({}) => {
         // Signed in
         const user = userCredential.user;
         // ...
+        console.log(user);
+        createUser(user).then(() => {
+          getUserById(user);
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -91,9 +97,8 @@ const Login = ({}) => {
         // Signed in
         const user = userCredential.user;
         // ...
-        createUser(user).then(() => {
-          getUserById(user);
-        });
+        console.log(user);
+        getUserById(user);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -114,47 +119,77 @@ const Login = ({}) => {
   };
 
   return (
-    <Cont>
-      <Left>
-        <LoginImg src="/LoginImg.svg" />
-      </Left>
-      <Right>
-        {/* {user ? "signed in" : "signed out"} */}
-        <LogoImg src="/icons/clogo.png" />
-        <Header>Welcome!</Header>
-        <Name>Sign up and build your skills with professional courses.</Name>
-        <div style={{ margin: "15px 0" }}>
-          <Text>Name</Text>
-          <Input value={name} onChange={(e) => setName(e.target.value)} />
-        </div>
-        <div>
-          <Text>Email</Text>
-          <Input value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div>
-        <div style={{ margin: "15px 0" }}>
-          <Data>Password</Data>
-          <Inputpassword
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <LoginDiv>
-          <LoginBtn onClick={signIn}>Login</LoginBtn>
-          <Para1 onClick={googleSignIn}>Sign in With google</Para1>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Para>Don't have an account yet?</Para>
-            <Para1>Sign up</Para1>
+    <>
+      {showSignUp ? (
+        <SignUp>
+          <Overlay onClick={() => setShowSignUp(!showSignUp)} />
+          <SignUpForm>
+            <LogoImg src="/icons/clogo.png" />
+
+            <Name>
+              Sign up and build your skills with professional courses.
+            </Name>
+            <div style={{ margin: "15px 0" }}>
+              <Text>Name</Text>
+              <Input value={name} onChange={(e) => setName(e.target.value)} />
+            </div>
+            <div>
+              <Text>Email</Text>
+              <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            <div style={{ margin: "15px 0" }}>
+              <Data>Password</Data>
+              <Inputpassword
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <LoginBtn onClick={() => signUp()}>Sign Up</LoginBtn>
+          </SignUpForm>
+        </SignUp>
+      ) : (
+        <></>
+      )}
+      <Cont>
+        <Left>
+          <LoginImg src="/LoginImg.png" />
+        </Left>
+        <Right>
+          {/* {user ? "signed in" : "signed out"} */}
+          <LogoImg src="/icons/clogo.png" />
+          <Header>Welcome!</Header>
+          <Name>Sign up and build your skills with professional courses.</Name>
+
+          <div style={{ margin: "15px 0" }}>
+            <Text>Email</Text>
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
-        </LoginDiv>
-      </Right>
-    </Cont>
+          <div style={{ margin: "15px 0" }}>
+            <Data>Password</Data>
+            <Inputpassword
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <LoginDiv>
+            <LoginBtn onClick={signIn}>Login</LoginBtn>
+            <Para1 onClick={googleSignIn}>Sign in With google</Para1>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Para>Don't have an account yet?</Para>
+              <Para1 onClick={() => setShowSignUp(!showSignUp)}>Sign up</Para1>
+            </div>
+          </LoginDiv>
+        </Right>
+      </Cont>
+    </>
   );
 };
 
@@ -169,13 +204,16 @@ const Cont = styled.div`
   display: flex;
   flex-direction: row;
 `;
+
 const Left = styled.div`
   width: 50vw;
   height: 100vh;
 `;
+
 const LoginImg = styled.img`
   width: 50vw;
 `;
+
 const Right = styled.div`
   width: 50vw;
   display: flex;
@@ -183,6 +221,7 @@ const Right = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 const LogoImg = styled.img`
   width: 50px;
   height: 50px;
@@ -294,4 +333,38 @@ const Para1 = styled.div`
   color: #ffc403;
   cursor: pointer;
   margin: 10px 0;
+`;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.38);
+  width: 100%;
+  height: 100vh;
+`;
+
+const SignUp = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SignUpForm = styled.div`
+  min-width: 519px;
+  min-height: 528px;
+  background: #ffffff;
+  box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999999;
+  flex-direction: column;
 `;
