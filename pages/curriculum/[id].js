@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import {
+  useActiveCourse,
+  useMyCurriculums,
   useSavedCourses,
   useSavedCurriculums,
   useServer,
@@ -16,10 +18,45 @@ import QuestionButton from "@/components/QuestionBotton";
 import HighlightsL from "@/components/HighlightsL";
 import DropZone from "@/components/DropZone";
 import DragComp from "@/components/DragComp";
+import { io } from "socket.io-client";
+import Chat from "@/components/Chat";
+import CurriculumSliderBasic from "@/components/CurriculumSliderBasic";
+import { ConstructionOutlined } from "@mui/icons-material";
+import CourseDetailCard from "@/components/CourseDetailCard";
 
 export default function Home({ username = "Julian", curriculumN = "UX" }) {
-  const [ns, setNs] = useState({});
+  /*   //sockets
+  const [mySoc, setMySoc] = useState(null)
+  const [blocks, setBlocks] = useState([])
+  const [txt, setTxt] = useState("")
+  const [isTyping, setIsTyping] = useState(false)
 
+  useEffect(()=>{
+    const socket = io("http://localhost:8888")
+
+    socket.on("change", (id, txt)=>{
+        setBlocks((prev)=>[
+            ...prev,
+            <Text>
+               {txt} 
+            </Text>,
+            // <TextShow>
+            //     {id} is typing...
+            // </TextShow>
+            
+        ])
+    })
+
+    setMySoc(socket)
+    setTxt("")
+},[])
+
+const AlertPpl = async ()=>{
+    mySoc.emit("alert", txt)
+}
+ */
+
+  //d + d
   const r = useRouter();
   const { id } = r.query;
 
@@ -35,9 +72,17 @@ export default function Home({ username = "Julian", curriculumN = "UX" }) {
 
   const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
 
+  const {
+    activeCourse,
+    setActiveCourse,
+    handleViewCourse,
+    viewCourse,
+    setViewCourse,
+  } = useActiveCourse();
+
   const completeCourse = async (course, complete) => {
     await ax
-      .post(`${server}/user/completeCourse`, {
+      .put(`${server}/user/completeCourse`, {
         uid: user.uid,
         curId: id,
         course: course,
@@ -52,114 +97,164 @@ export default function Home({ username = "Julian", curriculumN = "UX" }) {
       });
   };
 
+  const getCurriculumById = async () => {
+    const res = await ax.get(`${server}/curriculum/${id}`);
+    setCurriculum(res.data[0]);
+  };
+
   useEffect(() => {
     const cur = savedCurriculums.filter((x) => x.id === id);
-    setCurriculum(cur[0]);
-    setCourses(cur[0].courses);
-  }, []);
+
+    if (cur.length > 0) {
+      setCurriculum(cur[0]);
+      setCourses(cur[0].courses);
+    } else {
+      getCurriculumById();
+    }
+  }, [savedCurriculums]);
 
   const onDropItem = (item, complete) => {
     completeCourse(item, complete);
   };
 
+  /*   useEffect(() => {
+    setCourses(savedCurriculums.courses)
+  },[savedCurriculums]) */
+
+  console.log(curriculum);
   return (
     <Cont>
-      currciculm{id}
+      {viewCourse ? (
+        <CourseDetailCard
+          setViewCourse={setViewCourse}
+          course={activeCourse}
+          courseName={activeCourse && activeCourse["Course Name"]}
+        />
+      ) : (
+        <></>
+      )}
+      {/*       currciculm{id} */}
       <TopCont>
         <Greeting onClick={() => completeCourse()}>
-          Welcome to <br></br> {curriculum && curriculum.username}'s{" "}
+          Welcome to <br></br>{" "}
+          {curriculum && curriculum.username == user.name
+            ? "Your"
+            : curriculum && curriculum.username + "'s"}{" "}
           {curriculum && curriculum.name} Curriculum👋
         </Greeting>
         <QuestionButton />
       </TopCont>
       <BtCot>
-        <SubHeading>
+        {courses ? (
+          <>
+            <SubHeading>
+              <Bar></Bar>
+              <SubText>Curriculum Progress ✔️</SubText>
+            </SubHeading>
+
+            <DndProvider backend={HTML5Backend}>
+              <DragCont>
+                <ProcessCont>
+                  <HighlightsL />
+                  <DropZone
+                    backend={TouchBackend}
+                    options={{
+                      enableTouchEvents: false,
+                      enableMouseEvents: true,
+                    }}
+                    onDropItem={(item) => onDropItem(item, 0)}
+                    completeCourse={completeCourse}
+                  >
+                    {courses &&
+                      courses
+                        .filter((x) => x.complete == 0)
+                        .map((x) => (
+                          <DragComp
+                            key={x["Course Name"]}
+                            course={x}
+                            complete={x.complete}
+                            ratingCount={x["Course Rating"]}
+                            difficulty={x["Difficulty Level"]}
+                            courseName={x["Course Name"]}
+                            teachingSource={x["University"]}
+                          />
+                        ))}
+                  </DropZone>
+                </ProcessCont>
+                <ProcessCont>
+                  <HighlightsL Label="Processing 💪 ✨" background="#FFEBCC" />
+
+                  <DropZone
+                    backend={TouchBackend}
+                    options={{
+                      enableTouchEvents: false,
+                      enableMouseEvents: true,
+                    }}
+                    onDropItem={(item) => onDropItem(item, 1)}
+                    completeCourse={completeCourse}
+                  >
+                    {courses &&
+                      courses
+                        .filter((x) => x.complete == 1)
+                        .map((x) => (
+                          <DragComp
+                            key={x["Course Name"]}
+                            course={x}
+                            complete={x.complete}
+                            ratingCount={x["Course Rating"]}
+                            difficulty={x["Difficulty Level"]}
+                            courseName={x["Course Name"]}
+                            teachingSource={x["University"]}
+                          />
+                        ))}
+                  </DropZone>
+                </ProcessCont>
+                <ProcessCont>
+                  <HighlightsL Label="Completed 🙌 ✅ " background="#C8F8CD" />
+
+                  <DropZone
+                    backend={TouchBackend}
+                    options={{
+                      enableTouchEvents: false,
+                      enableMouseEvents: true,
+                    }}
+                    onDropItem={(item) => onDropItem(item, 2)}
+                    completeCourse={completeCourse}
+                  >
+                    {courses &&
+                      courses
+                        .filter((x) => x.complete == 2)
+                        .map((x) => (
+                          <DragComp
+                            key={x["Course Name"]}
+                            course={x}
+                            complete={x.complete}
+                            ratingCount={x["Course Rating"]}
+                            difficulty={x["Difficulty Level"]}
+                            courseName={x["Course Name"]}
+                            teachingSource={x["University"]}
+                          />
+                        ))}
+                  </DropZone>
+                </ProcessCont>
+              </DragCont>
+            </DndProvider>
+          </>
+        ) : (
+          <CurriculumSliderBasic
+            favouriteCount={curriculum && curriculum["likes"]}
+            handleViewCourse={handleViewCourse}
+            curriculum={curriculum && curriculum}
+            courses={curriculum && curriculum.courses}
+          />
+        )}
+        <SubHeading style={{ margin: " 0 0 40px 0" }} id="chat">
           <Bar></Bar>
-          <SubText>Curriculum Process ✔️</SubText>
+          <SubText>Chat 💬</SubText>
         </SubHeading>
-        <DndProvider backend={HTML5Backend}>
-          <DragCont>
-            <ProcessCont>
-              <HighlightsL />
-              <DropZone
-                backend={TouchBackend}
-                options={{
-                  enableTouchEvents: false,
-                  enableMouseEvents: true,
-                }}
-                onDropItem={(item) => onDropItem(item, 0)}
-                completeCourse={completeCourse}
-              >
-                {courses &&
-                  courses
-                    .filter((x) => x.complete == 0)
-                    .map((x) => (
-                      <DragComp
-                        course={x}
-                        complete={x.complete}
-                        ratingCount={x["Course Rating"]}
-                        difficulty={x["Difficulty Level"]}
-                        courseName={x["Course Name"]}
-                        teachingSource={x["University"]}
-                      />
-                    ))}
-              </DropZone>
-            </ProcessCont>
-            <ProcessCont>
-              <HighlightsL Label="Processing 💪 ✨" background="#FFEBCC" />
-
-              <DropZone
-                backend={TouchBackend}
-                options={{
-                  enableTouchEvents: false,
-                  enableMouseEvents: true,
-                }}
-                onDropItem={(item) => onDropItem(item, 1)}
-                completeCourse={completeCourse}
-              >
-                {courses &&
-                  courses
-                    .filter((x) => x.complete == 1)
-                    .map((x) => (
-                      <DragComp
-                        complete={x.complete}
-                        ratingCount={x["Course Rating"]}
-                        difficulty={x["Difficulty Level"]}
-                        courseName={x["Course Name"]}
-                        teachingSource={x["University"]}
-                      />
-                    ))}
-              </DropZone>
-            </ProcessCont>
-            <ProcessCont>
-              <HighlightsL Label="Completed 🙌 ✅ " background="#C8F8CD" />
-
-              <DropZone
-                backend={TouchBackend}
-                options={{
-                  enableTouchEvents: false,
-                  enableMouseEvents: true,
-                }}
-                onDropItem={(item) => onDropItem(item, 2)}
-                completeCourse={completeCourse}
-              >
-                {courses &&
-                  courses
-                    .filter((x) => x.complete == 2)
-                    .map((x) => (
-                      <DragComp
-                        complete={x.complete}
-                        ratingCount={x["Course Rating"]}
-                        difficulty={x["Difficulty Level"]}
-                        courseName={x["Course Name"]}
-                        teachingSource={x["University"]}
-                      />
-                    ))}
-              </DropZone>
-            </ProcessCont>
-          </DragCont>
-        </DndProvider>
-        <ChatCont></ChatCont>
+        <ChatCont>
+          <Chat />
+        </ChatCont>
       </BtCot>
     </Cont>
   );
@@ -178,29 +273,33 @@ const Cont = styled.div`
 `;
 
 const TopCont = styled.div`
-  width: 70vw;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   flex-direction: row;
   margin-bottom: 92px;
+  padding: 0 15%;
 `;
 const BtCot = styled.div`
-  width: 70vw;
+  width: 100%;
   display: flex;
-
   flex-direction: column;
 `;
 const SubHeading = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 62px;
+  padding: 0 15%;
 `;
 const DragCont = styled.div`
   display: flex;
   flex-direction: row;
-  width: 60vw;
-  justify-content: space-around;
+  width: 100%;
+  margin: 0 0 97px 0;
+  padding: 0 15%;
+
+  justify-content: space-between;
 `;
 const Bar = styled.div`
   width: 5px;
@@ -212,7 +311,13 @@ const Bar = styled.div`
 const SubText = styled.div`
   font-size: 18px;
 `;
-const ChatCont = styled.div``;
+const ChatCont = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 100px;
+  padding: 0 15%;
+`;
 
 const ProcessCont = styled.div``;
 

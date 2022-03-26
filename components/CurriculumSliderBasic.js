@@ -17,7 +17,7 @@ import { comp_themes } from "@/utils/variables";
 import ax from "axios";
 import ScrollContainer from "react-indiana-drag-scroll";
 
-export default function CurriculumSlider({
+export default function CurriculumSliderBasic({
   avasrc = "/avatar.png",
   avaText = "Juhee's UX/UI DesignCurriculum",
   favouriteCount = "",
@@ -31,7 +31,7 @@ export default function CurriculumSlider({
   const { server } = useServer();
   const r = useRouter();
 
-  const [likes, setLikes] = useState(null)
+  const [likes, setLikes] = useState(null);
 
   const saveCurriculum = async (curriculum) => {
     await ax
@@ -42,7 +42,7 @@ export default function CurriculumSlider({
       .then(function (response) {
         console.log(response.data.curriculums);
         setSavedCurriculums(response.data.curriculums);
-        setLikes(response.data.likes)
+        setLikes(response.data.likes);
       })
       .catch(function (error) {
         console.log(error);
@@ -51,7 +51,7 @@ export default function CurriculumSlider({
 
   const handleSaveCurriculum = () => {
     saveCurriculum(curriculum);
-    console.log(curriculum)
+    console.log(curriculum);
   };
 
   const handleMouseDown = (e) => {
@@ -66,9 +66,7 @@ export default function CurriculumSlider({
             color={comp_themes[theme].switch_text}
             onClick={() => r.push(`/curriculum/${curriculum.id}`)}
           >
-            {curriculum && curriculum.uid === user.uid
-              ? avaText + " by " + "me"
-              : avaText + " by " + curriculum.username}
+            “ Save this curriculum and start tracking your progress! 💡”
           </AvatarText>
         </LeftCont>
         <RightCont color={comp_themes[theme].switch_text}>
@@ -76,7 +74,7 @@ export default function CurriculumSlider({
           {likes ? likes : favouriteCount}
           <Checkbox
             checked={
-              savedCurriculums &&
+              savedCurriculums && curriculum &&
               savedCurriculums.some((i) => i["id"].includes(curriculum.id))
             }
             onClick={() => handleSaveCurriculum()}
@@ -95,7 +93,7 @@ export default function CurriculumSlider({
       </TitleCont>
       <Slider className="scroll-container" onMouseDown={handleMouseDown}>
         <InnerSlider>
-          {courses.map((x, i) => (
+          {courses && courses.map((x, i) => (
             <BoxCont key={i} onClick={() => handleViewCourse(x)}>
               <Img src={x["Image"]} onMouseDown={handleMouseDown} />
               <InfoCont>
@@ -139,7 +137,7 @@ const TitleCont = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 0 32px 0;
-  padding: 0 10%;
+  padding: 0 15%;
 `;
 
 const LeftCont = styled.div`
@@ -148,10 +146,17 @@ const LeftCont = styled.div`
 `;
 
 const AvatarText = styled.div`
-  font-size: 20px;
   white-space: nowrap;
   color: ${(props) => props.color};
   cursor: pointer;
+  font-family: "General Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 23px;
+  line-height: 31px;
+  /* identical to box height */
+
+  color: #8e5ef9;
 `;
 
 const RightCont = styled.div`
@@ -171,7 +176,7 @@ const InnerSlider = styled.div`
   display: flex;
   justify-content: flex-start;
   position: relative;
-  left: 10%;
+  left: 15%;
 `;
 
 const BoxCont = styled.div`
