@@ -8,6 +8,7 @@ import { Checkbox } from "@mui/material";
 import { purple } from "@mui/material/colors";
 import { useRouter } from "next/router";
 import {
+  useActiveCurriculum,
   useSavedCurriculums,
   useServer,
   useTheme,
@@ -29,9 +30,11 @@ export default function CurriculumSlider({
   const { user } = useUser();
   const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
   const { server } = useServer();
+
+
   const r = useRouter();
 
-  const [likes, setLikes] = useState(null)
+  const [likes, setLikes] = useState(null);
 
   const saveCurriculum = async (curriculum) => {
     await ax
@@ -42,7 +45,7 @@ export default function CurriculumSlider({
       .then(function (response) {
         console.log(response.data.curriculums);
         setSavedCurriculums(response.data.curriculums);
-        setLikes(response.data.likes)
+        setLikes(response.data.likes);
       })
       .catch(function (error) {
         console.log(error);
@@ -51,7 +54,7 @@ export default function CurriculumSlider({
 
   const handleSaveCurriculum = () => {
     saveCurriculum(curriculum);
-    console.log(curriculum)
+    console.log(curriculum);
   };
 
   const handleMouseDown = (e) => {

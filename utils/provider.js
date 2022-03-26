@@ -10,7 +10,8 @@ const initialStates = {
   savedCourses: [],
   savedCurriculums: [],
   server: "http://localhost:5000",
-/*   server: "https://courshare.herokuapp.com", */
+  /*   server: "https://courshare.herokuapp.com", */
+  activeCurriculum: {},
   setTheme: () => {},
   setView: () => {},
   setActiveCourse: () => {},
@@ -20,6 +21,7 @@ const initialStates = {
   setSavedCurriculums: () => {},
   setServer: () => {},
   setMyCurriculums: () => {},
+  setActiveCurriculum: () => {},
 };
 
 const MyContext = createContext(initialStates);
@@ -31,12 +33,18 @@ export default function AppProvider({ children }) {
   const [activeCourse, setActiveCourse] = useState(initialStates.activeCourse);
   const [viewCourse, setViewCourse] = useState(false);
   const [user, setUser] = useState(initialStates.user);
-  const [myCurriculums, setMyCurriculums] = useState(initialStates.myCurriculums);
+  const [myCurriculums, setMyCurriculums] = useState(
+    initialStates.myCurriculums
+  );
   const [savedCourses, setSavedCourses] = useState(initialStates.savedCourses);
   const [savedCurriculums, setSavedCurriculums] = useState(
     initialStates.savedCurriculums
   );
   const [server, setServer] = useState(initialStates.server);
+
+  const [currciculm, setActiveCurriculum] = useState(
+    initialStates.activeCurriculum
+  );
   const handleViewCourse = (course) => {
     setActiveCourse(course);
     setViewCourse(true);
@@ -64,6 +72,8 @@ export default function AppProvider({ children }) {
         setServer,
         myCurriculums,
         setMyCurriculums,
+        currciculm,
+        setActiveCurriculum,
       }}
     >
       <style jsx global>
@@ -112,6 +122,11 @@ export const useSavedCurriculums = () => {
 export const useServer = () => {
   const { server, setServer } = useContext(MyContext);
   return { server, setServer };
+};
+
+export const useActiveCurriculum = () => {
+  const { currciculm, setActiveCurriculum } = useContext(MyContext);
+  return { currciculm, setActiveCurriculum };
 };
 
 export const useActiveCourse = () => {

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {
   useActiveCourse,
+  useActiveCurriculum,
   useMyCurriculums,
   useSavedCourses,
   useSavedCurriculums,
@@ -59,6 +60,7 @@ const AlertPpl = async ()=>{
   //d + d
   const r = useRouter();
   const { id } = r.query;
+  const [curriculumId, setCurriculumId] = useState(null);
 
   const { theme } = useTheme();
 
@@ -103,8 +105,26 @@ const AlertPpl = async ()=>{
   };
 
   useEffect(() => {
-    const cur = savedCurriculums.filter((x) => x.id === id);
+    const localUser = localStorage.getItem("user");
+    const activeCurriculum = localStorage.getItem("activeCurriculum");
 
+    if (!id) {
+      setCurriculumId(JSON.parse(activeCurriculum));
+    } else {
+      localStorage.setItem("activeCurriculum", JSON.stringify(id));
+    }
+
+    if (localUser) {
+      setUser(JSON.parse(localUser));
+    } else {
+      return;
+    }
+  }, []);
+
+  useEffect(() => {
+    const cur = savedCurriculums.filter(
+      (x) => x.id === id || x.id === curriculumId
+    );
     if (cur.length > 0) {
       setCurriculum(cur[0]);
       setCourses(cur[0].courses);
@@ -116,10 +136,6 @@ const AlertPpl = async ()=>{
   const onDropItem = (item, complete) => {
     completeCourse(item, complete);
   };
-
-  /*   useEffect(() => {
-    setCourses(savedCurriculums.courses)
-  },[savedCurriculums]) */
 
   console.log(curriculum);
   return (

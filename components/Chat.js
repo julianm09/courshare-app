@@ -15,25 +15,58 @@ export default function Chat() {
 
   useEffect(() => {
     const socket = io("http://localhost:8888");
+    /*     const socket = io("https://courshare-sockets.herokuapp.com/"); */
+    setMySoc(socket);
 
     socket.on("change", (id, txt, uid, name) => {
       console.log(uid);
       setBlocks((prev) => [
         ...prev,
-        { txt: txt, uid: uid, name: name },
-        // <Text>{txt}</Text>,
-        // <TextShow>
-        //     {id} is typing...
-        // </TextShow>
+        { type: "txt", txt: txt, uid: uid, name: name },
       ]);
     });
 
-    setMySoc(socket);
-    setTxt("");
+    socket.on("joined", (id, uid, name) => {
+      setBlocks((prev) => [...prev, { type: "alert", uid: uid, name: name }]);
+    });
+
+    socket.on("typing", (id, uid, name) => {
+      setIsTyping({typing: true, uid: uid, name: name});
+    });
   }, []);
 
-  const AlertPpl = async () => {
+  useEffect(() => {
+    if (mySoc) {
+      JoinRoom();
+    }
+  }, [mySoc]);
+
+  const SendMessage = async () => {
+    setTxt("");
     mySoc.emit("alert", txt, user.uid, user.name);
+  };
+
+  const JoinRoom = async () => {
+    mySoc.emit("join", user.uid, user.name);
+  };
+
+  const Typing = async () => {
+    mySoc.emit("typing", user.uid, user.name);
+  };
+
+  const handleKeyDown = (event) => {
+    if (txt.length == 1) {
+      Typing();
+    }
+
+    if (txt.length == 0) {
+      setIsTyping(false);
+    }
+
+    if (event.key === "Enter") {
+      setIsTyping(false);
+      SendMessage();
+    }
   };
 
   return (
@@ -44,22 +77,31 @@ export default function Chat() {
             key={i.txt}
             justify={o.uid === user.uid ? "flex-end" : "flex-start"}
           >
-            <TextBox>
-              {o.name !== user.name && <Name>{o.name}</Name>}
-              <Text color={o.uid === user.uid ? "#fff0da" : "grey"}>
-                {o.txt}
-              </Text>
-            </TextBox>
+            {o.type === "txt" ? (
+              <TextBox>
+                {o.name !== user.name && <Name>{o.name}</Name>}
+                <Text color={o.uid === user.uid ? "#fff0da" : "grey"}>
+                  {o.txt}
+                </Text>
+              </TextBox>
+            ) : (
+              <TextBox>
+                {o.name !== user.name ? o.name + " has joined" : "You joined"}
+              </TextBox>
+            )}
           </TextRow>
         ))}
+    {/*     {isTyping.typing && "typing"} */}
       </TextCont>
       <InputCont>
         <Input
+          value={txt}
+          onKeyDown={handleKeyDown}
           type="text"
           placeholder="Send any questions!"
           onChange={(e) => setTxt(e.target.value)}
         />
-        <Btn onClick={AlertPpl}>
+        <Btn onClick={SendMessage}>
           <img src="/icons/bi_send-fill.png" />
         </Btn>
       </InputCont>
