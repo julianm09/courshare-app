@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { io } from "socket.io-client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { textAlign } from "@mui/system";
 import { useUser } from "@/utils/provider";
 import { ConstructionOutlined } from "@mui/icons-material";
+import useOnScreen from "@/utils/hooks/useOnScreen";
 
 export default function Chat() {
   const [mySoc, setMySoc] = useState(null);
@@ -15,7 +16,7 @@ export default function Chat() {
 
   useEffect(() => {
     /* const socket = io("http://localhost:8888"); */
-        const socket = io("https://courshare-sockets.herokuapp.com/");
+    const socket = io("https://courshare-sockets.herokuapp.com/");
     setMySoc(socket);
 
     socket.on("change", (id, txt, uid, name) => {
@@ -31,7 +32,7 @@ export default function Chat() {
     });
 
     socket.on("typing", (id, uid, name) => {
-      setIsTyping({typing: true, uid: uid, name: name});
+      setIsTyping({ typing: true, uid: uid, name: name });
     });
   }, []);
 
@@ -69,6 +70,21 @@ export default function Chat() {
     }
   };
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [blocks]);
+
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if (chatVisible) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const ref = useRef();
+  const chatVisible = useOnScreen(ref);
+
   return (
     <>
       <TextCont>
@@ -91,10 +107,12 @@ export default function Chat() {
             )}
           </TextRow>
         ))}
-    {/*     {isTyping.typing && "typing"} */}
+        {/*     {isTyping.typing && "typing"} */}
+        <div ref={messagesEndRef} />
       </TextCont>
       <InputCont>
         <Input
+          ref={ref}
           value={txt}
           onKeyDown={handleKeyDown}
           type="text"
@@ -108,8 +126,6 @@ export default function Chat() {
     </>
   );
 }
-
-const Cont = styled.div``;
 
 const TextCont = styled.div`
   display: flex;
@@ -180,14 +196,4 @@ const Btn = styled.div`
   background: #ffc403;
   border-radius: 14px;
   cursor: pointer;
-`;
-
-const TextShow = styled.div`
-  position: fixed;
-  left: 30px;
-  top: 570px;
-  font-family: "General Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
 `;
