@@ -26,61 +26,18 @@ import { ConstructionOutlined } from "@mui/icons-material";
 import CourseDetailCard from "@/components/CourseDetailCard";
 
 export default function Home({ username = "Julian", curriculumN = "UX" }) {
-  /*   //sockets
-  const [mySoc, setMySoc] = useState(null)
-  const [blocks, setBlocks] = useState([])
-  const [txt, setTxt] = useState("")
-  const [isTyping, setIsTyping] = useState(false)
-
-  useEffect(()=>{
-    const socket = io("http://localhost:8888")
-
-    socket.on("change", (id, txt)=>{
-        setBlocks((prev)=>[
-            ...prev,
-            <Text>
-               {txt} 
-            </Text>,
-            // <TextShow>
-            //     {id} is typing...
-            // </TextShow>
-            
-        ])
-    })
-
-    setMySoc(socket)
-    setTxt("")
-},[])
-
-const AlertPpl = async ()=>{
-    mySoc.emit("alert", txt)
-}
- */
-
-  //d + d
   const r = useRouter();
   const { id } = r.query;
   const [curriculumId, setCurriculumId] = useState(null);
-
   const { theme } = useTheme();
-
   const { server } = useServer();
-
   const [curriculum, setCurriculum] = useState(null);
-
   const [courses, setCourses] = useState(null);
-
   const { user, setUser } = useUser();
-
   const { savedCurriculums, setSavedCurriculums } = useSavedCurriculums();
 
-  const {
-    activeCourse,
-    setActiveCourse,
-    handleViewCourse,
-    viewCourse,
-    setViewCourse,
-  } = useActiveCourse();
+  const { activeCourse, handleViewCourse, viewCourse, setViewCourse } =
+    useActiveCourse();
 
   const completeCourse = async (course, complete) => {
     await ax
@@ -149,7 +106,6 @@ const AlertPpl = async ()=>{
       ) : (
         <></>
       )}
-      {/*       currciculm{id} */}
       <TopCont>
         <Greeting onClick={() => completeCourse()}>
           Welcome to <br></br>{" "}
@@ -160,6 +116,7 @@ const AlertPpl = async ()=>{
         </Greeting>
         <QuestionButton />
       </TopCont>
+      <Divider/>
       <BtCot>
         {courses ? (
           <>
@@ -294,7 +251,7 @@ const TopCont = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   flex-direction: row;
-  margin-bottom: 92px;
+
   padding: 0 15%;
 `;
 const BtCot = styled.div`
@@ -347,29 +304,11 @@ const Greeting = styled.div`
   margin: 95px 0 0 0;
   width: 80%;
 `;
+
 const Divider = styled.div`
   display: flex;
   align-items: center;
-  height: 0.5;
+  margin: 47px 0 64px 0;
   width: 80%;
-  background: #d8d8d8;
-`;
-const GridView = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 2fr 2fr 2fr;
-  width: 80%;
-  grid-gap: 53px;
-
-  @media (max-width: 1400px) {
-    grid-template-columns: 2fr 2fr 2fr;
-  }
-
-  @media (max-width: 1000px) {
-    grid-template-columns: 2fr 2fr;
-    width: 90%;
-  }
-
-  @media (max-width: 700px) {
-    grid-template-columns: 2fr;
-  }
+  border-bottom:0.8px solid #C9C9C9;
 `;

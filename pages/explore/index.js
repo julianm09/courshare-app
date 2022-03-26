@@ -50,7 +50,7 @@ export default function Home() {
   const [rating, setRating] = useState("");
   const [sortBy, setSortBy] = useState("");
 
-  const [universities, setUniversities] = useState([])
+  const [universities, setUniversities] = useState([]);
 
   //filter and sorting states curriculums
   const [sortDirection, setSortDirection] = useState("");
@@ -117,7 +117,6 @@ export default function Home() {
         page: coursePage,
       })
       .then(function (response) {
-        console.log(response.data);
         setSavedCourses(response.data.courses);
       })
       .catch(function (error) {
@@ -144,7 +143,7 @@ export default function Home() {
       getSavedCurriculums();
       getMyCurriculums();
     }
-  }, [user, display]);
+  }, [display]);
 
   //get courses from api courses
   const getCourses = async () => {
@@ -161,7 +160,7 @@ export default function Home() {
     });
     setCourses(res.data.courses);
     setCourseItems(res.data.length);
-    setUniversities(res.data.universities)
+    setUniversities(res.data.universities);
     setSearching(false);
   };
 
@@ -203,7 +202,6 @@ export default function Home() {
     setCurriculums(res.data.courses);
     setCurriculumItems(res.data.length);
     setSearching(false);
-    console.log(res.data.courses)
   };
 
   useEffect(() => {
