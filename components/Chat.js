@@ -14,8 +14,8 @@ export default function Chat() {
   const { user, setUser } = useUser();
 
   useEffect(() => {
-    const socket = io("http://localhost:8888");
-    /*     const socket = io("https://courshare-sockets.herokuapp.com/"); */
+    /* const socket = io("http://localhost:8888"); */
+        const socket = io("https://courshare-sockets.herokuapp.com/");
     setMySoc(socket);
 
     socket.on("change", (id, txt, uid, name) => {
