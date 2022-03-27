@@ -226,7 +226,7 @@ export default function Home({ username = "Julian", curriculumN = "UX" }) {
           <SubText>Chat 💬</SubText>
         </SubHeading>
         <ChatCont>
-          {/* <Chat /> */}
+          <Chat />
         </ChatCont>
       </BtCot>
     </Cont>
