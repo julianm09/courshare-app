@@ -19,7 +19,8 @@ export default function Chat({ id, curriculum }) {
   });
 
   useEffect(() => {
-    const socket = io("http://localhost:8888/");
+    /* const socket = io("http://localhost:8888/"); */
+    const socket = io("https://courshare-sockets.herokuapp.com/");
 
     if (!mySoc) {
       setMySoc(socket);
