@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { textAlign } from "@mui/system";
 import { useUser } from "@/utils/provider";
 import { ConstructionOutlined } from "@mui/icons-material";
-import { useOnScreen } from "@/utils/hooks/useOnScreen";
+import { useInView } from 'react-intersection-observer';
 
 export default function Chat() {
   const [mySoc, setMySoc] = useState(null);
@@ -13,6 +13,11 @@ export default function Chat() {
   const [isTyping, setIsTyping] = useState(false);
 
   const { user, setUser } = useUser();
+
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0,
+  });
 
   useEffect(() => {
     /* const socket = io("http://localhost:8888"); */
@@ -77,13 +82,10 @@ export default function Chat() {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    if (chatVisible) {
+    if (inView) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
-
-  const ref = useRef();
-  const chatVisible = useOnScreen(ref);
 
   return (
     <>
