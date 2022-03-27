@@ -19,10 +19,8 @@ import QuestionButton from "@/components/QuestionBotton";
 import HighlightsL from "@/components/HighlightsL";
 import DropZone from "@/components/DropZone";
 import DragComp from "@/components/DragComp";
-import { io } from "socket.io-client";
 import Chat from "@/components/Chat";
 import CurriculumSliderBasic from "@/components/CurriculumSliderBasic";
-import { ConstructionOutlined } from "@mui/icons-material";
 import CourseDetailCard from "@/components/CourseDetailCard";
 
 export default function Home({ username = "Julian", curriculumN = "UX" }) {
@@ -48,7 +46,6 @@ export default function Home({ username = "Julian", curriculumN = "UX" }) {
         complete: complete,
       })
       .then(function (response) {
-        console.log(response.data);
         setCourses(response.data);
       })
       .catch(function (error) {
@@ -94,7 +91,6 @@ export default function Home({ username = "Julian", curriculumN = "UX" }) {
     completeCourse(item, complete);
   };
 
-  console.log(curriculum);
   return (
     <Cont>
       {viewCourse ? (
@@ -116,7 +112,7 @@ export default function Home({ username = "Julian", curriculumN = "UX" }) {
         </Greeting>
         <QuestionButton />
       </TopCont>
-      <Divider/>
+      <Divider />
       <BtCot>
         {courses ? (
           <>
@@ -226,7 +222,7 @@ export default function Home({ username = "Julian", curriculumN = "UX" }) {
           <SubText>Chat 💬</SubText>
         </SubHeading>
         <ChatCont>
-          <Chat />
+          <Chat id={id} curriculum={curriculum} />
         </ChatCont>
       </BtCot>
     </Cont>
@@ -253,6 +249,11 @@ const TopCont = styled.div`
   flex-direction: row;
 
   padding: 0 15%;
+
+  @media (max-width: 1300px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 const BtCot = styled.div`
   width: 100%;
@@ -273,6 +274,10 @@ const DragCont = styled.div`
   padding: 0 15%;
 
   justify-content: space-between;
+
+  @media (max-width: 1300px) {
+    flex-direction: column;
+  }
 `;
 const Bar = styled.div`
   width: 5px;
@@ -292,7 +297,11 @@ const ChatCont = styled.div`
   padding: 0 15%;
 `;
 
-const ProcessCont = styled.div``;
+const ProcessCont = styled.div`
+
+@media (max-width: 1300px) {
+  margin: 0 0 50px 0;
+  }`;
 
 const Greeting = styled.div`
   font-family: General Sans;
@@ -303,6 +312,10 @@ const Greeting = styled.div`
   color: #000000;
   margin: 95px 0 0 0;
   width: 80%;
+
+  @media (max-width: 1300px) {
+    margin: 95px 0 95px 0;
+  }
 `;
 
 const Divider = styled.div`
@@ -310,5 +323,5 @@ const Divider = styled.div`
   align-items: center;
   margin: 47px 0 64px 0;
   width: 80%;
-  border-bottom:0.8px solid #C9C9C9;
+  border-bottom: 0.8px solid #c9c9c9;
 `;

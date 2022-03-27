@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { textAlign } from "@mui/system";
 import { useUser } from "@/utils/provider";
 import { ConstructionOutlined } from "@mui/icons-material";
-import { useInView } from 'react-intersection-observer';
+import { useInView } from "react-intersection-observer";
 
-export default function Chat() {
+export default function Chat({ id, curriculum }) {
   const [mySoc, setMySoc] = useState(null);
   const [blocks, setBlocks] = useState([]);
   const [txt, setTxt] = useState("");
@@ -15,31 +15,42 @@ export default function Chat() {
   const { user, setUser } = useUser();
 
   const { ref, inView, entry } = useInView({
-    /* Optional options */
     threshold: 0,
   });
 
   useEffect(() => {
-    /* const socket = io("http://localhost:8888"); */
-    const socket = io("https://courshare-sockets.herokuapp.com/");
-    setMySoc(socket);
+    const socket = io("http://localhost:8888/");
 
-    socket.on("change", (id, txt, uid, name) => {
-      console.log(uid);
-      setBlocks((prev) => [
-        ...prev,
-        { type: "txt", txt: txt, uid: uid, name: name },
-      ]);
-    });
+    if (!mySoc) {
+      setMySoc(socket);
+    }
 
-    socket.on("joined", (id, uid, name) => {
-      setBlocks((prev) => [...prev, { type: "alert", uid: uid, name: name }]);
-    });
+    if (curriculum) {
+      socket.on("change", (id, txt, uid, name, roomId) => {
+        if (curriculum.id == roomId) {
+          setBlocks((prev) => [
+            ...prev,
+            { type: "txt", txt: txt, uid: uid, name: name },
+          ]);
+        }
+      });
 
-    socket.on("typing", (id, uid, name) => {
-      setIsTyping({ typing: true, uid: uid, name: name });
-    });
-  }, []);
+      socket.on("joined", (id, uid, name, roomId) => {
+        if (curriculum.id == roomId) {
+          setBlocks((prev) => [
+            ...prev,
+            { type: "alert", uid: uid, name: name },
+          ]);
+        }
+      });
+
+      socket.on("typing", (id, uid, name, roomId) => {
+        if (curriculum.id == roomId) {
+          setIsTyping({ typing: true, uid: uid, name: name });
+        }
+      });
+    }
+  }, [curriculum]);
 
   useEffect(() => {
     if (mySoc) {
@@ -49,15 +60,15 @@ export default function Chat() {
 
   const SendMessage = async () => {
     setTxt("");
-    mySoc.emit("alert", txt, user.uid, user.name);
+    mySoc.emit("alert", txt, user.uid, user.name, id);
   };
 
   const JoinRoom = async () => {
-    mySoc.emit("join", user.uid, user.name);
+    mySoc.emit("join", user.uid, user.name, id);
   };
 
   const Typing = async () => {
-    mySoc.emit("typing", user.uid, user.name);
+    mySoc.emit("typing", user.uid, user.name, id);
   };
 
   const handleKeyDown = (event) => {
@@ -92,7 +103,7 @@ export default function Chat() {
       <TextCont>
         {blocks.map((o, i) => (
           <TextRow
-            key={i.txt}
+            key={i}
             justify={o.uid === user.uid ? "flex-end" : "flex-start"}
           >
             {o.type === "txt" ? (
@@ -139,6 +150,7 @@ const TextCont = styled.div`
   box-shadow: 0px 2px 8px rgba(185, 185, 185, 0.52);
   border-radius: 10px;
   overflow: auto;
+  font-family: "General Sans";
 `;
 
 const TextRow = styled.div`
@@ -185,6 +197,7 @@ const Input = styled.input`
   border: 1px solid #d0d0d0;
   border-radius: 20px;
   padding: 0 0 0 26px;
+  font-family: "General Sans";
 `;
 
 const Btn = styled.div`

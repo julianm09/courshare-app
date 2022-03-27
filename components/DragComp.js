@@ -94,7 +94,7 @@ const CourseCont = styled.div`
   flex-direction: column;
   cursor: pointer;
   transition: 0.2s ease;
-  margin-bottom: 20px;
+  margin: 10px;
   width: 250px;
   height: 145px;
   padding: 12px;
