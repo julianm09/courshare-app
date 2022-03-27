@@ -7,14 +7,12 @@ import PageNavigationCourse from "@/components/PageNavigationCourse";
 import PageNavigationCurriculum from "@/components/PageNavigationCurriculum";
 import SectionTabs from "@/components/SectionTabs";
 import {
-  useTheme,
   useView,
   useActiveCourse,
   useUser,
   useSavedCourses,
   useSavedCurriculums,
   useServer,
-  useCurriculums,
 } from "@/utils/provider";
 import CourseCard from "@/components/CourseCard";
 import CourseDetailCard from "@/components/CourseDetailCard";
@@ -22,7 +20,6 @@ import AddCurriculumForm from "@/components/AddCurriculumForm";
 
 export default function MyPage() {
   //display courses and currciculums
-  const [courses, setCourses] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
   const [myCurriculums, setMyCurriculums] = useState([]);
 
@@ -52,14 +49,7 @@ export default function MyPage() {
   const [searchCurriculum, setSearchCurriculum] = useState("");
   const [searchMyCurriculum, setSearchMyCurriculum] = useState("");
 
-  //filter and sorting states courses
-  const [university, setUniversity] = useState("");
-  const [level, setLevel] = useState("");
-  const [rating, setRating] = useState("");
-  const [sortBy, setSortBy] = useState("");
-
   //filter and sorting states curriculums
-  const [sortDirection, setSortDirection] = useState("");
   const [curriculumCategory, setCurriculumCategory] = useState([]);
 
   //provider states
@@ -78,7 +68,6 @@ export default function MyPage() {
 
     if (localUser) {
       setUser(JSON.parse(localUser));
-      console.log(JSON.parse(localUser));
     } else {
       return;
     }
@@ -98,7 +87,6 @@ export default function MyPage() {
         uid: user.uid,
       })
       .then(function (response) {
-        console.log(response.data);
         setSavedCurriculums(response.data);
       })
       .catch(function (error) {
@@ -114,7 +102,6 @@ export default function MyPage() {
 
   //display currciculum popup
   const handleSaveCourse = (e, course) => {
-    /* console.log(course); */
     e.stopPropagation();
     saveCourse(course);
   };
@@ -126,7 +113,6 @@ export default function MyPage() {
         uid: user.uid,
       })
       .then(function (response) {
-        console.log(response.data.courses);
         setSavedCourses(response.data.courses);
       })
       .catch(function (error) {
@@ -142,7 +128,6 @@ export default function MyPage() {
         page: coursePage,
       })
       .then(function (response) {
-        console.log(response.data);
         setSavedCourses(response.data.courses);
         setCourseItems(response.data.length);
         setSearching(false);
