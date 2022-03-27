@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { textAlign } from "@mui/system";
 import { useUser } from "@/utils/provider";
 import { ConstructionOutlined } from "@mui/icons-material";
-import useOnScreen from "@/utils/hooks/useOnScreen";
+import { useOnScreen } from "@/utils/hooks/useOnScreen";
 
 export default function Chat() {
   const [mySoc, setMySoc] = useState(null);
