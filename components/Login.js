@@ -13,11 +13,14 @@ import { useState } from "react";
 import { useServer, useUser } from "@/utils/provider";
 import ax from "axios";
 import { Directions } from "@mui/icons-material";
+import { ThreeCircles } from "react-loader-spinner";
 
 const Login = ({}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [showSignUp, setShowSignUp] = useState(false);
 
@@ -52,6 +55,7 @@ const Login = ({}) => {
 
     signInWithPopup(auth, provider)
       .then((result) => {
+        setLoading(true);
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential && credential.accessToken;
@@ -76,6 +80,7 @@ const Login = ({}) => {
   const signUp = async () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        setLoading(true);
         // Signed in
         const user = userCredential.user;
         // ...
@@ -94,6 +99,7 @@ const Login = ({}) => {
   const signIn = async () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        setLoading(true);
         // Signed in
         const user = userCredential.user;
         // ...
@@ -120,6 +126,18 @@ const Login = ({}) => {
 
   return (
     <>
+      {loading ? (
+        <LoadScreen>
+          <ThreeCircles
+            color="#FFC403"
+            height={50}
+            width={50}
+            ariaLabel="three-circles-rotating"
+          />
+        </LoadScreen>
+      ) : (
+        <></>
+      )}
       {showSignUp ? (
         <SignUp>
           <Overlay onClick={() => setShowSignUp(!showSignUp)} />
@@ -139,10 +157,16 @@ const Login = ({}) => {
             </div>
             <div style={{ margin: "15px 0" }}>
               <Data>Password</Data>
-              <Inputpassword
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <PasswordCont>
+                <Inputpassword
+                  type={showPassword ? "" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <ShowPass onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? "hide" : "show"}
+                </ShowPass>
+              </PasswordCont>
             </div>
 
             <LoginBtn onClick={() => signUp()}>Sign Up</LoginBtn>
@@ -167,10 +191,16 @@ const Login = ({}) => {
           </div>
           <div style={{ margin: "15px 0" }}>
             <Data>Password</Data>
-            <Inputpassword
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <PasswordCont>
+              <Inputpassword
+                type={showPassword ? "" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <ShowPass onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? "hide" : "show"}
+              </ShowPass>
+            </PasswordCont>
           </div>
           <LoginDiv>
             <LoginBtn onClick={signIn}>Login</LoginBtn>
@@ -197,6 +227,7 @@ export default Login;
 
 const Cont = styled.div`
   width: 100%;
+  height: 100vh;
   top: 0;
   background: white;
   z-index: 999999;
@@ -206,12 +237,16 @@ const Cont = styled.div`
 `;
 
 const Left = styled.div`
-  width: 50vw;
+  width: 50%;
   height: 100vh;
+  overflow: hidden;
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const LoginImg = styled.img`
-  width: 50vw;
+  min-width: 50vw;
 `;
 
 const Right = styled.div`
@@ -220,6 +255,9 @@ const Right = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
 `;
 
 const LogoImg = styled.img`
@@ -275,6 +313,26 @@ const Data = styled.div`
   line-height: 19px;
   color: #5e5e5e;
   top: 290px;
+`;
+
+const PasswordCont = styled.div`
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`;
+
+const ShowPass = styled.div`
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #999;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
 `;
 
 const Inputpassword = styled.input`
@@ -367,4 +425,17 @@ const SignUpForm = styled.div`
   justify-content: center;
   z-index: 9999999;
   flex-direction: column;
+`;
+
+const LoadScreen = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 99999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
 `;

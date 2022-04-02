@@ -11,7 +11,7 @@ import SearchBar from "./SearchBar";
 import { comp_themes } from "@/utils/variables";
 import SortDropdown from "./SortDropdown";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   indicator: {
     backgroundColor: "#FFC403",
     height: "10px",
@@ -55,7 +55,7 @@ export default function FilterBar({
   return (
     <BigCont>
       <TopCont color={theme === "dark" ? "white" : "black"}>
-        <Tabs
+        {/*         <Tabs
           value={value}
           onChange={handleChange}
           textColor="inherit"
@@ -64,7 +64,21 @@ export default function FilterBar({
         >
           <Tab classes={{ tabs: classes.tabs }} value="One" label="Courses" />
           <Tab value="Two" label="Curriculums" style={{ marginLeft: 30 }} />
-        </Tabs>
+        </Tabs> */}
+        <TabCont>
+          <TabUI
+            onClick={(e) => handleChange(e, "One")}
+            color={value == "One" ? "#FFC403" : "none"}
+          >
+            Courses
+          </TabUI>
+          <TabUI
+            onClick={(e) => handleChange(e, "Two")}
+            color={value == "Two" ? "#FFC403" : "none"}
+          >
+            Curriculums
+          </TabUI>
+        </TabCont>
         <Space />
         <SearchBar
           useSearch={useSearch}
@@ -207,7 +221,6 @@ const TopCont = styled.div`
   font-family: General Sans;
   align-items: center;
   margin: 0 0 71px 0;
-  min-height: 50px;
 
   @media (max-width: 1000px) {
     width: 100%;
@@ -258,4 +271,21 @@ const FilterCont = styled.div`
 const Space = styled.div`
   width: 17px;
   height: 22px;
+`;
+
+const TabCont = styled.div`
+  display: flex;
+`;
+
+const TabUI = styled.div`
+  font-family: "General Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 32px;
+  margin: 0 50px 0 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
+  border-bottom: 2px solid ${(props) => props.color};
+  color: ${(props) => props.color};
+  cursor: pointer;
 `;

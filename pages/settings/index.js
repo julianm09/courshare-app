@@ -118,9 +118,12 @@ const BigCont = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
-  padding: 0px 291px;
+  padding: 0px 20%;
   font-family: General Sans;
   margin-top: 5%;
+  @media(max-width: 1000px){
+    padding: 0px 10%;
+  }
 `;
 
 const HeadingCont = styled.div`

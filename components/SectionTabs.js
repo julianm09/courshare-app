@@ -10,6 +10,17 @@ import SearchBar from "./SearchBar";
 import { useTheme } from "@/utils/provider";
 import { comp_themes } from "@/utils/variables";
 
+const useStyles = makeStyles((theme) => ({
+  indicator: {
+    backgroundColor: "#FFC403",
+    height: "10px",
+    top: "45px",
+  },
+  textColor: {
+    color: "#FFC403",
+  },
+}));
+
 export default function FilterBar({
   display,
   value,
@@ -26,6 +37,7 @@ export default function FilterBar({
   searchMyCurriculum,
 }) {
   const handleChange = (event, newValue) => {
+    console.log(newValue);
     setValue(newValue);
   };
 
@@ -34,7 +46,7 @@ export default function FilterBar({
   return (
     <BigCont>
       <TopCont>
-        <Tabs
+        {/*         <Tabs
           value={value}
           onChange={handleChange}
           textColor="inherit"
@@ -44,7 +56,28 @@ export default function FilterBar({
           <Tab classes={{ tabs: classes.tabs }} value="One" label={one} />
           <Tab value="Two" label={two} style={{ marginLeft: 30 }} />
           <Tab value="Three" label={three} style={{ marginLeft: 30 }} />
-        </Tabs>
+        </Tabs> */}
+
+        <TabCont>
+          <TabUI
+            onClick={(e) => handleChange(e, "One")}
+            color={value == "One" ? "#FFC403" : "none"}
+          >
+            {one}
+          </TabUI>
+          <TabUI
+            onClick={(e) => handleChange(e, "Two")}
+            color={value == "Two" ? "#FFC403" : "none"}
+          >
+            {two}
+          </TabUI>
+          <TabUI
+            onClick={(e) => handleChange(e, "Three")}
+            color={value == "Three" ? "#FFC403" : "none"}
+          >
+            {three}
+          </TabUI>
+        </TabCont>
       </TopCont>
       <BottomCont>
         <Header color={comp_themes[theme].switch_text}>
@@ -78,7 +111,7 @@ const TopCont = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin: 0 0 71px 0;
-  height: 50px;
+
   @media (max-width: 1000px) {
     width: 100%;
     flex-direction: column;
@@ -108,13 +141,19 @@ const BottomCont = styled.div`
   }
 `;
 
-const useStyles = makeStyles((theme) => ({
-  indicator: {
-    backgroundColor: "#FFC403",
-    height: "10px",
-    top: "45px",
-  },
-  textColor: {
-    color: "#FFC403",
-  },
-}));
+const TabCont = styled.div`
+  display: flex;
+`;
+
+const TabUI = styled.div`
+  font-family: "General Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 32px;
+  margin: 0 50px 0 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
+  border-bottom: 2px solid ${(props) => props.color};
+  color: ${(props) => props.color};
+  cursor: pointer;
+`;
